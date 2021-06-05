@@ -115,12 +115,12 @@ def modify():
         password = input('enter the password:')
         password = hashlib.md5(password.encode('utf8')).hexdigest()
         du.loc[iu,['name', 'dob', 'gender', 'password']] =[name, dob, gender, password]
-        index()
-        secindex()
         #id2 = d['offset']
         #d = d.drop(i)
         #print(d)
         du.to_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv", index=False)
+        index()
+        secindex()
         #print(list(d['id']))
         '''imp = open('user.csv', 'rb')
         out = open('user.csv', 'wb')
