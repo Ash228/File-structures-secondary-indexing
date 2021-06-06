@@ -2,12 +2,15 @@ import csv
 from itertools import zip_longest
 import pandas as pd
 import hashlib
+import pathlib
+
+path = pathlib.Path().absolute()
 
 def index():
     Offset_address = []
     Primary_key = []
     csv_columns = ["id", "offset"]
-    fi = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
+    fi = open(path+"\\user.csv", "r", encoding='utf-8')
     pos = fi.tell()
     line = fi.readline()
     pos = fi.tell()
@@ -24,7 +27,7 @@ def index():
         line = fi.readline()
     list = [ Primary_key, Offset_address]
     export_data = zip_longest(*list, fillvalue='')
-    with open(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+    with open(path+"\\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("id", "offset"))
         wr.writerows(export_data)
@@ -34,7 +37,7 @@ def secindex():
     name = []
     Primary_key = []
     csv_columns = ["name", "id"]
-    fi = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
+    fi = open(path+"\\user.csv", "r", encoding='utf-8')
     pos = fi.tell()
     line = fi.readline()
     #print("Sec")
@@ -56,7 +59,7 @@ def secindex():
     list = [name, Primary_key]
     #print(list)
     export_data = zip_longest(*list, fillvalue='')
-    with open(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+    with open(path+"\\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("name", "id"))
         wr.writerows(export_data)
@@ -66,18 +69,18 @@ def insert():
     id1 = input("enter the id1")
     index()
     secindex()
-    d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", usecols=[0,],header=None)
+    d = pd.read_csv(path+"\\pk.csv", usecols=[0,],header=None)
     if id1 in d:
         print("id already exists")
     else:
-        with open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8') as csvfile:
+        with open(path+"\\user.csv", "r", encoding='utf-8') as csvfile:
             name = input('enter the name :')
             dob = input('enter the dob:')
             gender = input('enter the gender:')
             password = input('enter the password:')
             password = hashlib.md5(password.encode('utf8')).hexdigest()
             with open(
-                r'C:\Users\ashok\Desktop\Movie fs\user.csv', 'a', newline='') as csvfile:
+                path+"\\user.cs", 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow('')
                 filedname = [id1, name, dob, gender, password]
@@ -93,7 +96,7 @@ def insert():
 
 
 #data = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv")
-with open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r") as csvfile:
+with open(path+"\\user.csv", "r") as csvfile:
     # print('successful read')
     choice = int(input('Enter the Choice 1.insert :\n'))
 

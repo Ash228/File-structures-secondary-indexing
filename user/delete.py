@@ -4,10 +4,11 @@ import pandas as pd
 import hashlib
 import pathlib
 
+path = pathlib.Path().absolute()
 
 def delete():
     id1 = input("Enter id to delete")
-    d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv")
+    d = pd.read_csv(path+"\\sk.csv")
     #print(d)
     #i = d.iloc[d['name'] == id1]
     #print(i)
@@ -23,14 +24,14 @@ def delete():
             if int(id2) in list(d['id']):
                 #print(list(d['id']))
                 break
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv")
+        d = pd.read_csv(path+"\\sk.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
         i=d.query('name == @id1 & id == @id2').index
         #print("i sk" + str(i))
         d = d.drop(i)
         #print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", index=False)
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv")
+        d.to_csv(path+"\\sk.csv", index=False)
+        d = pd.read_csv(path+"\\pk.csv")
         #i = d.index[d['id'] == id2]
         i = d.query('id == @id2').index
         #print("i pk"+str(i))
@@ -48,14 +49,14 @@ def delete():
         out.close()'''
         d = d.drop(i)
         #print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv")
+        d.to_csv(path+"\\pk.csv", index=False)
+        d = pd.read_csv(path+"\\user.csv")
         i = d.query('id == @id2').index
         #print("i user" + str(i))
         #id2 = d['offset']
         d = d.drop(i)
         #print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv", index=False)
+        d.to_csv(path+"\\user.csv", index=False)
         #print(list(d['id']))
         print("Record deleted")
         '''imp = open('user.csv', 'rb')
@@ -76,7 +77,7 @@ def delete():
     else:
         print("Record does not exist")
 
-with open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r") as csvfile:
+with open(path+"\\user.csv", "r") as csvfile:
     # print('successful read')
     choice = int(input('Enter the Choice 1.delete :\n'))
 
