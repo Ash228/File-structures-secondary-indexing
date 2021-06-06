@@ -4,7 +4,7 @@ import pandas as pd
 import hashlib
 import pathlib
 
-path = pathlib.Path().absolute()
+path = str(pathlib.Path().absolute())
 
 def index():
     Offset_address = []
@@ -69,8 +69,9 @@ def insert():
     id1 = input("enter the id1")
     index()
     secindex()
-    d = pd.read_csv(path+"\\pk.csv", usecols=[0,],header=None)
-    if id1 in d:
+    d = pd.read_csv(path+"\\pk.csv", usecols=[0],header=None)
+    #print(d)
+    if id1 in d.values:
         print("id already exists")
     else:
         with open(path+"\\user.csv", "r", encoding='utf-8') as csvfile:
