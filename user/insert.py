@@ -16,8 +16,8 @@ def index():
         #if line[0]=='\n':
             #break
         a = line.split(",")
-        print(a)
-        print(pos, ",", a[0])
+        #print(a)
+        #print(pos, ",", a[0])
         Offset_address.append(pos)
         Primary_key.append(a[0])
         pos = fi.tell()
@@ -37,7 +37,7 @@ def secindex():
     fi = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
     pos = fi.tell()
     line = fi.readline()
-    print("Sec")
+    #print("Sec")
     pos = fi.tell()
     line = fi.readline()
     while line:
@@ -47,14 +47,14 @@ def secindex():
             #break
         line = line.rstrip()
         a = line.split(",")
-        print(a)
+        #print(a)
         #print(pos, ",", a[1])
         name.append(a[1])
         Primary_key.append(a[0])
         pos = fi.tell()
         line = fi.readline()
     list = [name, Primary_key]
-    print(list)
+    #print(list)
     export_data = zip_longest(*list, fillvalue='')
     with open(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
@@ -81,12 +81,13 @@ def insert():
                 writer = csv.writer(csvfile)
                 writer.writerow('')
                 filedname = [id1, name, dob, gender, password]
-                print(filedname)
+                #print(filedname)
                 writer = csv.writer(csvfile, lineterminator='')
                 writer.writerow(filedname)
         csvfile.close()
         index()
         secindex()
+        print("Record Inserted")
 
 
 
