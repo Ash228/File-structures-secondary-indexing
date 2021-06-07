@@ -4,13 +4,16 @@ import pandas as pd
 import time
 import sys
 import matplotlib.pyplot as plt
+import pathlib
+
+path = str(pathlib.Path().absolute())
 
 
 def secindex():
     Offset_address = []
     Primary_key = []
     csv_columns = ["ratings", "userId"]
-    fi = open(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", "r", encoding='utf-8')
+    fi = open(path+"/ratings.csv", "r", encoding='utf-8')
     pos = fi.tell()
     line = fi.readline()
     while line:
@@ -23,7 +26,7 @@ def secindex():
     list = [Offset_address, Primary_key]
     print(list)
     export_data = zip_longest(*list, fillvalue='')
-    with open(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+    with open(path+"/sk3.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("ratings", "userId"))
         wr.writerows(export_data)
@@ -52,8 +55,8 @@ def secindex():
 
 
 start = time.time()
-data = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
-with open(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv") as csvfile:
+data = pd.read_csv(path+"/ratings.csv")
+with open(path+"/ratings.csv") as csvfile:
     # print('successful read')
     choice = int(input('Enter the Choice 1.secondary indexing :\n'))
 

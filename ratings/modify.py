@@ -18,8 +18,8 @@ def index():
            while line:
                
                a=line.split(",")
-               print(a)
-               print(pos,",",a[0],",",a[1])
+               #print(a)
+               #print(pos,",",a[0],",",a[1])
                Offset_address.append(pos)
                Primary_key.append(a[0])
                movieId.append(a[1])
@@ -50,14 +50,14 @@ def secindex():
             #break
         line = line.rstrip()
         a = line.split(",")
-        print(a)
+        #print(a)
         #print(pos, ",", a[1])
         ratings.append(a[2])
         Primary_key.append(a[0]+'|'+a[1])
         pos = fi.tell()
         line = fi.readline()
     list = [ratings, Primary_key]
-    print(list)
+    #print(list)
     export_data = zip_longest(*list, fillvalue='')
     with open(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
@@ -66,22 +66,22 @@ def secindex():
     myfile.close()
 
 def modify():
-    id1 = int(input("Enter id to modify"))
+    id1 = int(input("Enter id to modify "))
     ds = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
-    print(ds)
+    #print(ds)
     #i = d.iloc[d['name'] == id1]
     #print(i)
     ds = ds.loc[ds['ratings'] == id1]
-    print(list(ds['ratings']))
+    #print(list(ds['ratings']))
     if id1 in list(ds['ratings']):
         print("Id exists")
         print(ds)
         #id2 = ''
         while(1):
-            id2 = input("enter one of the primary keys from above to modify")
-            print(list(ds['id']))
+            id2 = input("enter one of the primary keys from above to modify ")
+            #print(list(ds['id']))
             if id2 in list(ds['id']):
-                print(list(ds['id']))
+                #print(list(ds['id']))
                 break
         ds = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
@@ -93,7 +93,7 @@ def modify():
         id3=id2.split('|')
         id3 = [int(i) for i in id3]
         i = dp.query('userId == @id3[0] & movieId == @id3[1]').index
-        print(id3)
+        #print(id3)
         #ipk = dp.query('id == @id2').index
         #print("i pk"+str(i))
         #id2 = d.get_value(i, 'offset')
@@ -109,18 +109,18 @@ def modify():
         imp.close()
         out.close()'''
         #d = d.drop(i)
-        print(dp)
+        #print(dp)
         #dp.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
         du = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
         iu = du.query('userId == @id3[0] & movieId == @id3[1]').index
-        print("i user" + str(iu))
+        #print("i user" + str(iu))
         #index()
         #secindex()
-        movieId = input('enter the movieId :')
-        ratings = input('enter ratings:')
-        reviews = input('enter the review:')
+        movieId = input('enter the movieId : ')
+        ratings = input('enter ratings : ')
+        reviews = input('enter the review : ')
         du.loc[iu,['movieId', 'ratings', 'reviews']] =[movieId, ratings, reviews]
-        print(du)
+        #print(du)
         #id2 = d['offset']
         #d = d.drop(i)
         #print(d)
@@ -143,8 +143,9 @@ def modify():
         #print(id2)
         #new_df = d[~d.id.isin(id1)]
         #new_df.to_csv('pk.csv', index=False, sep=',')'''
+        print("Modification Successful ")
     else:
-        print("Record does not exist")
+        print("Record does not exist ")
 
 with open(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", "r") as csvfile:
     # print('successful read')

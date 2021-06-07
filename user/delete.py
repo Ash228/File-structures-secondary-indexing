@@ -2,34 +2,36 @@ import csv
 from itertools import zip_longest
 import pandas as pd
 import hashlib
+import pathlib
 
+path = pathlib.Path().absolute()
 
 def delete():
     id1 = input("Enter id to delete")
-    d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv")
-    print(d)
+    d = pd.read_csv(path+"\\sk.csv")
+    #print(d)
     #i = d.iloc[d['name'] == id1]
     #print(i)
     d = d.loc[d['name'] == id1]
-    print(list(d['name']))
+    #print(list(d['name']))
     if id1 in list(d['name']):
         print("Id exists")
         print(d)
         #id2 = ''
         while(1):
             id2 = input("enter one of the primary keys from above to delete")
-            print(list(d['id']))
+            #print(list(d['id']))
             if int(id2) in list(d['id']):
-                print(list(d['id']))
+                #print(list(d['id']))
                 break
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv")
+        d = pd.read_csv(path+"\\sk.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
         i=d.query('name == @id1 & id == @id2').index
         #print("i sk" + str(i))
         d = d.drop(i)
-        print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", index=False)
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv")
+        #print(d)
+        d.to_csv(path+"\\sk.csv", index=False)
+        d = pd.read_csv(path+"\\pk.csv")
         #i = d.index[d['id'] == id2]
         i = d.query('id == @id2').index
         #print("i pk"+str(i))
@@ -46,16 +48,17 @@ def delete():
         imp.close()
         out.close()'''
         d = d.drop(i)
-        print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
-        d = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv")
+        #print(d)
+        d.to_csv(path+"\\pk.csv", index=False)
+        d = pd.read_csv(path+"\\user.csv")
         i = d.query('id == @id2').index
-        print("i user" + str(i))
+        #print("i user" + str(i))
         #id2 = d['offset']
         d = d.drop(i)
-        print(d)
-        d.to_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv", index=False)
-        print(list(d['id']))
+        #print(d)
+        d.to_csv(path+"\\user.csv", index=False)
+        #print(list(d['id']))
+        print("Record deleted")
         '''imp = open('user.csv', 'rb')
         out = open('user.csv', 'wb')
         writer = csv.writer(out)
@@ -74,9 +77,9 @@ def delete():
     else:
         print("Record does not exist")
 
-with open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r") as csvfile:
+with open(path+"\\user.csv", "r") as csvfile:
     # print('successful read')
-    choice = int(input('Enter the Choice 1.insert :\n'))
+    choice = int(input('Enter the Choice 1.delete :\n'))
 
     if (choice == 1):
         delete()
