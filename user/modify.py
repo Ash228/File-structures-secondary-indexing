@@ -4,7 +4,7 @@ import pandas as pd
 import hashlib
 import pathlib
 
-path = pathlib.Path().absolute()
+path = str(pathlib.Path().absolute())
 def index():
     Offset_address = []
     Primary_key = []
