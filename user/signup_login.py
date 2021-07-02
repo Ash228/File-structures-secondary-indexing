@@ -26,8 +26,7 @@ def index():
         pos = fi.tell()
         line = fi.readline()
     list = [ Primary_key, Offset_address]
-    list = zip_longest(*list, fillvalue='')
-    export_data = sorted(list, key=lambda x: x[0])
+    export_data = zip_longest(*list, fillvalue='')
     with open(path+"\\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("id", "offset"))
@@ -58,15 +57,15 @@ def secindex():
         pos = fi.tell()
         line = fi.readline()
     list = [name, Primary_key]
-    list = zip_longest(*list, fillvalue='')
-    export_data = sorted (list, key=lambda x: x[0])
+    #print(list)
+    export_data = zip_longest(*list, fillvalue='')
     with open(path+"\\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("name", "id"))
         wr.writerows(export_data)
     myfile.close()
 
-def insert():
+def signup():
     id1 = input("enter the id1")
     index()
     secindex()
@@ -94,15 +93,31 @@ def insert():
         secindex()
         print("Record Inserted")
 
+def login():
+    id = input("Enter user id:")
+    ds = pd.read_csv(path+"\\user.csv")
+    print(ds)
+    ds = ds.loc[ds['id'] == int(id)]
+    print(ds)
+    if ds.empty:
+        print("user does not exist")
+    else:
+        password = input('enter the password:')
+        password = hashlib.md5(password.encode('utf8')).hexdigest()
+        if ds.loc[int(id)-1].at['password'] == password:
+            '''login placeholder '''
+            print("Success")
+        else:
+            print("Incorrect password")
 
 
 
 #data = pd.read_csv(r"C:\Users\ashok\Desktop\Movie fs\user.csv")
 with open(path+"\\user.csv", "r") as csvfile:
     # print('successful read')
-    choice = int(input('Enter the Choice 1.insert :\n'))
+    choice = int(input('Enter the Choice 1.signup\n2.login :\n'))
 
     if (choice == 1):
-        insert()
-
-
+        signup()
+    elif(choice==2):
+        login()
