@@ -6,35 +6,35 @@ import hashlib
 
 def delete():
     id1 = int(input("Enter ratings to delete "))
-    d = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
+    dsk_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
     #print(d)
     #i = d.iloc[d['name'] == id1]
     #print(i)
-    d = d.loc[d['ratings'] == id1]
+    dsk_ratings = dsk_ratings.loc[dsk_ratings['ratings'] == id1]
     #print(list(d['ratings']))
-    if id1 in list(d['ratings']):
+    if id1 in list(dsk_ratings['ratings']):
         print("id exists")
-        print(d)
+        print(dsk_ratings)
         #id2 = ''
         while(1):
             id2 = input("enter one of the primary keys from above to delete ")
             #print(list(d['id']))
-            if id2 in list(d['id']):
+            if id2 in list(dsk_ratings['id']):
                 #print(list(d['id']))
                 break
-        d = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
+        dsk_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
-        i=d.query('ratings == @id1 & id == @id2').index
+        i=dsk_ratings.query('ratings == @id1 & id == @id2').index
         print(id1,id2)
         #print("i sk" + str(i))
-        d = d.drop(i)
+        dsk_ratings = dsk_ratings.drop(i)
         #print(d)
-        d.to_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv", index=False)
-        d = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/pk3.csv")
+        dsk_ratings.to_csv(r"/Users/souravnarayan/Desktop/FS mini/sk3.csv", index=False)
+        dpk_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/pk3.csv")
         #i = d.index[d['id'] == id2]
         id3=id2.split('|')
         id3 = [int(i) for i in id3]
-        i = d.query('userId == @id3[0] & movieId == @id3[1]').index
+        i = dpk_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
         #print(id3)
         
         #print("i pk"+str(i))
@@ -50,16 +50,16 @@ def delete():
             writer.writerow(row)
         imp.close()
         out.close()'''
-        d = d.drop(i)
+        dpk_ratings = dpk_ratings.drop(i)
         #print(d)
-        d.to_csv(r"/Users/souravnarayan/Desktop/FS mini/pk3.csv", index=False)
-        d = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
-        i = d.query('userId == @id3[0] & movieId == @id3[1]').index
+        dpk_ratings.to_csv(r"/Users/souravnarayan/Desktop/FS mini/pk3.csv", index=False)
+        df_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
+        i = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
         #print("i user" + str(i))
         #id2 = d['offset']
-        d = d.drop(i)
+        df_ratings = df_ratings.drop(i)
         #print(d)
-        d.to_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", index=False)
+        df_ratings.to_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", index=False)
         #print(list(d['userId']))
         '''imp = open('ratings.csv', 'rb')
         out = open('ratings.csv', 'wb')

@@ -10,18 +10,19 @@ def index():
     Offset_address = []
     Primary_key = []
     csv_columns = ["id", "Primary"]
-    fi = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
-        pos = fi.tell()
-        line = fi.readline()
-        a = line.split(",")
-        print(pos, ",", a[0])
+        pos = fi_user.tell()
+        line = fi_user.readline()
+        temp = line.split(",")
+        print(pos, ",", temp[0])
         Offset_address.append(pos)
-        Primary_key.append(a[0])
+        Primary_key.append(temp[0])
     list = [Offset_address, Primary_key]
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("Primary_key", "id"))

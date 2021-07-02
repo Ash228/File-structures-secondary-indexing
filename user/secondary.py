@@ -10,19 +10,20 @@ def secindex():
     Offset_address = []
     Primary_key = []
     csv_columns = ["name", "id"]
-    fi = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(r"C:\Users\ashok\Desktop\Movie fs\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
-        pos = fi.tell()
-        line = fi.readline()
-        a = line.split(",")
-        print(pos, ",", a[-1])
+        pos = fi_user.tell()
+        line = fi_user.readline()
+        temp = line.split(",")
+        print(pos, ",", temp[-1])
         Offset_address.append(pos)
-        Primary_key.append(a[-1])
+        Primary_key.append(temp[-1])
     list = [Offset_address, Primary_key]
-    print(list)
-    export_data = zip_longest(*list, fillvalue='')
+    #print(list)
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("name", "id"))

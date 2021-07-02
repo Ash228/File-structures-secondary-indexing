@@ -8,32 +8,32 @@ path = str(pathlib.Path().absolute())
 
 def delete():
     id1 = input("Enter id to delete")
-    d = pd.read_csv(path+"\\sk.csv")
+    dsk_user = pd.read_csv(path+"\\sk.csv")
     #print(d)
     #i = d.iloc[d['name'] == id1]
     #print(i)
-    d = d.loc[d['name'] == id1]
+    dsk_user = dsk_user.loc[dsk_user['name'] == id1]
     #print(list(d['name']))
-    if id1 in list(d['name']):
+    if id1 in list(dsk_user['name']):
         print("Id exists")
-        print(d)
+        print(dsk_user)
         #id2 = ''
         while(1):
             id2 = input("enter one of the primary keys from above to delete")
             #print(list(d['id']))
-            if int(id2) in list(d['id']):
+            if int(id2) in list(dsk_user['id']):
                 #print(list(d['id']))
                 break
-        d = pd.read_csv(path+"\\sk.csv")
+        dsk_user = pd.read_csv(path+"\\sk.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
-        i=d.query('name == @id1 & id == @id2').index
+        i=dsk_user.query('name == @id1 & id == @id2').index
         #print("i sk" + str(i))
-        d = d.drop(i)
+        dsk_user = dsk_user.drop(i)
         #print(d)
-        d.to_csv(path+"\\sk.csv", index=False)
-        d = pd.read_csv(path+"\\pk.csv")
+        dsk_user.to_csv(path+"\\sk.csv", index=False)
+        dpk_user = pd.read_csv(path+"\\pk.csv")
         #i = d.index[d['id'] == id2]
-        i = d.query('id == @id2').index
+        i = dpk_user.query('id == @id2').index
         #print("i pk"+str(i))
         #id2 = d.get_value(i, 'offset')
         #id2 = d['offset']
@@ -47,16 +47,16 @@ def delete():
             writer.writerow(row)
         imp.close()
         out.close()'''
-        d = d.drop(i)
+        dpk_user = dpk_user.drop(i)
         #print(d)
-        d.to_csv(path+"\\pk.csv", index=False)
-        d = pd.read_csv(path+"\\user.csv")
-        i = d.query('id == @id2').index
+        dpk_user.to_csv(path+"\\pk.csv", index=False)
+        df_user = pd.read_csv(path+"\\user.csv")
+        i = df_user.query('id == @id2').index
         #print("i user" + str(i))
         #id2 = d['offset']
-        d = d.drop(i)
+        df_user = df_user.drop(i)
         #print(d)
-        d.to_csv(path+"\\user.csv", index=False)
+        df_user.to_csv(path+"\\user.csv", index=False)
         #print(list(d['id']))
         print("Record deleted")
         '''imp = open('user.csv', 'rb')

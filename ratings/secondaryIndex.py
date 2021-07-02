@@ -13,19 +13,19 @@ def secindex():
     Offset_address = []
     Primary_key = []
     csv_columns = ["ratings", "userId"]
-    fi = open(path+"/ratings.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
+    fi_ratings = open(path+"/ratings.csv", "r", encoding='utf-8')
+    pos = fi_ratings.tell()
+    line = fi_ratings.readline()
     while line:
-        pos = fi.tell()
-        line = fi.readline()
-        a = line.split(",")
-        print(pos, ",", a[-1])
+        pos = fi_ratings.tell()
+        line = fi_ratings.readline()
+        temp = line.split(",")
+        #print(pos, ",", a[-1])
         Offset_address.append(pos)
-        Primary_key.append(a[-1])
+        Primary_key.append(temp[-1])
     list = [Offset_address, Primary_key]
-    print(list)
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(path+"/sk3.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("ratings", "userId"))

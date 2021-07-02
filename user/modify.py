@@ -9,23 +9,24 @@ def index():
     Offset_address = []
     Primary_key = []
     csv_columns = ["id", "offset"]
-    fi = open(path+"\\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(path+"\\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
         #if line[0]=='\n':
             #break
-        a = line.split(",")
+        temp = line.split(",")
         #print(a)
         #print(pos, ",", a[0])
         Offset_address.append(pos)
-        Primary_key.append(a[0])
-        pos = fi.tell()
-        line = fi.readline()
+        Primary_key.append(temp[0])
+        pos = fi_user.tell()
+        line = fi_user.readline()
     list = [ Primary_key, Offset_address]
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(path+"\\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("id", "offset"))
@@ -36,28 +37,28 @@ def secindex():
     name = []
     Primary_key = []
     csv_columns = ["name", "id"]
-    fi = open(path+"\\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(path+"\\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
     #print("Sec")
-    pos = fi.tell()
-    line = fi.readline()
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
         #pos = fi.tell()
         #line = fi.readline()
         #if line[0] == '\n':
             #break
         line = line.rstrip()
-        a = line.split(",")
+        temp = line.split(",")
         #print(a)
         #print(pos, ",", a[1])
-        name.append(a[1])
-        Primary_key.append(a[0])
-        pos = fi.tell()
-        line = fi.readline()
+        name.append(temp[1])
+        Primary_key.append(temp[0])
+        pos = fi_user.tell()
+        line = fi_user.readline()
     list = [name, Primary_key]
-    #print(list)
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(path+"\\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("name", "id"))
@@ -66,30 +67,30 @@ def secindex():
 
 def modify():
     id1 = input("Enter id to delete")
-    ds = pd.read_csv(path+"\\sk.csv")
+    dsk_user = pd.read_csv(path+"\\sk.csv")
     #print(ds)
     #i = d.iloc[d['name'] == id1]
     #print(i)
-    ds = ds.loc[ds['name'] == id1]
+    dsk_user = dsk_user.loc[dsk_user['name'] == id1]
     #print(list(ds['name']))
-    if id1 in list(ds['name']):
+    if id1 in list(dsk_user['name']):
         print("Id exists")
         #print(ds)
         #id2 = ''
         while(1):
             id2 = input("enter one of the primary keys from above to modify")
-            print(list(ds['id']))
-            if int(id2) in list(ds['id']):
-                print(list(ds['id']))
+            print(list(dsk_user['id']))
+            if int(id2) in list(dsk_user['id']):
+                print(list(dsk_user['id']))
                 break
-        ds = pd.read_csv(path+"\\sk.csv")
+        dsk_user = pd.read_csv(path+"\\sk.csv")
         #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
-        isk =ds.query('name == @id1 & id == @id2').index
+        isk =dsk_user.query('name == @id1 & id == @id2').index
         #print("i sk" + str(i))
         #ds.to_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", index=False)
-        dp = pd.read_csv(path+"\\pk.csv")
+        dpk_user = pd.read_csv(path+"\\pk.csv")
         #i = d.index[d['id'] == id2]
-        ipk = dp.query('id == @id2').index
+        ipk = dpk_user.query('id == @id2').index
         #print("i pk"+str(i))
         #id2 = d.get_value(i, 'offset')
         #id2 = d['offset']
@@ -106,8 +107,8 @@ def modify():
         #d = d.drop(i)
         #print(dp)
         #dp.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
-        du = pd.read_csv(path+"\\user.csv")
-        iu = du.query('id == @id2').index
+        df_user = pd.read_csv(path+"\\user.csv")
+        iu = df_user.query('id == @id2').index
         #print("i user" + str(iu))
         #index()
         #secindex()
@@ -116,13 +117,13 @@ def modify():
         gender = input('enter the gender:')
         password = input('enter the password:')
         password = hashlib.md5(password.encode('utf8')).hexdigest()
-        du.loc[iu,['name', 'dob', 'gender', 'password']] =[name, dob, gender, password]
+        df_user.loc[iu,['name', 'dob', 'gender', 'password']] =[name, dob, gender, password]
         index()
         secindex()
         #id2 = d['offset']
         #d = d.drop(i)
         #print(d)
-        du.to_csv(path+"\\user.csv", index=False)
+        df_user.to_csv(path+"\\user.csv", index=False)
         print("Record modified")
         #print(list(d['id']))
         '''imp = open('user.csv', 'rb')
