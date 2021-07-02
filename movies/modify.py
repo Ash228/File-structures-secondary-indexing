@@ -6,25 +6,22 @@ import pathlib
 
 path = str(pathlib.Path().absolute())
 
+#Function for the primary index file i.e movie id and offset
 def index():
     Offset_address = []
     Primary_key = []
     csv_columns = ["id", "offset"]
-    fi = open(path+"\\movies.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
-    pos = fi.tell()
-    line = fi.readline()
+    fi_movies = open(path+"\\movies.csv", "r", encoding='utf-8')
+    pos = fi_movies.tell()
+    line = fi_movies.readline()
+    pos = fi_movies.tell()
+    line = fi_movies.readline()
     while line:
-        #if line[0]=='\n':
-            #break
-        a = line.split(",")
-        #print(a)
-        #print(pos, ",", a[0])
+        temp= line.split(",")
         Offset_address.append(pos)
-        Primary_key.append(a[0])
-        pos = fi.tell()
-        line = fi.readline()
+        Primary_key.append(temp[0])
+        pos = fi_movies.tell()
+        line = fi_movies.readline()
     list = [ Primary_key, Offset_address]
     export_data = zip_longest(*list, fillvalue='')
     with open(path+"\\movprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
@@ -33,37 +30,26 @@ def index():
         wr.writerows(export_data)
     myfile.close()
 
+#Function for secondary index file i.e movie id and genre
 def secindex():
     genre = []
     Primary_key = []
     csv_columns = ["genre", "id"]
-    fi = open(path+"\\movies.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
-    #print("Sec")
-    pos = fi.tell()
-    line = fi.readline()
+    fi_movies= open(path+"\\movies.csv", "r", encoding='utf-8')
+    pos = fi_movies.tell()
+    line = fi_movies.readline()
+    pos = fi_movies.tell()
+    line = fi_movies.readline()
     while line:
-        #pos = fi.tell()
-        #line = fi.readline()
-        #if line[0] == '\n':
-            #break
         line = line.rstrip()
-        a = line.split(",")
-        #print(a)
-        b=a[-1].split("|")
-        for i in b:
+        temp1= line.split(",")
+        temp2=temp1[-1].split("|")
+        for i in temp2:
             genre.append(i)
-            Primary_key.append(a[0])
-        #print(pos, ",", a[1])
-        '''
-        name.append(a[1])
-        Primary_key.append(a[0])
-        '''
-        pos = fi.tell()
-        line = fi.readline()
+            Primary_key.append(temp1[0])
+        pos = fi_movies.tell()
+        line = fi_movies.readline()
     list = [genre, Primary_key]
-    #print(list)
     export_data = zip_longest(*list, fillvalue='')
     with open(path+"\\movsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
@@ -71,86 +57,35 @@ def secindex():
         wr.writerows(export_data)
     myfile.close()
 
+#Function to modify a record first by entering a genre and choosing a primary key from all that have the given genre
 def modify():
     id1 = input("Enter genre to modify ")
-    ds = pd.read_csv(path+"\\movsecondary.csv")
-    #print(ds)
-    #i = d.iloc[d['name'] == id1]
-    #print(i)
-    ds = ds.loc[ds['genre'] == id1]
-    #print(list(ds['genre']))
-    if id1 in list(ds['genre']):
+    dsk_movies = pd.read_csv(path+"\\movsecondary.csv")
+    dsk_movies = dsk_movies.loc[dsk_movies['genre'] == id1]
+    if id1 in list(dsk_movies['genre']):
         print("Id exists")
-        print(ds)
-        #id2 = ''
+        print(dsk_movies)
         while(1):
             id2 = input("enter one of the primary keys from above to modify ")
-            #print(list(ds['id']))
-            if int(id2) in list(ds['id']):
-                #print(list(ds['id']))
+            if int(id2) in list(dsk_movies['id']):
                 break
-        ds = pd.read_csv(path+"\\movsecondary.csv")
-        #i = d.iloc[d['name']==id1 & d['id']==int(id2)]
-        isk =ds.query('genre == @id1 & id == @id2').index
-        #print("i sk" + str(i))
-        #ds.to_csv(r"C:\Users\ashok\Desktop\Movie fs\sk.csv", index=False)
-        dp = pd.read_csv(path+"\\movprimary.csv")
-        #i = d.index[d['id'] == id2]
-        ipk = dp.query('id == @id2').index
-        #print("i pk"+str(i))
-        #id2 = d.get_value(i, 'offset')
-        #id2 = d['offset']
-        #print(list(d['id']))
-        '''imp = open('pk.csv', 'rb')
-        out = open('pk.csv', 'wb')
-        writer = csv.writer(out)
-        for row in csv.reader(imp):
-            if row == id1:
-                continue
-            writer.writerow(row)
-        imp.close()
-        out.close()'''
-        #d = d.drop(i)
-        #print(dp)
-        #dp.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
-        du = pd.read_csv(path+"\\movies.csv")
-        iu = du.query('id == @id2').index
-        #print("i movie" + str(iu))
-        #index()
-        #secindex()
+        dsk_movies = pd.read_csv(path+"\\movsecondary.csv")
+        isk =dsk_movies.query('genre == @id1 & id == @id2').index
+        dpk_movies = pd.read_csv(path+"\\movprimary.csv")
+        ipk = dpk_movies.query('id == @id2').index
+        df_movies = pd.read_csv(path+"\\movies.csv")
+        iu = df_movies.query('id == @id2').index
         title = input('enter the title:')
         description = input('enter the description:')
         genre = input('enter the genre:')
-        #password = input('enter the password:')
-        #password = hashlib.md5(password.encode('utf8')).hexdigest()
-        du.loc[iu,['title', 'description', 'genre']] =[title, description, genre]
-        #id2 = d['offset']
-        #d = d.drop(i)
-        #print(d)
-        du.to_csv(path+"\\movies.csv", index=False)
+        df_movies.loc[iu,['title', 'description', 'genre']] =[title, description, genre]
+        df_movies.to_csv(path+"\\movies.csv", index=False)
         index()
         secindex()
-        #print(list(d['id']))
-        '''imp = open('user.csv', 'rb')
-        out = open('user.csv', 'wb')
-        writer = csv.writer(out)
-        for row in csv.reader(imp):
-            if row == id1:
-                continue
-            writer.writerow(row)
-        imp.close()
-        out.close()
-        #print(d)
-        #d.loc[d['id'] == id1]
-        #id2 = d['offset']
-        #print(id2)
-        #new_df = d[~d.id.isin(id1)]
-        #new_df.to_csv('pk.csv', index=False, sep=',')'''
     else:
         print("Record does not exist")
 
 with open(path+"\\movies.csv", "r") as csvfile:
-    # print('successful read')
     choice = int(input('Enter the Choice 1.Modify:\n'))
 
     if (choice == 1):
