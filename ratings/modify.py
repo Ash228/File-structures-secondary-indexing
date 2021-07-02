@@ -112,20 +112,20 @@ def modify():
         #d = d.drop(i)
         #print(dp)
         #dp.to_csv(r"C:\Users\ashok\Desktop\Movie fs\pk.csv", index=False)
-        du = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
-        iu = du.query('userId == @id3[0] & movieId == @id3[1]').index
+        df_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
+        iu = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
         #print("i user" + str(iu))
         #index()
         #secindex()
         movieId = input('enter the movieId : ')
         ratings = input('enter ratings : ')
         reviews = input('enter the review : ')
-        du.loc[iu,['movieId', 'ratings', 'reviews']] =[movieId, ratings, reviews]
+        df_ratings.loc[iu,['movieId', 'ratings', 'reviews']] =[movieId, ratings, reviews]
         #print(du)
         #id2 = d['offset']
         #d = d.drop(i)
         #print(d)
-        du.to_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", index=False)
+        df_ratings.to_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv", index=False)
         index()
         secindex()
         #print(list(d['id']))

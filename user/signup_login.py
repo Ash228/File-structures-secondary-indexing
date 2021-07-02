@@ -10,23 +10,24 @@ def index():
     Offset_address = []
     Primary_key = []
     csv_columns = ["id", "offset"]
-    fi = open(path+"\\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(path+"\\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
         #if line[0]=='\n':
             #break
-        a = line.split(",")
+        temp = line.split(",")
         #print(a)
         #print(pos, ",", a[0])
         Offset_address.append(pos)
-        Primary_key.append(a[0])
-        pos = fi.tell()
-        line = fi.readline()
+        Primary_key.append(temp[0])
+        pos = fi_user.tell()
+        line = fi_user.readline()
     list = [ Primary_key, Offset_address]
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(path+"\\pk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("id", "offset"))
@@ -37,28 +38,28 @@ def secindex():
     name = []
     Primary_key = []
     csv_columns = ["name", "id"]
-    fi = open(path+"\\user.csv", "r", encoding='utf-8')
-    pos = fi.tell()
-    line = fi.readline()
+    fi_user = open(path+"\\user.csv", "r", encoding='utf-8')
+    pos = fi_user.tell()
+    line = fi_user.readline()
     #print("Sec")
-    pos = fi.tell()
-    line = fi.readline()
+    pos = fi_user.tell()
+    line = fi_user.readline()
     while line:
         #pos = fi.tell()
         #line = fi.readline()
         #if line[0] == '\n':
             #break
         line = line.rstrip()
-        a = line.split(",")
+        temp = line.split(",")
         #print(a)
         #print(pos, ",", a[1])
-        name.append(a[1])
-        Primary_key.append(a[0])
-        pos = fi.tell()
-        line = fi.readline()
+        name.append(temp[1])
+        Primary_key.append(temp[0])
+        pos = fi_user.tell()
+        line = fi_user.readline()
     list = [name, Primary_key]
-    #print(list)
-    export_data = zip_longest(*list, fillvalue='')
+    list = zip_longest(*list, fillvalue='')
+    export_data = sorted(list, key=lambda x: x[0])
     with open(path+"\\sk.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("name", "id"))
@@ -69,9 +70,9 @@ def signup():
     id1 = input("enter the id1")
     index()
     secindex()
-    d = pd.read_csv(path+"\\pk.csv", usecols=[0],header=None)
+    dpk_user = pd.read_csv(path+"\\pk.csv", usecols=[0],header=None)
     #print(d)
-    if id1 in d.values:
+    if id1 in dpk_user.values:
         print("id already exists")
     else:
         with open(path+"\\user.csv", "r", encoding='utf-8') as csvfile:
@@ -95,16 +96,16 @@ def signup():
 
 def login():
     id = input("Enter user id:")
-    ds = pd.read_csv(path+"\\user.csv")
-    print(ds)
-    ds = ds.loc[ds['id'] == int(id)]
-    print(ds)
-    if ds.empty:
+    df_user = pd.read_csv(path+"\\user.csv")
+    print(df_user)
+    df_user = df_user.loc[df_user['id'] == int(id)]
+    print(df_user)
+    if df_user.empty:
         print("user does not exist")
     else:
         password = input('enter the password:')
         password = hashlib.md5(password.encode('utf8')).hexdigest()
-        if ds.loc[int(id)-1].at['password'] == password:
+        if df_user.loc[int(id)-1].at['password'] == password:
             '''login placeholder '''
             print("Success")
         else:
