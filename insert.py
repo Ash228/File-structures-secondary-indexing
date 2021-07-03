@@ -34,8 +34,7 @@ def rinsert():
             movieid = input('enter the movieId: ')
             ratings = input('give ratings: ')
             reviews = input('enter review: ')
-            with open(
-                path+'/data/ratings.csv', 'a', newline='') as csvfile:
+            with open(path+'/data/ratings.csv', 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow('')
                 filedname = [id1, movieid, ratings, reviews]
@@ -60,8 +59,7 @@ def uinsert():
             gender = input('enter the gender:')
             password = input('enter the password:')
             password = hashlib.md5(password.encode('utf8')).hexdigest()
-            with open(
-                path+"\\data\\user.cs", 'a', newline='') as csvfile:
+            with open(path+"\\data\\user.cs", 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow('')
                 filedname = [id1, name, dob, gender, password]
