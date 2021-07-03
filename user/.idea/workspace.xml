@@ -20,13 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="668d9c00-a051-4733-ba5d-3b28cbd23a06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/user.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/user.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insert.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sk.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sk.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,9 +127,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.modify" />
-      <item itemvalue="Python.insert" />
       <item itemvalue="Python.delete" />
+      <item itemvalue="Python.insert" />
+      <item itemvalue="Python.modify" />
       <item itemvalue="Python.signup_login" />
     </list>
     <recent_temporary>
