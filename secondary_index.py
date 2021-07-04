@@ -1,7 +1,16 @@
+import csv
+import hashlib
+import pathlib
+import pandas as pd
+from itertools import zip_longest
+
+path = str(pathlib.Path().absolute())
+
+
 def msecindex():
     genre= []
     Primary_key = []
-    csv_columns = ["genre", "id"]
+    csv_columns = ["genre", "movieId"]
     fi_movies = open(path+"\\data\\movies.csv", "r", encoding='utf-8')
     pos = fi_movies.tell()
     line = fi_movies.readline()
@@ -10,7 +19,7 @@ def msecindex():
     while line:
         line = line.rstrip()
         temp1 = line.split(",")
-        temp2=temp1[-1].split("|")
+        temp2=temp1[-2].split("|")
         for i in temp2:
             genre.append(i)
             Primary_key.append(temp1[0])
@@ -20,7 +29,7 @@ def msecindex():
     export_data = sorted (list, key=lambda x: x[0])
     with open(path+"\\data\\movsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
-        wr.writerow(("genre", "id"))
+        wr.writerow(("genre", "movieId"))
         wr.writerows(export_data)
     myfile.close()
 

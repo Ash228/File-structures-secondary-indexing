@@ -1,7 +1,17 @@
+
+import csv
+import hashlib
+import pathlib
+import pandas as pd
+from itertools import zip_longest
+
+path = str(pathlib.Path().absolute())
+
+
 def mindex():
     Offset_address = []
     Primary_key = []
-    csv_columns = ["id", "offset"]
+    csv_columns = ["movieId", "offset"]
     fi_movies = open(path+"\\data\\movies.csv", "r", encoding='utf-8')
     pos = fi_movies.tell()
     line = fi_movies.readline()
@@ -18,7 +28,7 @@ def mindex():
     export_data = sorted(list, key=lambda x: x[0])
     with open(path+"\\data\\\movprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
-        wr.writerow(("id", "offset"))
+        wr.writerow(("movieId", "offset"))
         wr.writerows(export_data)
     myfile.close()
 
@@ -45,7 +55,7 @@ def rindex():
     list = [Primary_key, movieId, Offset_address]
     list = zip_longest(*list, fillvalue='')
     export_data = sorted(list, key=lambda x: x[0])
-    with open(path + '\\data\\rprimary.csv.csv', 'w', encoding="ISO-8859-1", newline='') as myfile:
+    with open(path + '\\data\\rprimary.csv', 'w', encoding="ISO-8859-1", newline='') as myfile:
         wr = csv.writer(myfile)
         wr.writerow(("userId", "movieId", "offset"))
         wr.writerows(export_data)

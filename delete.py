@@ -1,3 +1,14 @@
+from primary_index import *
+from secondary_index import *
+import csv
+import hashlib
+import pathlib
+import pandas as pd
+from itertools import zip_longest
+
+path = str(pathlib.Path().absolute())
+
+
 def mdelete():
     id1 = input("Enter genre to delete ")
     dsk_movies= pd.read_csv(path+"\\data\\movsecondary.csv")
@@ -7,10 +18,10 @@ def mdelete():
         print(dsk_movies)
         while(1):
             id2 = int(input("enter one of the primary keys from above to delete "))
-            if int(id2) in list(dsk_movies['id']):
+            if int(id2) in list(dsk_movies['movieId']):
                 break
         dsk_movies = pd.read_csv(path+"\\data\\movsecondary.csv")
-        i=dsk_movies.query('genre == @id1 & id == @id2').index
+        i=dsk_movies.query('genre == @id1 & movieId == @id2').index
         dsk_movies = dsk_movies.drop(i)
         dsk_movies.to_csv(path+"\\data\\movsecondary.csv", index=False)
         dpk_movies = pd.read_csv(path+"\\data\\movprimary.csv")
@@ -18,7 +29,7 @@ def mdelete():
         dpk_movies = dpk_movies.drop(i)
         dpk_movies.to_csv(path+"\\data\\movprimary.csv", index=False)
         df_movies = pd.read_csv(path+"\\data\\movies.csv")
-        i = df_movies.query('id == @id2').index
+        i = df_movies.query('movieId == @id2').index
         df_movies = df_movies.drop(i)
         df_movies.to_csv(path+"\\data\\movies.csv", index=False)
         print("Record deleted ")
@@ -67,11 +78,11 @@ def udelete():
             if int(id2) in list(dsk_user['userId']):
                 break
         dsk_user = pd.read_csv(path+"\\data\\usecondary.csv")
-        i=dsk_user.query('name == @id1 & id == @id2').index
+        i=dsk_user.query('name == @id1 & userId == @id2').index
         dsk_user = dsk_user.drop(i)
         dsk_user.to_csv(path+"\\data\\usecondary.csv", index=False)
         dpk_user = pd.read_csv(path+"\\data\\pk.csv")
-        i = dpk_user.query('id == @id2').index
+        i = dpk_user.query('userId == @id2').index
         dpk_user = dpk_user.drop(i)
         dpk_user.to_csv(path+"\\data\\uprimary.csv", index=False)
         df_user = pd.read_csv(path+"\\data\\user.csv")

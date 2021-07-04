@@ -1,3 +1,14 @@
+from primary_index import *
+from secondary_index import *
+import csv
+import hashlib
+import pathlib
+import pandas as pd
+from itertools import zip_longest
+
+path = str(pathlib.Path().absolute())
+
+
 def mupdate():
     id1 = input("Enter genre to modify ")
     dsk_movies = pd.read_csv(path+"\\data\\\movsecondary.csv")
@@ -7,14 +18,14 @@ def mupdate():
         print(dsk_movies)
         while(1):
             id2 = input("enter one of the primary keys from above to modify ")
-            if int(id2) in list(dsk_movies['id']):
+            if int(id2) in list(dsk_movies['movieId']):
                 break
         dsk_movies = pd.read_csv(path+"\\data\\\movsecondary.csv")
-        isk =dsk_movies.query('genre == @id1 & id == @id2').index
+        isk =dsk_movies.query('genre == @id1 & movieId == @id2').index
         dpk_movies = pd.read_csv(path+"\\data\\\movprimary.csv")
-        ipk = dpk_movies.query('id == @id2').index
+        ipk = dpk_movies.query('movieId == @id2').index
         df_movies = pd.read_csv(path+"\\data\\\movies.csv")
-        iu = df_movies.query('id == @id2').index
+        iu = df_movies.query('movieId == @id2').index
         title = input('enter the title:')
         description = input('enter the description:')
         genre = input('enter the genre:')
@@ -43,10 +54,9 @@ def rupdate():
         id3 = [int(i) for i in id3]
         df_ratings = pd.read_csv(path+"\\data\\ratings.csv")
         iu = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
-        movieId = input('enter the movieId : ')
         ratings = input('enter ratings : ')
         reviews = input('enter the review : ')
-        df_ratings.loc[iu,['movieId', 'ratings', 'reviews']] =[movieId, ratings, reviews]
+        df_ratings.loc[iu, ['ratings', 'reviews']] =[ ratings, reviews]
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
         rindex()
         rsecindex()
@@ -71,7 +81,7 @@ def uupdate():
         dpk_user = pd.read_csv(path+"\\data\\uprimary.csv")
         ipk = dpk_user.query('id == @id2').index
         df_user = pd.read_csv(path+"\\data\\user.csv")
-        iu = df_user.query('id == @id2').index
+        iu = df_user.query('userId == @id2').index
         name = input('enter the name :')
         dob = input('enter the dob:')
         gender = input('enter the gender:')
