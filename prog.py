@@ -93,7 +93,7 @@ def admin():
 
 
 def logged():
-    #placeholder to recmmendation
+    #placeholder to recommendation
     #placeholder to display movies
     movid = -1
     while(1):
@@ -105,13 +105,14 @@ def logged():
         #will set id on select
         #Display selected movie details
         #connect to rfilter
+        #recommendation based on ratings
         #connect to rinsert when user enters a rating
         #and reset movie id on exit
         inp = input("Enter genre you would like to see:")
         df_movies = pd.read_csv(path + "\\movies.csv")
         df_movies = df_movies[df_movies['genre'].str.contains(inp, flags=re.IGNORECASE)]
         print(sorted)
-        inp = int(inp('Would you like to sort these results?\n1.Ascending\n2.Descending\n3.No\nEnter choice:'))
+        inp = int(inp('Would you like to sort these results?\n1.Ascending\n2.Descending\n3.No\nEnter choice:'))#another option popularity
         if inp == 1:
             sorted = df_movies.sort_values('title', ascending=True)
             print(sorted)

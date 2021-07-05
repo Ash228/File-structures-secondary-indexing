@@ -18,14 +18,14 @@ def minsert():
     if id1 in dpk_movies:
         print("id already exists")
     else:
-        with open(path + "\\data\\movies.csv", "a", encoding='utf-8') as csvfile:
+        with open(path + "\\data\\movies.csv", "a", encoding='utf-8',newline='') as csvfile:
             title = input('enter the title:')
             description = input('enter the description:')
             genre = input('enter the genre:')
-            no_of_ratings = 0
+            no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
-            filedname = [id1, title, description, genre, no_of_ratings]
+            filedname = [id1, title, description, genre, no_of_ratings, average_ratings]
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
@@ -92,7 +92,7 @@ def uinsert():
     if id1 in dpk_user.values:
         print("id already exists")
     else:
-        with open(path+"\\data\\user.csv", "a", encoding='utf-8') as csvfile:
+        with open(path+"\\data\\user.csv", "a", encoding='utf-8',newline='') as csvfile:
             name = input('enter the name :')
             dob = input('enter the dob:')
             gender = input('enter the gender:')
