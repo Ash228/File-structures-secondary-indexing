@@ -68,5 +68,4 @@ def ainsert():
     else:
         print('doest')
 
-rinsert()
 
