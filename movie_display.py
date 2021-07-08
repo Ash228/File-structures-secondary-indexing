@@ -13,7 +13,8 @@ def display_single(df_movies):
     print("Title:  ", df_movies["title"])
     print("Description:  ",df_movies["description"])
     print("Genre:  ",df_movies["genre"] + "\n")
-    img = Image.open(df_movies['img'])
+    print(path+df_movies['img'])
+    img = Image.open(path+df_movies['img'].values[0])
     img.show()
 
 

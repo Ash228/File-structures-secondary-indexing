@@ -35,7 +35,7 @@ def recommendationname(movie_name):
         for val in rec_movie_indices:
             movie_idx = final_dataset.iloc[val[0]]['movieId']
             idx = movies[movies['movieId'] == movie_idx].index
-            recommend_frame.append({'movieId':movies.iloc[idx]['movieId'].values[0],'img':movies.iloc[idx]['img'].values[0],'title':movies.iloc[idx]['title'].values[0],'distance':val[1]})
+            recommend_frame.append({'movieId':movies.iloc[idx]['movieId'].values[0],'img':movies.iloc[idx]['img'].values[0],'title':movies.iloc[idx]['title'].values[0],'genre':movies.iloc[idx]['genre'].values[0],'distance':val[1]})
         df = pd.DataFrame(recommend_frame,index=range(1,n_movies_to_reccomend+1))
         return df.head(5)
     else:
