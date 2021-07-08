@@ -132,7 +132,7 @@ def search_mov(id1):
             rfilter(id1)
             print('Recommendation based on title\n')
             display_df(recommendationname(df_movies['title'].values[0]))
-            inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back\n"))
+            inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Back\n"))
             if inp == 1:
                 rinsert(uid,movid)
             elif inp == 2:
@@ -140,10 +140,10 @@ def search_mov(id1):
             elif inp == 3:
                 rdelete(uid,movid)
             elif inp == 4:
-                pass
-            elif inp == 5:
                 movid = -1
                 return
+            else:
+                print('Invalid input')
     else:
         print("Please enter correct movie id")
 
@@ -186,7 +186,7 @@ def logged():
                 sorted = df_movies.sort_values('title', ascending=False)
                 display_df(sorted)
             elif inp == 3:
-                display_df(recommendationgenre(inp1,0))
+                display_df(recommendationgenre(inp1,0.1))
             elif inp == 4:
                 display_df(recommendationgenre(inp1, 0.85))
             elif inp == 5:
