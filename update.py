@@ -96,7 +96,7 @@ def uupdate():
                 print(list(dsk_user['userId']))
                 break
         dsk_user = pd.read_csv(path+"/data/usecondary.csv")
-        isk =dsk_user.query('name == @id1 & id == @id2').index
+        isk =dsk_user.query('name == @id1 & userId == @id2').index
         dpk_user = pd.read_csv(path+"/data/uprimary.csv")
         ipk = dpk_user.query('userId == @id2').index
         df_user = pd.read_csv(path+"/data/user.csv")
