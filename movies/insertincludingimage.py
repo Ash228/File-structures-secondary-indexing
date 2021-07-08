@@ -75,14 +75,13 @@ def insert():
             genre = input('enter the genre:')
             print("Insert the image")
             imgpath = input("Insert path")
-            id4 = input ("Input movie id")
             file = open(imgpath, 'rb')
             im_b64 = base64.b64encode(file.read())
             file.close()
             with open(path+'\\movies.csv', 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow('')
-                filedname = [id1,title,description,genre,imgpath] #added a new column called imgpath that holds the path of the image
+                filedname = [id1,im_b64,title,description,genre]
                 print(filedname)
                 writer = csv.writer(csvfile, lineterminator='')
                 writer.writerow(filedname)

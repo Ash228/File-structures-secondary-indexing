@@ -11,7 +11,7 @@ def Display():
     df_movies = pd.read_csv(path+"\\movies.csv")
     for index,row in df_movies.iterrows():
         print("Movie id:",end=" ")
-        print(row["id"])
+        print(row["d"])
         print("Title:",end=" ")
         print(row["title"])
         print("Description:",end=" ")

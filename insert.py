@@ -5,6 +5,7 @@ import hashlib
 import pathlib
 import pandas as pd
 from itertools import zip_longest
+import base64
 
 path = str(pathlib.Path().absolute())
 
@@ -22,10 +23,15 @@ def minsert():
             title = input('enter the title:')
             description = input('enter the description:')
             genre = input('enter the genre:')
+            print("Insert the image")
+            imgpath = input("Insert path")
+            file = open(imgpath, 'rb')
+            im_b64 = base64.b64encode(file.read())
+            file.close()
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
-            filedname = [id1, title, description, genre, no_of_ratings, average_ratings]
+            filedname = [id1, im_b64, title, description, genre, no_of_ratings, average_ratings]
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
