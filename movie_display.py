@@ -9,10 +9,10 @@ path = str(pathlib.Path().absolute())
 
 # Function to for formatted display
 def display_single(df_movies):
-    print("Movie id: ", df_movies["movieId"])
-    print("Title:  ", df_movies["title"])
-    print("Description:  ",df_movies["description"])
-    print("Genre:  ",df_movies["genre"] + "\n")
+    print("Movie id: ", df_movies["movieId"].values[0])
+    print("Title:  ", df_movies["title"].values[0])
+    print("Description:  ",df_movies["description"].values[0])
+    print("Genre:  ",df_movies["genre"].values[0] + "\n")
     print(path+df_movies['img'])
     img = Image.open(path+df_movies['img'].values[0])
     img.show()

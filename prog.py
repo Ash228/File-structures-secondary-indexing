@@ -52,6 +52,8 @@ def signup():
         print("You've been signed up\nPlease login using your credentials")
 
 def login():
+    global uid
+    global movid
     id = input("Enter user id:")
     df_user = pd.read_csv(path+"/data/user.csv")
     print(df_user)
@@ -64,6 +66,7 @@ def login():
         password = hashlib.md5(password.encode('utf8')).hexdigest()
         if str(df_user['password'].values[0]) == password:
             uid = id
+            print(uid)
             print("Success")
             logged()
         else:
@@ -119,6 +122,8 @@ def rfilter(id1):
         print(df_ratings1)
 
 def search_mov(id1):
+    global uid
+    global movid
     df_movies = pd.read_csv(path+"\\data\\movies.csv")
     df_movies = df_movies.loc[df_movies['movieId'] == id1]
     if id1 in list(df_movies['movieId']):
@@ -143,6 +148,8 @@ def search_mov(id1):
         print("Please enter correct movie id")
 
 def logged():
+    global uid
+    global movid
     while(1):
         print("Trending now:\n")
         display_df(recommendationtop())
