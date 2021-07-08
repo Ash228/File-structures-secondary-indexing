@@ -95,7 +95,7 @@ def rinsert(id1,movieid):
         rsecindex()
 
 def uinsert():
-    id1 = input("enter the name:")
+    id1 = input("enter the id:")
     uindex()
     usecindex()
     dpk_user = pd.read_csv(path+"\\data\\uprimary.csv", usecols=[0],header=None)
