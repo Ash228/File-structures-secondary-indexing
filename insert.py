@@ -50,9 +50,9 @@ def rinsert(id1,movieid):
     a1 = 0
     id1, movieid = str(id1), str(movieid)
     x = (id1,movieid)
-    print(x)
+    #print(x)
     for (index, tuple) in enumerate(a[1:]):
-        print(tuple)
+        #print(tuple)
         if tuple[0] == id1 and tuple[1] == movieid:
             a1 = 1
             break

@@ -56,9 +56,9 @@ def login():
     global movid
     id = input("Enter user id:")
     df_user = pd.read_csv(path+"/data/user.csv")
-    print(df_user)
+    #print(df_user)
     df_user = df_user.loc[df_user['userId'] == int(id)]
-    print(df_user)
+    #print(df_user)
     if df_user.empty:
         print("user does not exist")
     else:
@@ -130,6 +130,7 @@ def search_mov(id1):
             display_single(df_movies)
             movid = str(df_movies['movieId'].values[0])
             rfilter(id1)
+            print('Recommendation based on title\n')
             display_df(recommendationname(df_movies['title'].values[0]))
             inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back\n"))
             if inp == 1:
@@ -150,18 +151,19 @@ def logged():
     global uid
     global movid
     while(1):
-        print("Trending now:\n")
-        display_df(recommendationtop())
-        df_movies = pd.read_csv(path + '/data/movies.csv')
-        print('All movies:\n')
-        display_df(df_movies)
-        inp = int(input("Please pick a movie(-1 to logout):"))
-        if inp == -1:
-            uid = -1
-            break
-        search_mov(inp)
-        inp = int(input('Would you like to search based on genre?\n1.Yes\n2.No\n'))
+        inp = int(input("1.Show movies\n2.Select genre\n"))
         if inp == 1:
+            print("Trending now:\n")
+            display_df(recommendationtop())
+            df_movies = pd.read_csv(path + '/data/movies.csv')
+            print('All movies:\n')
+            display_df(df_movies)
+            inp = int(input("Please pick a movie(-1 to logout):"))
+            if inp == -1:
+                uid = -1
+                break
+            search_mov(inp)
+        elif inp == 2:
             inp1 = input("Enter genre you would like to see:")
             df_movies = pd.read_csv(path + "/data/movies.csv")
             #print(df_movies)
@@ -194,6 +196,8 @@ def logged():
                 uid = -1
                 break
             search_mov(inp)
+        else:
+            print('Invalid input')
 
 while(uid == -1):
     inp = int(input("Would you like to :\n1.Login\n2.Signup\n3.Login(Admin)\n4.Exit\n"))
