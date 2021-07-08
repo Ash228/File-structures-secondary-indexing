@@ -129,7 +129,7 @@ def search_mov(id1):
     if id1 in list(df_movies['movieId']):
         while(1):
             display_single(df_movies)
-            movid = df_movies['movieId'].values[0]
+            movid = str(df_movies['movieId'].values[0])
             rfilter(id1)
             display_df(recommendationname(df_movies['title'].values[0]))
             inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back\n"))

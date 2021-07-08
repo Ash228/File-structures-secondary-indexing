@@ -14,26 +14,28 @@ path = str(pathlib.Path().absolute())
 def mupdate():
     id1 = input("Enter genre to modify ")
     dsk_movies = pd.read_csv(path+"/data/movsecondary.csv")
-    dsk_movies = dsk_movies.loc[dsk_movies['genre'] == id1]
-    if id1 in list(dsk_movies['genre']):
+    dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(id1)]
+    if dsk_movies.empty:
+        print("Record does not exist")
+    else:
         print("Id exists")
         print(dsk_movies)
-        while(1):
+        while (1):
             id2 = input("enter one of the primary keys from above to modify ")
             if int(id2) in list(dsk_movies['movieId']):
                 break
-        dsk_movies = pd.read_csv(path+"/data/movsecondary.csv")
-        isk =dsk_movies.query('genre == @id1 & movieId == @id2').index
-        dpk_movies = pd.read_csv(path+"/data/movsecondary.csv")
+        dsk_movies = pd.read_csv(path + "/data/movsecondary.csv")
+        isk = dsk_movies.query('genre == @id1 & movieId == @id2').index
+        dpk_movies = pd.read_csv(path + "/data/movsecondary.csv")
         ipk = dpk_movies.query('movieId == @id2').index
-        df_movies = pd.read_csv(path+"/data/movies.csv")
+        df_movies = pd.read_csv(path + "/data/movies.csv")
         iu = df_movies.query('movieId == @id2').index
         imgpath = input('enter the image path:')
         title = input('enter the title:')
         description = input('enter the description:')
         genre = input('enter the genre:')
-        df_movies.loc[iu,['title', 'description', 'genre']] =[title, description, genre]
-        df_movies.to_csv(path+"/data/movies.csv", index=False)
+        df_movies.loc[iu, ['title', 'description', 'genre']] = [title, description, genre]
+        df_movies.to_csv(path + "/data/movies.csv", index=False)
         im = Image.open(imgpath)
         # converting to jpg
         rgb_im = im.convert("RGB")
@@ -41,26 +43,23 @@ def mupdate():
         rgb_im.save(path + "\\data\\images\\" + str(id1) + ".jpg")
         mindex()
         msecindex()
-    else:
-        print("Record does not exist")
 
-def rupdate(id1,movieid):
-    dsk_ratings = pd.read_csv(path+"/data/rsecondary.csv")
-    dsk_ratings = dsk_ratings.loc[dsk_ratings['ratings'] == id1]
-    if id1 in list(dsk_ratings['ratings']):
-        print("Id exists")
-        print(dsk_ratings)
-        while(1):
-            id2 = input("enter one of the primary keys from above to modify ")
-            if id2 in list(dsk_ratings['id']):
-                break
-        dsk_ratings = pd.read_csv(path+"/data/rsecondary.csv")
-        dpk_ratings = pd.read_csv(path+"/data/rprimary.csv")
-        #i = d.index[d['id'] == id2]
-        id3=id2.split('|')
-        id3 = [int(i) for i in id3]
+def rupdate(uid,movieid):
+    dpk_ratings = pd.read_csv(path + "/data/rprimary.csv", usecols=[0, 1], header=None)
+    a = list(dpk_ratings.to_records(index=False))
+    a1 = 0
+    uid, movieid = str(uid), str(movieid)
+    x = (uid, movieid)
+    print(x)
+    print(a)
+    for (index, tuple) in enumerate(a[1:]):
+        if tuple[0] == uid and tuple[1] == movieid:
+            a1 = 1
+            break
+    print(a1)
+    if (a1):
         df_ratings = pd.read_csv(path+"/data/ratings.csv")
-        iu = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
+        iu = df_ratings.query('userId == @uid & movieId == @movieid').index
         ratings = input('enter ratings : ')
         reviews = input('enter the review : ')
         df_ratings.loc[iu, ['ratings', 'reviews']] =[ ratings, reviews]
