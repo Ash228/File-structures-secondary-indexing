@@ -39,35 +39,27 @@ def mdelete():
         print("Record does not exist")
 
 
-def rdelete(id1,movieid):
-    dsk_ratings = pd.read_csv(path+"\\data\\rsecondary.csv")
-    dsk_ratings = dsk_ratings.loc[dsk_ratings['ratings'] == id1]
-    if id1 in list(dsk_ratings['ratings']):
-        print("id exists")
-        print(dsk_ratings)
-        while (1):
-            id2 = input("enter one of the primary keys from above to delete ")
-            if id2 in list(dsk_ratings['id']):
-                break
-        dsk_ratings = pd.read_csv(path+"\\data\\rsecondary.csv")
-        i = dsk_ratings.query('ratings == @id1 & id == @id2').index
-        print(id1, id2)
-        dsk_ratings = dsk_ratings.drop(i)
-        dsk_ratings.to_csv(path+"\\data\\rsecondary.csv", index=False)
-        dpk_ratings = pd.read_csv(path+"\\data\\rprimary.csv")
-        id3 = id2.split('|')
-        id3 = [int(i) for i in id3]
-        i = dpk_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
-        dpk_ratings = dpk_ratings.drop(i)
-        dpk_ratings.to_csv(path+"\\data\\rprimary.csv", index=False)
-        df_ratings = pd.read_csv(path+"\\data\\ratings.csv")
-        i = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
+def rdelete(uid,movieid):
+    rindex()
+    rsecindex()
+    dpk_ratings = pd.read_csv(path + "/data/rprimary.csv", usecols=[0, 1], header=None)
+    a = list(dpk_ratings.to_records(index=False))
+    a1 = 0
+    uid, movieid = str(uid), str(movieid)
+    x = (uid, movieid)
+    for (index, tuple) in enumerate(a[1:]):
+        if tuple[0] == uid and tuple[1] == movieid:
+            a1 = 1
+            break
+    if (a1):
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
+        i = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings = df_ratings.drop(i)
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
         
         df_movies = pd.read_csv(path + "/data/movies.csv" )
         df_movies = df_movies.loc[df_movies['movieId'] == movieid]
-        no_of_ratings = int(df_movies['no_of_ratings']) -1
+        no_of_ratings = int(df_movies['no_of_ratings'].values[0]) -1
         df_movies = pd.read_csv(path + "\\data\\\movies.csv")
 
         df_ratings = pd.read_csv(path + "\\data\\ratings.csv")

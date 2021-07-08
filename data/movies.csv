@@ -1,5 +1,5 @@
 movieId,img,title,description,genre,average_ratings,no_of_ratings
-100,\data\images\100.jpg,Ratatouille,"Remy, a rat, aspires to become a renowned French chef. However, he fails to realise that people despise rodents and will never enjoy a meal cooked by him.",Family|Comedy,7.67,6
+100,\data\images\100.jpg,Ratatouille,"Remy, a rat, aspires to become a renowned French chef. However, he fails to realise that people despise rodents and will never enjoy a meal cooked by him.",Family|Comedy,0.0,6
 101,\data\images\101.jpg,Titanic,"Seventeen-year-old Rose hails from an aristocratic family and is set to be married. When she boards the Titanic, she meets Jack Dawson, an artist, and falls in love with him.",Romance|Drama,7.5,2
 102,\data\images\102.jpg,Blended,"After a terrible blind date, Jim and Lauren find themselves stranded at a resort together with their respective children. However, the two soon start developing feelings for each other.",Romance|Comedy,7.5,2
 103,\data\images\103.jpg,Inception,Cobb steals information from his targets by entering their dreams. Saito offers to wipe clean Cobb's criminal history as payment for performing an inception on his sick competitor's son.,Action|Sci-fi,8.33,3

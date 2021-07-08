@@ -50,19 +50,19 @@ def rupdate(uid,movieid):
     a1 = 0
     uid, movieid = str(uid), str(movieid)
     x = (uid, movieid)
-    print(x)
-    print(a)
+    #print(x)
+    #print(a)
     for (index, tuple) in enumerate(a[1:]):
         if tuple[0] == uid and tuple[1] == movieid:
             a1 = 1
             break
-    print(a1)
+    #print(a1)
     if (a1):
         df_ratings = pd.read_csv(path+"/data/ratings.csv")
         iu = df_ratings.query('userId == @uid & movieId == @movieid').index
         ratings = input('enter ratings : ')
         reviews = input('enter the review : ')
-        df_ratings.loc[iu, ['ratings', 'reviews']] =[ ratings, reviews]
+        df_ratings.loc[iu, ['ratings', 'reviews']] == [ratings, reviews]
         df_ratings.to_csv(path+"/data/ratings.csv", index=False)
         df_movies = pd.read_csv(path + "\\data\\\movies.csv")
         #-------------
