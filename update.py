@@ -110,9 +110,9 @@ def uupdate():
         password = input('enter the password:')
         password = hashlib.md5(password.encode('utf8')).hexdigest()
         df_user.loc[iu,['name', 'dob', 'gender', 'password']] =[name, dob, gender, password]
+        df_user.to_csv(path+"/data/user.csv", index=False)
         rindex()
         rsecindex()
-        df_user.to_csv(path+"/data/user.csv", index=False)
         print("Record modified")
     else:
         print("Record does not exist")

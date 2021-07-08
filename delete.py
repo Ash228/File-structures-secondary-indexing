@@ -24,24 +24,25 @@ def mdelete():
         dsk_movies = pd.read_csv(path+"\\data\\movsecondary.csv")
         i=dsk_movies.query('genre == @id1 & movieId == @id2').index
         dsk_movies = dsk_movies.drop(i)
-        dsk_movies.to_csv(path+"\\data\\movsecondary.csv", index=False)
         dpk_movies = pd.read_csv(path+"\\data\\movprimary.csv")
         i = dpk_movies.query('id == @id2').index
         dpk_movies = dpk_movies.drop(i)
-        dpk_movies.to_csv(path+"\\data\\movprimary.csv", index=False)
         df_movies = pd.read_csv(path+"\\data\\movies.csv")
         i = df_movies.query('movieId == @id2').index
         df_movies = df_movies.drop(i)
+        df_movies.dropna(how="all", inplace=True)
         df_movies.to_csv(path+"\\data\\movies.csv", index=False)
+        file_data = open(path + "\\data\\movies.csv", 'rb').read()
+        open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
         os.remove(path+'\\data\\images\\'+id2+'.jpg')
         print("Record deleted ")
+        mindex()
+        msecindex()
     else:
         print("Record does not exist")
 
 
 def rdelete(uid,movieid):
-    rindex()
-    rsecindex()
     dpk_ratings = pd.read_csv(path + "/data/rprimary.csv", usecols=[0, 1], header=None)
     a = list(dpk_ratings.to_records(index=False))
     a1 = 0
@@ -59,7 +60,11 @@ def rdelete(uid,movieid):
         df_ratings = pd.read_csv(path + "/data/ratings.csv")
         i = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings = df_ratings.drop(i)
+        df_ratings.dropna(how="all", inplace=True)
+        print(df_ratings)
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
+        file_data = open(path+"\\data\\ratings.csv", 'rb').read()
+        open(path+"\\data\\ratings.csv", 'wb').write(file_data[:-2])
         
         df_movies = pd.read_csv(path + "\\data\\movies.csv" )
         df_movies = df_movies.loc[df_movies['movieId'] == movieid]
@@ -78,7 +83,8 @@ def rdelete(uid,movieid):
         iu = df_movies.query('movieId == @movieid').index
         df_movies.loc[iu, ['average_ratings','no_of_ratings']] = [t,no_of_ratings]
         df_movies.to_csv(path + "\\data\\movies.csv", index=False)
-        
+        rindex()
+        rsecindex()
     else:
         print("Record does not exist")
 
@@ -104,7 +110,12 @@ def udelete():
         df_user = pd.read_csv(path+"\\data\\user.csv")
         i = df_user.query('id == @id2').index
         df_user = df_user.drop(i)
+        df_user.dropna(how="all", inplace=True)
         df_user.to_csv(path+"\\data\\user.csv", index=False)
+        file_data = open(path + "\\data\\user.csv", 'rb').read()
+        open(path + "\\data\\user.csv", 'wb').write(file_data[:-2])
         print("Record deleted")
+        uindex()
+        usecindex()
     else:
         print("Record does not exist")

@@ -19,7 +19,7 @@ def msecindex():
     while line:
         line = line.rstrip()
         temp1 = line.split(",")
-        temp2=temp1[-2].split("|")
+        temp2=temp1[-3].split("|")
         for i in temp2:
             genre.append(i)
             Primary_key.append(temp1[0])
