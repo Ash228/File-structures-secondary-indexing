@@ -30,7 +30,6 @@ def mdelete():
         df_movies = pd.read_csv(path+"\\data\\movies.csv")
         i = df_movies.query('movieId == @id2').index
         df_movies = df_movies.drop(i)
-        df_movies.dropna(how="all", inplace=True)
         df_movies.to_csv(path+"\\data\\movies.csv", index=False)
         file_data = open(path + "\\data\\movies.csv", 'rb').read()
         open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
@@ -60,7 +59,6 @@ def rdelete(uid,movieid):
         df_ratings = pd.read_csv(path + "/data/ratings.csv")
         i = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings = df_ratings.drop(i)
-        df_ratings.dropna(how="all", inplace=True)
         print(df_ratings)
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
         file_data = open(path+"\\data\\ratings.csv", 'rb').read()
@@ -108,9 +106,8 @@ def udelete():
         dpk_user = dpk_user.drop(i)
         dpk_user.to_csv(path+"\\data\\uprimary.csv", index=False)
         df_user = pd.read_csv(path+"\\data\\user.csv")
-        i = df_user.query('id == @id2').index
+        i = df_user.query('userId == @id2').index
         df_user = df_user.drop(i)
-        df_user.dropna(how="all", inplace=True)
         df_user.to_csv(path+"\\data\\user.csv", index=False)
         file_data = open(path + "\\data\\user.csv", 'rb').read()
         open(path + "\\data\\user.csv", 'wb').write(file_data[:-2])
