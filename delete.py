@@ -37,7 +37,7 @@ def mdelete():
         print("Record does not exist")
 
 
-def rdelete():
+def rdelete(movieid):
     id1 = int(input("Enter ratings to delete "))
     dsk_ratings = pd.read_csv(path+"\\data\\rsecondary.csv")
     dsk_ratings = dsk_ratings.loc[dsk_ratings['ratings'] == id1]
