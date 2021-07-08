@@ -15,9 +15,15 @@ import io
 import numpy as np
 import torch
 from PIL import Image
+from recommendationratings import *
+from recommendationtop import *
+from recommendationgenre import *
 
+movid = -1
 uid = -1
 path = str(pathlib.Path().absolute())
+
+
 
 def signup():
     id1 = input("enter the id1")
@@ -97,47 +103,77 @@ def admin():
                     print("Invalid")
             elif inp == 3:
                 break
+def rfilter(id1):
+    df_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
+    df_ratings = df_ratings.loc[df_ratings['movieId'] == id1]
+    if id1 in list(df_ratings['movieId']):
+        df_ratings1 = df_ratings.drop(['movieId'],axis = 1)
+        df_user = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/user/user.csv")
+        id2 = df_ratings1['userId']
+        a = df_user.set_index('userId')['name'].to_dict()
+        b = df_ratings1.filter(like='userId')
+        df_ratings1[b.columns] = b.replace(a)
+        df_ratings1 = df_ratings1.rename(columns={'userId':'username'})
+        print(df_ratings1)
 
+def search_mov(id1):
+    df_movies = pd.read_csv(path+"\\movies.csv")
+    df_movies = df_movies.loc[df_movies['id'] == id1]
+    if id1 in list(df_movies['id']):
+        while(1):
+            display_single(df_movies)
+            movid = df_movies
+            rfilter(id1)
+            display_df(recommendationname(df_movies['title']))
+            inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back"))
+            if inp == 1:
+                rinsert(uid,movid)
+            elif inp == 2:
+                rupdate(uid,movid)
+            elif inp == 3:
+                rdelete(uid,movid)
+            elif inp == 4:
+                pass
+            elif inp == 5:
+                movid = -1
+                return
+    else:
+        print("Please enter correct movie id")
 
 def logged():
-    #placeholder to recommendation
-    exec(compile(open('recommendationtop.py', "rb").read(), 'recommendationtop.py', 'exec'))
-    #placeholder to display movies
-    movid = -1
     while(1):
+        print("Trending now:")
+        display_df(recommendationtop())
+        df_movies = pd.read_csv(path + '/data/movies.csv')
+        print('All movies:')
+        display_df(df_movies)
         inp = int(input("Please pick a movie(-1 to logout):"))
         if inp == -1:
             uid = -1
             break
-        #placeholder for search
-        #will set id on select
-        #Display selected movie details
-        #connect to rfilter
-        #recommendation based on ratings
-        #connect to rinsert when user enters a rating
-        #and reset movie id on exit
-        inp1 = input("Enter genre you would like to see:")
-        df_movies = pd.read_csv(path + "/movies/movies.csv")
-        df_movies = df_movies[df_movies['genre'].str.contains(inp1,re.IGNORECASE)]
-        print(df_movies)
-        inp = int(input("Would you like to sort these results?\n1.Ascending\n2.Descending\n3.Popularity\n4.No\nEnter choice:\n"))#another option popularity
+        search_mov(inp)
+        inp = int(input('Would you like to search based on genre?\n1.Yes\n2.No'))
         if inp == 1:
-            sorted = df_movies.sort_values('title', ascending=True)
-            print(sorted)
-        elif inp == 2:
-            sorted = df_movies.sort_values('title', ascending=False)
-            print(sorted)
-        elif inp == 3:
-            #exec(compile(open('recommendationgenre.py', "rb").read(), 'recommendationgenre.py', 'exec'))
-            import recommendationgenre
-            recommendationgenre.build_chart(inp1) 
-        elif inp == 4:
-            pass
-        # will set id on select
-        # Display selected movie details
-        # connect to rfilter
-        # connect to rinsert when user enters a rating
-        # and reset movie id on exit
+            inp1 = input("Enter genre you would like to see:")
+            df_movies = pd.read_csv(path + "/movies/movies.csv")
+            df_movies = df_movies[df_movies['genre'].str.contains(inp1,re.IGNORECASE)]
+            display_df(df_movies)
+            inp = int(input("Would you like to sort these results?\n1.Ascending\n2.Descending\n3.Popularity\n4.No\nEnter choice:\n"))#another option popularity
+            if inp == 1:
+                sorted = df_movies.sort_values('title', ascending=True)
+                display_df(sorted)
+            elif inp == 2:
+                sorted = df_movies.sort_values('title', ascending=False)
+                display_df(sorted)
+            elif inp == 3:
+                display_df(recommendationgenre(inp1))
+            elif inp == 4:
+                continue
+            inp = int(input("Please pick a movie(-1 to logout):"))
+            if inp == -1:
+                uid = -1
+                break
+            search_mov(inp)
 
 while(uid == -1):
     inp = int(input("Would you like to :\n1.Login\n2.Signup\n3.Login(Admin)\n4.Exit\n"))

@@ -114,4 +114,3 @@ def display_df(df_movies):
         print("Title:  ",row["title"])
         print("Genre:  ",row["genre"]+"\n")
 df_movies = pd.read_csv(path + "\\data\\movies.csv")
-display_df(df_movies)

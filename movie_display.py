@@ -8,9 +8,7 @@ path = str(pathlib.Path().absolute())
 
 
 # Function to for formatted display
-def display_single(movieid):
-    df_movies = pd.read_csv(path + "\\movies.csv")
-    df_movies = df_movies.loc[df_movies['movieId'] == movieid]
+def display_single(df_movies):
     print("Movie id: ", df_movies["movieId"])
     print("Title:  ", df_movies["title"])
     print("Description:  ",df_movies["description"])

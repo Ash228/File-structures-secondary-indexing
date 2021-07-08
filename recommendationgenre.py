@@ -6,7 +6,7 @@ uid = -1
 path = str(pathlib.Path().absolute())
 
 
-def build_chart(genre, percentile=0.85):
+def recommendationgenre(genre, percentile=0.85):
     #df = gen_md[gen_md['genre'] == genre]
     features = 'genre'
     md = pd.read_csv(path + '/data/movies.csv')
@@ -30,5 +30,3 @@ def build_chart(genre, percentile=0.85):
     qualified = qualified.sort_values('wr', ascending=False).head(250)
 
     return qualified.head(5)
-
-print(build_chart('Comedy'))

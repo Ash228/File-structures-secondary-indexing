@@ -8,7 +8,7 @@ uid = -1
 path = str(pathlib.Path().absolute())
 
 
-def get_movie_recommendation(movie_name):
+def recommendationname(movie_name):
     movies = pd.read_csv(path + '\\data\\movies.csv')
     ratings = pd.read_csv(path + '\\data\\ratings.csv')
     #print(movies)
@@ -41,6 +41,5 @@ def get_movie_recommendation(movie_name):
     else:
         return "No movies found. Please check your input"
 
-print(get_movie_recommendation(input('enter movie name:')))
 
 

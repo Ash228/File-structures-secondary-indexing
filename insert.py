@@ -39,8 +39,7 @@ def minsert():
         mindex()
         msecindex()
 
-def rinsert(movieid):
-    id1 = input("enter the id1 ")
+def rinsert(id1,movieid):
     rindex()
     rsecindex()
     dpk_ratings = pd.read_csv(path+"/data/rprimary.csv", usecols=[0,1],header=None)

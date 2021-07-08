@@ -36,8 +36,7 @@ def mupdate():
     else:
         print("Record does not exist")
 
-def rupdate(movieid):
-    id1 = int(input("Enter id to modify "))
+def rupdate(id1,movieid):
     dsk_ratings = pd.read_csv(path+"/data/rsecondary.csv")
     dsk_ratings = dsk_ratings.loc[dsk_ratings['ratings'] == id1]
     if id1 in list(dsk_ratings['ratings']):
