@@ -90,8 +90,8 @@ def uupdate():
     if id1 in list(dsk_user['name']):
         print("Id exists")
         while(1):
-            id2 = input("enter one of the primary keys from above to modify")
             print(list(dsk_user['userId']))
+            id2 = input("enter one of the primary keys from above to modify")
             if int(id2) in list(dsk_user['userId']):
                 print(list(dsk_user['userId']))
                 break

@@ -29,4 +29,4 @@ def recommendationgenre(genre, percentile=0.85):
         lambda x: (x['no_of_ratings'] / (x['no_of_ratings'] + m) * x['average_ratings']) + (m / (m + x['no_of_ratings']) * C),axis=1)
     qualified = qualified.sort_values('wr', ascending=False).head(250)
 
-    return qualified.head(5)
+    return qualified
