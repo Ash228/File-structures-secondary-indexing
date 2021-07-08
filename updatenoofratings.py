@@ -14,6 +14,7 @@ import io
 import numpy as np
 import torch
 from PIL import Image
+import os
 
 uid = -1
 path = str(pathlib.Path().absolute())
@@ -90,17 +91,15 @@ def imginsert():
 def iminsert():
     df_movies = pd.read_csv(path + "\\data\\movies.csv")
     for i in range(100, 121):
-        file = open(path+'\\images\\'+str(i)+'.jpeg', 'rb')
-        im_b64 = base64.b64encode(file.read())
-        file.close()
-        imgdata = base64.b64decode(im_b64)
+        img_path = path+'\\images\\'+str(i)+'.jpeg'
         #im_file = io.BytesIO(imgdata)  # convert image to file-like object
         #img = Image.open(im_file)
         #img.show(img)
-        iu = df_movies.query('movieId == @i').index
-        df_movies.loc[iu, ['img']] = [imgdata]
-    print(df_movies)
-    df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        im = Image.open(img_path)
+        # converting to jpg
+        rgb_im = im.convert("RGB")
+        # exporting the image
+        rgb_im.save(path+"\\data\\images\\" + str(i) + ".jpg")
 
 def display_df(df_movies):
     for index,row in df_movies.iterrows():
@@ -114,3 +113,5 @@ def display_df(df_movies):
         print("Title:  ",row["title"])
         print("Genre:  ",row["genre"]+"\n")
 df_movies = pd.read_csv(path + "\\data\\movies.csv")
+
+iminsert()

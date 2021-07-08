@@ -13,10 +13,8 @@ def display_single(df_movies):
     print("Title:  ", df_movies["title"])
     print("Description:  ",df_movies["description"])
     print("Genre:  ",df_movies["genre"] + "\n")
-    imgdata = base64.b64decode(df_movies['img'])
-    im_file = io.BytesIO(imgdata)
-    img = Image.open(im_file)
-    img.show(img)
+    img = Image.open(df_movies['img'])
+    img.show()
 
 
 def display_df(df_movies):

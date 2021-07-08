@@ -5,6 +5,8 @@ import hashlib
 import pathlib
 import pandas as pd
 from itertools import zip_longest
+import shutil, os
+from PIL import Image
 
 path = str(pathlib.Path().absolute())
 
@@ -26,11 +28,17 @@ def mupdate():
         ipk = dpk_movies.query('movieId == @id2').index
         df_movies = pd.read_csv(path+"/data/movies.csv")
         iu = df_movies.query('movieId == @id2').index
+        imgpath = input('enter the image path:')
         title = input('enter the title:')
         description = input('enter the description:')
         genre = input('enter the genre:')
         df_movies.loc[iu,['title', 'description', 'genre']] =[title, description, genre]
         df_movies.to_csv(path+"/data/movies.csv", index=False)
+        im = Image.open(imgpath)
+        # converting to jpg
+        rgb_im = im.convert("RGB")
+        # exporting the image
+        rgb_im.save(path + "\\data\\images\\" + str(id1) + ".jpg")
         mindex()
         msecindex()
     else:

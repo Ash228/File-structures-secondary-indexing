@@ -5,6 +5,7 @@ import hashlib
 import pathlib
 import pandas as pd
 from itertools import zip_longest
+import os
 
 path = str(pathlib.Path().absolute())
 
@@ -32,6 +33,7 @@ def mdelete():
         i = df_movies.query('movieId == @id2').index
         df_movies = df_movies.drop(i)
         df_movies.to_csv(path+"\\data\\movies.csv", index=False)
+        os.remove(path+'\\data\\images\\'+id2+'.jpg')
         print("Record deleted ")
     else:
         print("Record does not exist")

@@ -7,7 +7,7 @@ path = str(pathlib.Path().absolute())
 def recommendationtop():
     df2 = pd.read_csv(path+'/data/movies.csv')
     #print(df2)
-    df2 = df2.drop(['description','genre'],axis=1)
+    df2 = df2.drop(['description'],axis=1)
     C=df2['average_ratings'].mean()
     m = df2['no_of_ratings'].quantile(0.9)
     q_movies = df2.copy().loc[df2['no_of_ratings'] >= m]
