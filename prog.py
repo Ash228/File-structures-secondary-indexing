@@ -176,7 +176,7 @@ def logged():
             df_movies = df_movies[df_movies['genre'].str.contains(inp1,flags=re.IGNORECASE)]
             #print(df_movies)
             display_df(df_movies)
-            inp = int(input("Would you like to sort these results?\n1.Ascending\n2.Descending\n3.Popularity\n4.No\nEnter choice:\n"))#another option popularity
+            inp = int(input("Would you like to?\n1.Sort Ascending\n2.Sort Descending\n3.Sort Popularity\n4.Get Recommendation\n5.No\nEnter choice:\n"))#another option popularity
             if inp == 1:
                 sorted = df_movies.sort_values('title', ascending=True)
                 display_df(sorted)
@@ -184,8 +184,10 @@ def logged():
                 sorted = df_movies.sort_values('title', ascending=False)
                 display_df(sorted)
             elif inp == 3:
-                display_df(recommendationgenre(inp1))
+                display_df(recommendationgenre(inp1,0))
             elif inp == 4:
+                display_df(recommendationgenre(inp1, 0.85))
+            elif inp == 5:
                 continue
             inp = int(input("Please pick a movie(-1 to logout):"))
             if inp == -1:

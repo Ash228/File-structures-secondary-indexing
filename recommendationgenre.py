@@ -18,7 +18,7 @@ def recommendationgenre(genre, percentile=0.85):
     df = gen_md[gen_md['genre'].str.contains(genre, flags=re.IGNORECASE)]
     #print(df)
     C = df['average_ratings'].mean()
-    m = df['no_of_ratings'].quantile(0.85)
+    m = df['no_of_ratings'].quantile(percentile)
     #print(vote_counts.values,vote_averages.values)
 
     qualified = df[(df['no_of_ratings'] >= m) & (df['no_of_ratings'].notnull()) & (df['average_ratings'].notnull())][['movieId','img','title', 'genre','no_of_ratings', 'average_ratings']]

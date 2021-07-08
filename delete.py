@@ -94,8 +94,8 @@ def udelete():
         print("Id exists")
         print(dsk_user)
         while(1):
-            id2 = input("enter one of the primary keys from above to delete")
-            if int(id2) in list(dsk_user['userId']):
+            id2 = int(input("enter one of the primary keys from above to delete"))
+            if id2 in list(dsk_user['userId']):
                 break
         dsk_user = pd.read_csv(path+"\\data\\usecondary.csv")
         i=dsk_user.query('name == @id1 & userId == @id2').index
