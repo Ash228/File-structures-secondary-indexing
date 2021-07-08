@@ -50,14 +50,11 @@ def rupdate(uid,movieid):
     a1 = 0
     uid, movieid = str(uid), str(movieid)
     x = (uid, movieid)
-    print(x)
     #print(a)
     for (index, tuple) in enumerate(a[1:]):
-        print(tuple)
         if tuple[0] == uid and tuple[1] == movieid:
             a1 = 1
             break
-    print(a1)
     if (a1):
         df_ratings = pd.read_csv(path+"/data/ratings.csv")
         iu = df_ratings.query('userId == @uid & movieId == @movieid').index
@@ -101,7 +98,7 @@ def uupdate():
         dsk_user = pd.read_csv(path+"/data/usecondary.csv")
         isk =dsk_user.query('name == @id1 & id == @id2').index
         dpk_user = pd.read_csv(path+"/data/uprimary.csv")
-        ipk = dpk_user.query('id == @id2').index
+        ipk = dpk_user.query('userId == @id2').index
         df_user = pd.read_csv(path+"/data/user.csv")
         iu = df_user.query('userId == @id2').index
         name = input('enter the name :')

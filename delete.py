@@ -25,7 +25,7 @@ def mdelete():
         i=dsk_movies.query('genre == @id1 & movieId == @id2').index
         dsk_movies = dsk_movies.drop(i)
         dpk_movies = pd.read_csv(path+"\\data\\movprimary.csv")
-        i = dpk_movies.query('id == @id2').index
+        i = dpk_movies.query('movieId == @id2').index
         dpk_movies = dpk_movies.drop(i)
         df_movies = pd.read_csv(path+"\\data\\movies.csv")
         i = df_movies.query('movieId == @id2').index
@@ -34,7 +34,7 @@ def mdelete():
         df_movies.to_csv(path+"\\data\\movies.csv", index=False)
         file_data = open(path + "\\data\\movies.csv", 'rb').read()
         open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
-        os.remove(path+'\\data\\images\\'+id2+'.jpg')
+        os.remove(path+'\\data\\images\\'+str(id2)+'.jpg')
         print("Record deleted ")
         mindex()
         msecindex()

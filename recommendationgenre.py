@@ -13,10 +13,10 @@ def recommendationgenre(genre, percentile=0.85):
     s = md.apply(lambda x: pd.Series(x['genre']), axis=1).stack().reset_index(level=1, drop=True)
     s.name = 'genre'
     gen_md = md.drop('genre', axis=1).join(s)
-    print(gen_md)
+    #print(gen_md)
 
     df = gen_md[gen_md['genre'].str.contains(genre, flags=re.IGNORECASE)]
-    print(df)
+    #print(df)
     C = df['average_ratings'].mean()
     m = df['no_of_ratings'].quantile(0.9)
     #print(vote_counts.values,vote_averages.values)

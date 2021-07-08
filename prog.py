@@ -66,7 +66,6 @@ def login():
         password = hashlib.md5(password.encode('utf8')).hexdigest()
         if str(df_user['password'].values[0]) == password:
             uid = id
-            print(uid)
             print("Success")
             logged()
         else:

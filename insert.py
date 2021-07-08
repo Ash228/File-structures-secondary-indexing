@@ -17,7 +17,7 @@ def minsert():
     mindex()
     msecindex()
     dpk_movies = pd.read_csv(path + "\\data\\movprimary.csv", usecols=[0], header=None)
-    if id1 in dpk_movies:
+    if id1 in dpk_movies.values:
         print("id already exists")
     else:
         with open(path + "\\data\\movies.csv", "a", encoding='utf-8',newline='') as csvfile:
@@ -95,7 +95,7 @@ def rinsert(id1,movieid):
         rsecindex()
 
 def uinsert():
-    id1 = input("enter the id1")
+    id1 = input("enter the name:")
     uindex()
     usecindex()
     dpk_user = pd.read_csv(path+"\\data\\uprimary.csv", usecols=[0],header=None)
