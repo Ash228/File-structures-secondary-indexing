@@ -24,6 +24,4 @@ def recommendationtop():
     q_movies = q_movies.sort_values('score', ascending=False)
 
     #Print the top 15 movies
-    print(q_movies.head(5))
-
-recommendationtop()
+    return(q_movies.head(5))

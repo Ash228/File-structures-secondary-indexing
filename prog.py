@@ -125,7 +125,7 @@ def search_mov(id1):
             movid = df_movies
             rfilter(id1)
             display_df(recommendationname(df_movies['title']))
-            inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back"))
+            inp = int(input("Enter 1.Enter Rating\n2.Update Rating\n3.Delete Rating\n4.Do nothing\n5:Back\n"))
             if inp == 1:
                 rinsert(uid,movid)
             elif inp == 2:
@@ -142,17 +142,17 @@ def search_mov(id1):
 
 def logged():
     while(1):
-        print("Trending now:")
+        print("Trending now:\n")
         display_df(recommendationtop())
         df_movies = pd.read_csv(path + '/data/movies.csv')
-        print('All movies:')
+        print('All movies:\n')
         display_df(df_movies)
         inp = int(input("Please pick a movie(-1 to logout):"))
         if inp == -1:
             uid = -1
             break
         search_mov(inp)
-        inp = int(input('Would you like to search based on genre?\n1.Yes\n2.No'))
+        inp = int(input('Would you like to search based on genre?\n1.Yes\n2.No\n'))
         if inp == 1:
             inp1 = input("Enter genre you would like to see:")
             df_movies = pd.read_csv(path + "/movies/movies.csv")
