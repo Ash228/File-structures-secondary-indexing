@@ -54,12 +54,14 @@ def rdelete(uid,movieid):
             a1 = 1
             break
     if (a1):
+        movieid = int(movieid)
+        uid = int(uid)
         df_ratings = pd.read_csv(path + "/data/ratings.csv")
         i = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings = df_ratings.drop(i)
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
         
-        df_movies = pd.read_csv(path + "/data/movies.csv" )
+        df_movies = pd.read_csv(path + "\\data\\movies.csv" )
         df_movies = df_movies.loc[df_movies['movieId'] == movieid]
         no_of_ratings = int(df_movies['no_of_ratings'].values[0]) -1
         df_movies = pd.read_csv(path + "\\data\\\movies.csv")
