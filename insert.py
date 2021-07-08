@@ -12,7 +12,6 @@ from PIL import Image
 path = str(pathlib.Path().absolute())
 
 
-
 def minsert():
     id1 = input("enter the id")
     mindex()
@@ -27,6 +26,11 @@ def minsert():
             genre = input('enter the genre:')
             print("Insert the image")
             imgpath = input("Insert path")
+            im = Image.open(imgpath)
+            # converting to jpg
+            rgb_im = im.convert("RGB")
+            # exporting the image
+            rgb_im.save(path + "\\data\\images\\" + str(id1) + ".jpg")
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
@@ -34,11 +38,6 @@ def minsert():
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
-            im = Image.open(imgpath)
-            # converting to jpg
-            rgb_im = im.convert("RGB")
-            # exporting the image
-            rgb_im.save(path+"\\data\\images\\"+str(id1)+".jpg")
         csvfile.close()
         mindex()
         msecindex()
