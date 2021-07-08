@@ -19,6 +19,7 @@ def display_single(df_movies):
 
 
 def display_df(df_movies):
+    print("df\n",df_movies)
     for index,row in df_movies.iterrows():
         print("Movie id: ",row["movieId"])
         '''

@@ -21,7 +21,7 @@ def recommendationgenre(genre, percentile=0.85):
     m = df['no_of_ratings'].quantile(0.9)
     #print(vote_counts.values,vote_averages.values)
 
-    qualified = df[(df['no_of_ratings'] >= m) & (df['no_of_ratings'].notnull()) & (df['average_ratings'].notnull())][['movieId','img','title', 'no_of_ratings', 'average_ratings']]
+    qualified = df[(df['no_of_ratings'] >= m) & (df['no_of_ratings'].notnull()) & (df['average_ratings'].notnull())][['movieId','img','title', 'genre','no_of_ratings', 'average_ratings']]
     qualified['no_of_ratings'] = qualified['no_of_ratings'].astype('int')
     qualified['average_ratings'] = qualified['average_ratings'].astype('int')
 

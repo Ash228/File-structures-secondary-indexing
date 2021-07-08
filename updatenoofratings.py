@@ -20,7 +20,10 @@ uid = -1
 path = str(pathlib.Path().absolute())
 
 def rupdate():
+    rindex()
+    rsecindex()
     dpk_ratings = pd.read_csv(path+"\\data\\ratings.csv")
+
     t = [[0] * 2 for i in range(131)]
     l = 0
     for i in list(dpk_ratings['movieId']):
@@ -114,4 +117,4 @@ def display_df(df_movies):
         print("Genre:  ",row["genre"]+"\n")
 df_movies = pd.read_csv(path + "\\data\\movies.csv")
 
-iminsert()
+rupdate()

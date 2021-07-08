@@ -164,8 +164,18 @@ def logged():
         inp = int(input('Would you like to search based on genre?\n1.Yes\n2.No\n'))
         if inp == 1:
             inp1 = input("Enter genre you would like to see:")
-            df_movies = pd.read_csv(path + "/movies/movies.csv")
-            df_movies = df_movies[df_movies['genre'].str.contains(inp1,re.IGNORECASE)]
+            df_movies = pd.read_csv(path + "/data/movies.csv")
+            print(df_movies)
+            print(inp1)
+            '''df_movies1 = df_movies.apply(lambda x: pd.Series(x['genre']), axis=1).stack().reset_index(level=1, drop=True)
+            df_movies1.name = 'genre'
+            gen_md = md.drop('genre', axis=1).join(s)
+            print(gen_md)
+
+            df = gen_md[gen_md['genre'].str.contains(genre, flags=re.IGNORECASE)]
+            print(df)'''
+            df_movies = df_movies[df_movies['genre'].str.contains(inp1,flags=re.IGNORECASE)]
+            print(df_movies)
             display_df(df_movies)
             inp = int(input("Would you like to sort these results?\n1.Ascending\n2.Descending\n3.Popularity\n4.No\nEnter choice:\n"))#another option popularity
             if inp == 1:

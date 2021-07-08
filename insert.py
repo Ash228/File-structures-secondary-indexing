@@ -49,8 +49,11 @@ def rinsert(id1,movieid):
     dpk_ratings = pd.read_csv(path+"/data/rprimary.csv", usecols=[0,1],header=None)
     a=list(dpk_ratings.to_records(index=False))
     a1 = 0
+    id1, movieid = str(id1), str(movieid)
     x = (id1,movieid)
+    print(x)
     for (index, tuple) in enumerate(a[1:]):
+        print(tuple)
         if tuple[0] == id1 and tuple[1] == movieid:
             a1 = 1
             break

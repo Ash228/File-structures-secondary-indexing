@@ -47,7 +47,9 @@ def rdelete(uid,movieid):
     a1 = 0
     uid, movieid = str(uid), str(movieid)
     x = (uid, movieid)
+    print(x)
     for (index, tuple) in enumerate(a[1:]):
+        print(tuple)
         if tuple[0] == uid and tuple[1] == movieid:
             a1 = 1
             break
