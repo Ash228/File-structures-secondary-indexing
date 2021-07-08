@@ -6,8 +6,6 @@ uid = -1
 path = str(pathlib.Path().absolute())
 
 
-
-
 def build_chart(genre, percentile=0.85):
     #df = gen_md[gen_md['genre'] == genre]
     features = 'genre'

@@ -86,4 +86,32 @@ def imginsert():
     im_file = io.BytesIO(imgdata)  # convert image to file-like object
     img = Image.open(im_file)
     img.show(img)
-imginsert()
+
+def iminsert():
+    df_movies = pd.read_csv(path + "\\data\\movies.csv")
+    for i in range(100, 121):
+        file = open(path+'\\images\\'+str(i)+'.jpeg', 'rb')
+        im_b64 = base64.b64encode(file.read())
+        file.close()
+        imgdata = base64.b64decode(im_b64)
+        #im_file = io.BytesIO(imgdata)  # convert image to file-like object
+        #img = Image.open(im_file)
+        #img.show(img)
+        iu = df_movies.query('movieId == @i').index
+        df_movies.loc[iu, ['img']] = [imgdata]
+    print(df_movies)
+    df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+
+def display_df(df_movies):
+    for index,row in df_movies.iterrows():
+        print("Movie id: ",row["movieId"])
+        '''
+        imgdata = base64.b64decode(row['img'])
+        im_file = io.BytesIO(imgdata) 
+        img = Image.open(im_file)
+        img.show(img)
+    '''
+        print("Title:  ",row["title"])
+        print("Genre:  ",row["genre"]+"\n")
+df_movies = pd.read_csv(path + "\\data\\movies.csv")
+display_df(df_movies)
