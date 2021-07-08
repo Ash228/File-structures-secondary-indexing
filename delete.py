@@ -103,7 +103,7 @@ def udelete():
         i=dsk_user.query('name == @id1 & userId == @id2').index
         dsk_user = dsk_user.drop(i)
         dsk_user.to_csv(path+"\\data\\usecondary.csv", index=False)
-        dpk_user = pd.read_csv(path+"\\data\\pk.csv")
+        dpk_user = pd.read_csv(path+"\\data\\uprimary.csv")
         i = dpk_user.query('userId == @id2').index
         dpk_user = dpk_user.drop(i)
         dpk_user.to_csv(path+"\\data\\uprimary.csv", index=False)
