@@ -63,6 +63,25 @@ def rdelete():
         i = df_ratings.query('userId == @id3[0] & movieId == @id3[1]').index
         df_ratings = df_ratings.drop(i)
         df_ratings.to_csv(path+"\\data\\ratings.csv", index=False)
+        
+        df_movies = pd.read_csv(path + "/data/movies.csv" )
+        df_movies = df_movies.loc[df_movies['movieId'] == movieid]
+        no_of_ratings = int(df_movies['no_of_ratings']) -1
+        df_movies = pd.read_csv(path + "\\data\\\movies.csv")
+
+        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
+        t = 0
+        if movieid in list(df_ratings['movieId']):
+            for i in list(df_ratings['ratings']):
+                t += i
+        if t:
+            t /= len(df_ratings.index)
+            t = str(round(t,2))
+        iu = df_movies.query('movieId == @movieid').index
+        df_movies.loc[iu, ['average_ratings','no_of_ratings']] = [t,no_of_ratings]
+        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        
     else:
         print("Record does not exist")
 
