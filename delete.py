@@ -89,7 +89,7 @@ def rdelete(uid,movieid):
         print("Record does not exist")
 
 def udelete():
-    id1 = input("Enter id to delete")
+    id1 = input("Enter name to delete")
     dsk_user = pd.read_csv(path+"\\data\\usecondary.csv")
     dsk_user = dsk_user.loc[dsk_user['name'] == id1]
     if id1 in list(dsk_user['name']):
