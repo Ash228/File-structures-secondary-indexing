@@ -103,12 +103,14 @@ def admin():
                     print("Invalid")
             elif inp == 3:
                 break
+    else:
+        print('Invalid credentials')
 def rfilter(id1):
-    df_ratings = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/ratings.csv")
+    df_ratings = pd.read_csv(path+"\\data\\ratings.csv")
     df_ratings = df_ratings.loc[df_ratings['movieId'] == id1]
     if id1 in list(df_ratings['movieId']):
         df_ratings1 = df_ratings.drop(['movieId'],axis = 1)
-        df_user = pd.read_csv(r"/Users/souravnarayan/Desktop/FS mini/user/user.csv")
+        df_user = pd.read_csv(path+"\\data\\user.csv")
         id2 = df_ratings1['userId']
         a = df_user.set_index('userId')['name'].to_dict()
         b = df_ratings1.filter(like='userId')
