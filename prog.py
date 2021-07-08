@@ -119,9 +119,9 @@ def rfilter(id1):
         print(df_ratings1)
 
 def search_mov(id1):
-    df_movies = pd.read_csv(path+"\\movies.csv")
-    df_movies = df_movies.loc[df_movies['id'] == id1]
-    if id1 in list(df_movies['id']):
+    df_movies = pd.read_csv(path+"\\data\\movies.csv")
+    df_movies = df_movies.loc[df_movies['movieId'] == id1]
+    if id1 in list(df_movies['movieId']):
         while(1):
             display_single(df_movies)
             movid = df_movies
