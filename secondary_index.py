@@ -18,9 +18,7 @@ def msecindex():
     line = fi_movies.readline()
     while line:
         line = line.rstrip()
-        print(line)
         temp1 = line.split(",")
-        print(temp1)
         temp2=temp1[-3].split("|")
         for i in temp2:
             genre.append(i)
