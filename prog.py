@@ -29,7 +29,7 @@ def signup():
     id1 = input("enter the id1")
     uindex()
     usecindex()
-    dpk_user = pd.read_csv(path+"/data/pk.csv", usecols=[0],header=None)
+    dpk_user = pd.read_csv(path+"/data/uprimary.csv", usecols=[0],header=None)
     if id1 in dpk_user.values:
         print("id already exists")
     else:
