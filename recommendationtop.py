@@ -25,3 +25,5 @@ def recommendationtop():
 
     #Print the top 15 movies
     return(q_movies.head(5))
+
+print(recommendationtop().to_html())
