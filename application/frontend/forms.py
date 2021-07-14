@@ -6,13 +6,8 @@ from wtforms.fields.html5 import DateField
 
 class RegisterForm(FlaskForm):
 
-    def validate_uid(form, field):
-        if Users.check_userId(field.data):
-            raise ValidationError("UserId is already taken.")
-        else:
-            return True
 
-    userId = StringField(label="User Id", validators=[Length(min=1, max=10), DataRequired(), validate_uid])
+    userId = StringField(label="User Id", validators=[Length(min=1, max=10,), DataRequired()])
     name = StringField(label="Name", validators=[Length(min=1, max=20), DataRequired()])
     date = DateField(label="Date")
     gender = StringField(label="Gender", validators=[DataRequired()])
@@ -21,8 +16,8 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
 
-    userId = StringField(label="userId", validators=[Length(min=1, max=10), DataRequired()])
-    password = PasswordField(label='password', validators=[Length(min=1), DataRequired()])
+    userId = StringField(label="userId", validators=[Length(min=1, max=10)])
+    password = PasswordField(label='password', validators=[Length(min=1)])
     submit = SubmitField(label='LogIn')
 
     def validate(self, extra_validators=None):

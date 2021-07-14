@@ -12,6 +12,19 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, message in messages %}
+    <div class="alert alert-{{ cat }}" role="alert">
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+            <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <section class="login-dark">
         <form method="post">
             <h2 class="visually-hidden">Login Form</h2>
@@ -19,9 +32,16 @@
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 {{ form.userId(class="form-control", placeholder="User Id") }}
-            </div>
-            <div class="mb-3">
+                {% if form.userId.errors %}
+                    {{ form.userId(class="form-control form-control-lg is-invaid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.userId.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor%}
+                        </div>
+                {% else %}
                 {{ form.name(class="form-control", placeholder="Name") }}
+                {% endif %}
             </div>
             <div class="input-group mb-4">
                 {{ form.date(class="form-control") }}

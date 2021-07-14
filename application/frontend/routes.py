@@ -41,13 +41,16 @@ def user_login_page():
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.get(form.userId.data)
-        password = form.password.data
-        password = hashlib.md5(password.encode('utf8')).hexdigest()
-        if user.password == password:
-            login_user(user)
-            flash(
-                f"Logged in Successfully!! Welcome {current_user.username}", category="success")
-            return redirect(url_for('test_page'))
+        if user:
+            password = form.password.data
+            password = hashlib.md5(password.encode('utf8')).hexdigest()
+            if user.password == password:
+                login_user(user)
+                flash(
+                    f"Logged in Successfully!! Welcome {current_user.username}", category="success")
+                return redirect(url_for('test_page'))
+            else:
+                flash('Invalid credentials, Please try again', category="danger")
         else:
             flash('Invalid credentials, Please try again', category="danger")
     return render_template("user_login.html", form=form, active_login="active")
@@ -56,11 +59,15 @@ def user_login_page():
 def registration_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        Users.uinsert(request.form.get('userId'), request.form.get('name'),
+        if not Users.check_userId(request.form.get('userId')):
+            Users.uinsert(request.form.get('userId'), request.form.get('name'),
                       form.date.data,request.form.get('gender'),request.form.get('password'))
-        flash(
-                f"Registered succesfully, Please Log In", category="success")
-        return redirect(url_for('user_login_page'))
+            flash(
+                    f"Registered succesfully, Please Log In", category="success")
+            return redirect(url_for('user_login_page'))
+        else:
+            flash('User Id already exists', category="danger")
     else:
         flash('Invalid credentials, Please try again', category="danger")
-        return render_template("registration.html", form=form, active_register="active")
+
+    return render_template("registration.html", form=form, active_register="active")
