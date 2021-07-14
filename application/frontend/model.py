@@ -350,7 +350,8 @@ class Users(UserMixin):
     #check if user exists
     @staticmethod
     def check_userId(userId):
-        userId = int(userId)
+        userId = userId
+        print(type(userId))
         df_user = pd.read_csv(path + "/data/uprimary.csv")
         df_user = df_user.loc[df_user['userId'] == userId]
         if df_user.empty:
@@ -360,8 +361,8 @@ class Users(UserMixin):
     #Check if password is correct
     @staticmethod
     def check_password(userId, password):
-        userId = int(userId)
-        df_user = pd.read_csv(path + "/data/user.csv")
+        userId = userId
+        df_user = pd.read_csv(path + "\\data\\user.csv")
         df_user = df_user.loc[df_user['userId'] == userId]
         if df_user.empty:
             return False
@@ -659,8 +660,6 @@ class Ratings():
             df_movies.to_csv(path + "\\data\\movies.csv", index=False)
             Ratings.rindex()
             Ratings.rsecindex()
-        else:
-            print("Record does not exist")
 
     @staticmethod
     def rupdate(uid, movieid, ratings, reviews):
@@ -696,24 +695,24 @@ class Admin(UserMixin):
         self.username = username
         self.password = password
 
-    @staticmethod
+    '''@staticmethod
     def check_admin(adminId):
         adminId = int(adminId)
         if adminId != 1234:
             return False
-        return True
+        return True'''
 
     @staticmethod
     def check_password(adminId, password):
-        adminId = int(adminId)
-        if password == '1234':
+        adminId = adminId
+        if password == '1234' and adminId == '1234':
             return True
         else:
-            return None
+            return False
 
     @staticmethod
-    def get(user_id, password):
-        if user_id == '1234' and password == '1234':
-            return Admin(user_id, 'admin', password)
+    def get(adminId, password):
+        if adminId == '1234' and password == '1234':
+            return Admin(adminId, 'admin', password)
         else:
             return None
