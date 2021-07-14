@@ -8,6 +8,7 @@ from PIL import Image
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd
+from datetime import datetime
 
 from frontend.app import app, login_manager
 #from util.records import get_new_rec_offset, write_into_files, write_game_count, get_game_count
@@ -62,6 +63,8 @@ class Movie:
     #check if genre exists
     @staticmethod
     def check_genre(genre):
+        Movie.mindex()
+        Movie.msecindex()
         df_movies = pd.read_csv(path + "\\data\\movsecondary.csv")
         df_movies = df_movies.loc[df_movies['genre'] == genre]
         if genre in list(df_movies['genre']):
@@ -72,6 +75,8 @@ class Movie:
     #Retieve list of movieId for given genre
     @staticmethod
     def find_genre(genre):
+        Movie.mindex()
+        Movie.msecindex()
         dsk_movies = pd.read_csv(path + "/data/movsecondary.csv")
         dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(genre)]
         if dsk_movies.empty:
@@ -343,27 +348,29 @@ class Movie:
 class Users(UserMixin):
 
     def __init__(self, userId, username, password):
-        self.userId = userId
+        self.id = userId
         self.username = username
         self.password = password
 
     #check if user exists
     @staticmethod
     def check_userId(userId):
-        userId = userId
-        print(type(userId))
+        Users.uindex()
+        Users.usecindex()
+        userId = int(userId)
         df_user = pd.read_csv(path + "/data/uprimary.csv")
         df_user = df_user.loc[df_user['userId'] == userId]
         if df_user.empty:
             return False
         return True
 
-    #Check if password is correct
+    ''''#Check if password is correct
     @staticmethod
-    def check_password(userId, password):
-        userId = userId
+    def check_password(user_id, password):
+        print(user_id)
+        #userId = int(user_id)
         df_user = pd.read_csv(path + "\\data\\user.csv")
-        df_user = df_user.loc[df_user['userId'] == userId]
+        df_user = df_user.loc[df_user['userId'] == user_id]
         if df_user.empty:
             return False
         else:
@@ -371,26 +378,26 @@ class Users(UserMixin):
             if str(df_user['password'].values[0]) == password:
                 return True
             else:
-                return False
+                return False'''
 
     #Get the user data
     @staticmethod
-    def get(user_id, password):
+    def get(user_id):
+        Users.uindex()
+        Users.usecindex()
         user_id = int(user_id)
         df_user = pd.read_csv(path + "/data/user.csv")
         df_user = df_user.loc[df_user['userId'] == user_id]
         if df_user.empty:
-            print("user does not exist")
+            return None
         else:
-            password = hashlib.md5(password.encode('utf8')).hexdigest()
-            if str(df_user['password'].values[0]) == password:
-                return Users(df_user['userId'], df_user['name'], df_user['password'])
-            else:
-                return None
+            return Users(df_user['userId'].values[0], df_user['name'].values[0], df_user['password'].values[0])
 
     #Get list of userId for username
     @staticmethod
     def ufind(uname):
+        Users.uindex()
+        Users.usecindex()
         dsk_users = pd.read_csv(path + "/data/usecondary.csv")
         dsk_users = dsk_users.loc[dsk_users['name'].str.contains(uname)]
         if dsk_users.empty:
@@ -460,6 +467,7 @@ class Users(UserMixin):
     def uinsert(id1, name, dob, gender, password):
         Users.uindex()
         Users.usecindex()
+        dob = dob.strftime("%m-%d-%Y")
         with open(path + "\\data\\user.csv", "a", encoding='utf-8', newline='') as csvfile:
             password = hashlib.md5(password.encode('utf8')).hexdigest()
             writer = csv.writer(csvfile)
@@ -526,6 +534,8 @@ class Ratings():
     #Check if user has left a rating for movie
     @staticmethod
     def check_rating(user_id, movieId):
+        Ratings.rindex()
+        Ratings.rsecindex()
         dpk_ratings = pd.read_csv(path + "/data/rprimary.csv", usecols=[0, 1], header=None)
         a = list(dpk_ratings.to_records(index=False))
         a1 = 0
@@ -631,35 +641,35 @@ class Ratings():
 
     @staticmethod
     def rdelete(uid, movieid):
-            movieid = int(movieid)
-            uid = int(uid)
-            df_ratings = pd.read_csv(path + "/data/ratings.csv")
-            i = df_ratings.query('userId == @uid & movieId == @movieid').index
-            df_ratings = df_ratings.drop(i)
-            print(df_ratings)
-            df_ratings.to_csv(path + "\\data\\ratings.csv", index=False)
-            file_data = open(path + "\\data\\ratings.csv", 'rb').read()
-            open(path + "\\data\\ratings.csv", 'wb').write(file_data[:-2])
+        movieid = int(movieid)
+        uid = int(uid)
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
+        i = df_ratings.query('userId == @uid & movieId == @movieid').index
+        df_ratings = df_ratings.drop(i)
+        print(df_ratings)
+        df_ratings.to_csv(path + "\\data\\ratings.csv", index=False)
+        file_data = open(path + "\\data\\ratings.csv", 'rb').read()
+        open(path + "\\data\\ratings.csv", 'wb').write(file_data[:-2])
 
-            df_movies = pd.read_csv(path + "\\data\\movies.csv")
-            df_movies = df_movies.loc[df_movies['movieId'] == movieid]
-            no_of_ratings = int(df_movies['no_of_ratings'].values[0]) - 1
-            df_movies = pd.read_csv(path + "\\data\\\movies.csv")
+        df_movies = pd.read_csv(path + "\\data\\movies.csv")
+        df_movies = df_movies.loc[df_movies['movieId'] == movieid]
+        no_of_ratings = int(df_movies['no_of_ratings'].values[0]) - 1
+        df_movies = pd.read_csv(path + "\\data\\\movies.csv")
 
-            df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
-            df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
-            t = 0
-            if movieid in list(df_ratings['movieId']):
-                for i in list(df_ratings['ratings']):
-                    t += i
-            if t:
-                t /= len(df_ratings.index)
-                t = str(round(t, 2))
-            iu = df_movies.query('movieId == @movieid').index
-            df_movies.loc[iu, ['average_ratings', 'no_of_ratings']] = [t, no_of_ratings]
-            df_movies.to_csv(path + "\\data\\movies.csv", index=False)
-            Ratings.rindex()
-            Ratings.rsecindex()
+        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
+        t = 0
+        if movieid in list(df_ratings['movieId']):
+            for i in list(df_ratings['ratings']):
+                t += i
+        if t:
+            t /= len(df_ratings.index)
+            t = str(round(t, 2))
+        iu = df_movies.query('movieId == @movieid').index
+        df_movies.loc[iu, ['average_ratings', 'no_of_ratings']] = [t, no_of_ratings]
+        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        Ratings.rindex()
+        Ratings.rsecindex()
 
     @staticmethod
     def rupdate(uid, movieid, ratings, reviews):
@@ -711,8 +721,8 @@ class Admin(UserMixin):
             return False
 
     @staticmethod
-    def get(adminId, password):
-        if adminId == '1234' and password == '1234':
-            return Admin(adminId, 'admin', password)
-        else:
-            return None
+    def get(adminId):
+        #if adminId == '1234' and password == '1234':
+        return Admin(adminId, 'admin', '1234')
+        #else:
+            #return None

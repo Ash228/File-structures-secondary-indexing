@@ -7,11 +7,14 @@ from wtforms.fields.html5 import DateField
 class RegisterForm(FlaskForm):
 
     def validate_uid(form, field):
-        if not Users.check_userId(field.data):
+        if Users.check_userId(field.data):
             raise ValidationError("UserId is already taken.")
+        else:
+            return True
 
     userId = StringField(label="User Id", validators=[Length(min=1, max=10), DataRequired(), validate_uid])
-    date = DateField(label="Date", format='%d-%m-%Y', validators=[DataRequired()])
+    name = StringField(label="Name", validators=[Length(min=1, max=20), DataRequired()])
+    date = DateField(label="Date")
     gender = StringField(label="Gender", validators=[DataRequired()])
     password = PasswordField(label='Password', validators=[Length(min=1), DataRequired()])
     submit = SubmitField(label='Sign Up')
@@ -26,16 +29,14 @@ class LoginForm(FlaskForm):
         if super().validate(extra_validators):
 
             # your logic here e.g.
-            if not (self.field1.data or self.field2.data):
-                self.field1.errors.append('At least one field must have a value')
+            if not (self.userId.data or self.password.data):
+                self.userId.errors.append('At least one field must have a value')
+                self.password.errors.append('At least one field must have a value')
                 return False
             else:
                 return True
 
         return False
-
-    if Users.check_password(userId, password):
-        raise ValidationError('UserId or Password invalid')
 
 class LoginFormAdmin(FlaskForm):
 

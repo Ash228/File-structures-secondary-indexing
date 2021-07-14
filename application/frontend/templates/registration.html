@@ -18,12 +18,15 @@
             <div class="illustration"><i class="icon ion-android-person-add"></i></div>
             {{ form.hidden_tag() }}
             <div class="mb-3">
-                {{ form.userId(class="form-control", placeholder="Name") }}
-                <div class="form-group mb-3">
-                    <div class="input-group mb-4">
-                        {{ form.date(class="form-control", placeholder="dd-mm-yyyy") }}
-                    </div>
-                </div>
+                {{ form.userId(class="form-control", placeholder="User Id") }}
+            </div>
+            <div class="mb-3">
+                {{ form.name(class="form-control", placeholder="Name") }}
+            </div>
+            <div class="input-group mb-4">
+                {{ form.date(class="form-control") }}
+            </div>
+            <div class="mb-3">
                 {{ form.gender(class="form-control", placeholder="Gender") }}
             </div>
             <div class="mb-3">
@@ -35,7 +38,7 @@
             <p>Already have an account? <a href="{{url_for('user_login_page')}}">Login Now</a></p>
         </form>
     </section>
-    <script src="signup_assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src={{url_for('static',filename="signup_assets/bootstrap/js/bootstrap.min.js")}}></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
