@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1878979e-226c-427e-9da9-6ec430032548" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/movielibrary_backend_cmdgui.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/library.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/library.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1vLmf3XC3WfwRs8Ly2hLtzAw6HX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1878979e-226c-427e-9da9-6ec430032548" name="Default Changelist" comment="" />
+      <created>1626349842835</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626349842835</updated>
+    </task>
+    <servers />
+  </component>
+</project>

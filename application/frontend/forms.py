@@ -66,10 +66,14 @@ class LibraryForm(FlaskForm):
     submit = SubmitField(label='Search')
 
 
-class DetailsForm(FlaskForm):
-    movId = StringField('MovieId')
-    submit1 = SubmitField(label='Details')
 
-'''class LibraryClickForm(object):
-    movId = SubmitField('Details')'''
+'''class AdminForm(FlaskForm):
+    uadd = SubmitField('Add User')
+    umod = SubmitField('Modify User')
+    udel = SubmitField('Delete User')
+    madd = SubmitField('Add Movie')
+    mmod = SubmitField('Modify Movie')
+    mdel = SubmitField('Delete Movie')'''
+
+
 

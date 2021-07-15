@@ -34,11 +34,12 @@
 
 <header class="header-blue">
     <form method="post">
-{{ form.hidden_tag() }}
-{{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline;") }}
-{{ form.genre(class="form-control",placeholder="Genre",style="display:inline;" ) }}
-{{ form.submit(class="btn btn-primary d-block w-100",style="display:inline;") }}
-    <div class="row">
+    {{ form.hidden_tag() }}
+    {{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline;") }}
+    {{ form.genre(class="form-control",placeholder="Genre",style="display:inline;" ) }}
+    {{ form.submit(class="btn btn-primary d-block w-100",style="display:inline;") }}
+    {% if top_rec %}
+        <div class="row">
         <div class="col-12">
             <h3>Trending now</h3>
             <br>
@@ -68,6 +69,8 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% if allmov %}
         <div class="row">
         <div class="col-12">
             <h3>All Movies</h3>
@@ -89,23 +92,68 @@
                                 <li class="list-group-item">{{item.genre}}</li>
                                 <li class="list-group-item">{{item.avg_ratings}}</li>
                             </ul>
-                            <div class="card-body d-flex justify-content-between">
-                                <div class="mb-3">
-                                    {{ detailform.movId(type="hidden",value=item.movieId)}}
-                                    {{ detailform.submit1(class="btn btn-primary d-block w-100") }}
-                                    <!--button class="btn btn-primary d-block w-100" type="submit" value="{{item.movieId}}">Details
-                                    </button-->
-                                </div>
-
-                                </div>
                             </div>
                         </a>
                         </div>
                     {% endfor %}
                 </div>
                 </div>
+
             </div>
         </div>
+        {% endif %}
+        {% if mov_obj %}
+        <div class="row">
+        <div class="col-12">
+            <h3>Movies</h3>
+            <br>
+            <div class="container">
+                <div class="row g-2">
+                    {% if iterab %}
+                    {% for item in mov_obj %}
+                    <div class="col-6 ">
+                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
+                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                            <img src="{{ url_for('static', filename= item.movieId|string ~ '.jpg') }}" class="card-img-top"
+                                 alt="Movie Image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.title}}</h5>
+                                <p class="card-text">{{item.description}}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item">{{item.genre}}</li>
+                                <li class="list-group-item">{{item.avg_ratings}}</li>
+                            </ul>
+                            </div>
+                        </a>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="col-6 ">
+                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=mov_obj.movieId)}}">
+                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                            <img src="{{ url_for('static', filename= mov_obj.movieId|string ~ '.jpg') }}" class="card-img-top"
+                                 alt="Movie Image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{mov_obj.title}}</h5>
+                                <p class="card-text">{{mov_obj.description}}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item">{{mov_obj.genre}}</li>
+                                <li class="list-group-item">{{mov_obj.avg_ratings}}</li>
+                            </ul>
+                            </div>
+                        </a>
+                        </div>
+                    {% endif %}
+
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </form>
     <footer class="footer-dark">
         <div class="container">

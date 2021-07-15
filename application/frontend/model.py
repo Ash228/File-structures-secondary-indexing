@@ -73,11 +73,32 @@ class Movie:
 
     #Retieve list of movieId for given genre
     @staticmethod
+    def find_genre_search(genre):
+        Movie.mindex()
+        Movie.msecindex()
+        df_movies = pd.read_csv(path + "/data/movies.csv")
+        df_movies = df_movies.loc[df_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
+        if df_movies.empty:
+            print("Record does not exist")
+        else:
+            print("Id exists")
+            mov_obj = []
+            for index, row in df_movies.iterrows():
+                mov_obj.append(Movie(row['movieId'], row['title'],
+                                     row['img'], row['genre'],
+                                     row['description'], row['average_ratings']))
+            return mov_obj
+
+    @staticmethod
     def find_genre(genre):
         Movie.mindex()
         Movie.msecindex()
-        dsk_movies = pd.read_csv(path + "/data/movsecondary.csv")
-        dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(genre)]
+        dsk_movies = pd.read_csv(path + "/data/movies.csv")
+        print(dsk_movies)
+        print(genre)
+        print(dsk_movies['genre'])
+        dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
+        print(dsk_movies)
         if dsk_movies.empty:
             print("Record does not exist")
         else:
@@ -117,10 +138,11 @@ class Movie:
             if df_movies.empty:
                 print('Movie title incorrect')
             else:
-                mov_obj = Movie(df_movies['movieId'].values[0], df_movies['title'].values[0],
-                                df_movies['img'].values[0],
-                                df_movies['genre'].values[0], df_movies['description'].values[0],
-                                df_movies['average_ratings'].values[0])
+                mov_obj = []
+                for index, row in df_movies.iterrows():
+                    mov_obj.append(Movie(row['movieId'], row['title'],
+                                         row['img'], row['genre'],
+                                         row['description'], row['average_ratings']))
                 return mov_obj
         else:
             print("Please enter MovieId or title")
