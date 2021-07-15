@@ -2,12 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1878979e-226c-427e-9da9-6ec430032548" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/movielibrary_backend_cmdgui.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/data/uprimary.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../application/data/uprimary.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/data/usecondary.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../application/data/usecondary.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/data/user.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../application/data/user.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../application/frontend/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../application/frontend/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../application/frontend/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/addMovie.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/addMovie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/addUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/addUser.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../application/frontend/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/deleteMovie.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/deleteMovie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/deleteUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/deleteUser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../application/frontend/templates/library.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/library.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/modify1Movie.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/modify1Movie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/modify1User.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/modify1User.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/modify2Movie.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/modify2Movie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/modify2User.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/modify2User.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

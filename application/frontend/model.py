@@ -1,4 +1,5 @@
 import csv
+import glob
 import hashlib
 import os
 import pathlib
@@ -40,7 +41,7 @@ class Movie:
 
     #Check if the movie exists based on movieId or title
     @staticmethod
-    def check_movie(movieId = False, title = False):
+    def check_movieId(movieId = False):
         if movieId:
             movieId = int(movieId)
             df_movies = pd.read_csv(path + "\\data\\movies.csv")
@@ -49,15 +50,7 @@ class Movie:
                 return True
             else:
                 return False
-        elif title:
-            df_movies = pd.read_csv(path + "\\data\\movies.csv")
-            df_movies = df_movies.loc[df_movies['title'].str.contains(title, flags=re.IGNORECASE)]
-            if df_movies.empty:
-                return False
-            else:
-                return True
-        else:
-            return False
+
 
     #check if genre exists
     @staticmethod
@@ -317,7 +310,10 @@ class Movie:
         Movie.msecindex()
         dpk_movies = pd.read_csv(path + "\\data\\movprimary.csv", usecols=[0], header=None)
         with open(path + "\\data\\movies.csv", "a", encoding='utf-8', newline='') as csvfile:
-            im = Image.open(imgpath)
+
+            files = glob.glob(path + '\\uploads')
+            for f in files:
+                im = Image.open(f)
             # converting to jpg
             rgb_im = im.convert("RGB")
             # exporting the image
@@ -325,10 +321,13 @@ class Movie:
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
-            filedname = [id1, imgpath, title, description, genre, no_of_ratings, average_ratings]
+            filedname = [id1, '\\frontend\\static\\'+str(id1)+'.jpg', title, description, genre, no_of_ratings, average_ratings]
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
+            files = glob.glob(path+'\\uploads')
+            for f in files:
+                os.remove(f)
         csvfile.close()
         Movie.mindex()
         Movie.msecindex()
@@ -419,7 +418,7 @@ class Users(UserMixin):
         Users.uindex()
         Users.usecindex()
         dsk_users = pd.read_csv(path + "/data/usecondary.csv")
-        dsk_users = dsk_users.loc[dsk_users['name'].str.contains(uname)]
+        dsk_users = dsk_users.loc[dsk_users['name'].str.contains(uname, flags=re.IGNORECASE)]
         if dsk_users.empty:
             print("Record does not exist")
             return -1
@@ -517,6 +516,7 @@ class Users(UserMixin):
     @staticmethod
     def uupdate(name, userId, name1, dob, gender, password):
         df_user = pd.read_csv(path + "/data/user.csv")
+        dob = dob.strftime("%m-%d-%Y")
         iu = df_user.query('userId == @userId').index
         password = hashlib.md5(password.encode('utf8')).hexdigest()
         df_user.loc[iu, ['name', 'dob', 'gender', 'password']] = [name1, dob, gender, password]

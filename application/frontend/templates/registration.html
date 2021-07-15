@@ -33,15 +33,15 @@
             <div class="mb-3">
                 {{ form.userId(class="form-control", placeholder="User Id") }}
                 {% if form.userId.errors %}
-                    {{ form.userId(class="form-control form-control-lg is-invaid") }}
+                    {{ form.userId(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.userId.errors %}
                             <span>{{ error }}</span>
                             {% endfor%}
                         </div>
-                {% else %}
-                {{ form.name(class="form-control", placeholder="Name") }}
                 {% endif %}
+                {{ form.name(class="form-control", placeholder="Name") }}
+
             </div>
             <div class="input-group mb-4">
                 {{ form.date(class="form-control") }}
