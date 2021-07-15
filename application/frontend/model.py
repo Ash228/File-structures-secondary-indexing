@@ -510,14 +510,15 @@ class Users(UserMixin):
 
 class Ratings():
 
-    def __init__(self, userId, movieId, rating, reviews):
-        self.userId = userId
+    def __init__(self, username, movieId, rating, reviews):
+        self.username = username
         self.movieId = movieId
         self.rating = rating
         self.reviews = reviews
 
     @staticmethod
     def get_all_ratings(movieId):
+        movieId = int(movieId)
         df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
         df_ratings = df_ratings.loc[df_ratings['movieId'] == movieId]
         if movieId in list(df_ratings['movieId']):
@@ -531,8 +532,8 @@ class Ratings():
 
             rating_obj = []
         for index, row in df_ratings.iterrows():
-            rating_obj.append(Ratings(row['username'], row['ratings'],row['reviews']))
-        return rating_obj
+            rating_obj.append(Ratings(row['username'],'', row['ratings'],row['reviews']))
+            return rating_obj
 
     #Check if user has left a rating for movie
     @staticmethod

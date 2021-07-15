@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
     <meta charset="utf-8">
@@ -7,19 +7,89 @@
     <title>displayMovie</title>
     <link rel="stylesheet" href={{url_for('static',filename="displayMovie_assets/bootstrap/css/bootstrap.min.css")}}>
     <link rel="stylesheet" href="/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href={{url_for('static',filename="displayMovie_assets/css/Footer-Dark.css")}}>
+    <link rel="stylesheet" href={{url_for('static',filename='assets/css/Header-Blue.css')}}>
     <link rel="stylesheet" href={{url_for('static',filename="displayMovie_assets/css/styles.css")}}>
+    <link rel="stylesheet" href={{url_for('static',filename='assets/css/styles.css')}}>
 </head>
 
-<body style="background: linear-gradient(-3deg, var(--bs-white) 0%, var(--bs-white) 6%, var(--bs-blue) 100%);">
-<img style="height: 300px;width: 300px;margin-top: 21px;margin-right: 300px;margin-left: 500px;background: url(&quot;displayMovie_assets/img/100.jpeg&quot;);" src="{{ url_for('static', filename= 'images/'+movie.movieId|string ~ '.jpg') }}">
-    <ul>
-        <li style="font-size: 30px;margin-left: 350px;"><b>MovieId:</b> {{ movie.movieId }}</li>
-        <li style="font-size: 30px;margin-left: 350px;"><b>Title:</b> {{ movie.title }}</li>
-        <li style="font-size: 30px;margin-left: 350px;"><b>Genre:</b> {{ movie.genre }}</li>
-        <li style="font-size: 30px;margin-left: 350px;"><b>Rating:</b> {{ movie.avg_ratings }}</li>
-        <li style="font-size: 30px;margin-left: 350px;width: 700px;"><b>Description:</b>&nbsp;<br>{{ movie.description }}</li>
+<body style="background: rgb(10, 53, 75)">
+        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item"></li>
+                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
+                </div>
+            </div>
+        </nav>
+    <br>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, message in messages %}
+    <div class="alert alert-{{ cat }}" role="alert">
+        {{ message }}
+        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+<header class="header-blue">
+<img style="max-height: 600px;max-width: 400px;margin-left:40%;margin:right:40%;margin-top:100px;" src="{{ url_for('static', filename= 'images/'+movie.movieId|string ~ '.jpg') }}">
+    <ul style="margin-left:35%;margin-right:30%;margin-top:50px;">
+        <li style="font-family: 'Georgia', serif;font-size: 25px;color:white;"><b>MovieId:</b> {{ movie.movieId }}</li>
+        <li style="font-family: 'Georgia', serif;font-size: 25px;color:white;"><b>Title:</b> {{ movie.title }}</li>
+        <li style="font-family: 'Georgia', serif;font-size: 25px;color:white;"><b>Genre:</b> {{ movie.genre }}</li>
+        <li style="font-family: 'Georgia', serif;font-size: 25px;color:white;"><b>Rating:</b> {{ movie.avg_ratings }}</li>
+        <li style="font-family: 'Georgia', serif;font-size: 25px;color:white;"><b>Description:</b>&nbsp;<br>{{ movie.description }}</li>
             <br><br><br></li>
     </ul>
+    {% if rating %}
+<br><br>
+    <div class="table-responsive" style="width: 800px;margin: auto;font-family: 'Abhaya Libre', serif;font-size: 25px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">User name</th>
+                    <th style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">Ratings</th>
+                    <th style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">Review</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in rating %}
+                <tr>
+                    <td style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">{{item.username}}</td>
+                    <td style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">{{item.rating}}</td>
+                    <td style="font-family: 'Georgia', serif;font-size: 30px;margin: auto;color:white;">{{item.reviews}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+<br>
+<form method="post">{{ form.hidden_tag() }}
+{{ form.rating(class="form-control", placeholder="Rating",style="width:50%;margin-left: 25%;margin-top: 50px;") }}
+{{ form.review(class="form-control", placeholder="Review",style="width:50%;margin-left: 25%;margin-top: 50px;") }}
+<br>
+{{ form.addrating(class="btn btn-primary", style="background: #355a91;margin-left: 30%;margin-top: 10px;display:inline-block;") }}
+{% if rate %}
+{{ form.modifyrating(class="btn btn-primary", style="background: #355a91;margin-left: 5%;margin-top: 10px;display:inline-block;") }}
+{{ form.deleterating(class="btn btn-primary", style="background: #355a91;margin-left: 5%;margin-top: 10px;display:inline-block;") }}
+{% endif %}
+</form>
+    <footer class="footer-dark" style="margin-top: 100px;width: 1500px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 item text">
+                    <h3>Movie Library</h3>
+                </div>
+            </div>
+            <p class="copyright">Movie Library © 2021</p>
+        </div>
+    </footer>
     <script src={{url_for('static',filename="displayMovie_assets/bootstrap/js/bootstrap.min.js")}}></script>
 </body>
 

@@ -31,17 +31,24 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-
+<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item"></li>
+                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
+                </div>
+            </div>
+        </nav>
 <header class="header-blue">
     <form method="post">
     {{ form.hidden_tag() }}
-    {{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline;") }}
-    {{ form.genre(class="form-control",placeholder="Genre",style="display:inline;" ) }}
-    {{ form.submit(class="btn btn-primary d-block w-100",style="display:inline;") }}
+    {{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline-block;width:54%;") }}
+    {{ form.genre(class="form-control",placeholder="Genre",style="display:inline-block;width:34%;" ) }}
+    {{ form.submit(class="btn btn-primary",style="display:inline-block;width:10%;") }}
     {% if top_rec %}
         <div class="row">
         <div class="col-12">
-            <h3>Trending now</h3>
             <br><div style="background-color:lightgoldenrodyellow"> <h3 style="text-align: center;">Trending Now </h3></div>
             <div class="container">
                 <div class="row g-2">
@@ -73,7 +80,6 @@
         {% if allmov %}
         <div class="row">
         <div class="col-12">
-            <h3>All Movies</h3>
             <br>
             <div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">All Movies</h3></div>
             <div class="container">
@@ -106,8 +112,8 @@
         {% if mov_obj %}
         <div class="row">
         <div class="col-12">
-            <h3>Movies</h3>
-            <br>
+
+            <br><div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">Movies</h3></div>
             <div class="container">
                 <div class="row g-2">
                     {% if iterab %}

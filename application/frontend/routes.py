@@ -11,7 +11,7 @@ from .model import Movie, Users, Ratings, Admin
 from flask_login import login_user, logout_user, current_user, login_required
 # from .forms import RegisterForm, LoginForm, PurchaseForm, GameForm, GameEditForm, GameDeleteForm
 from .forms import LoginFormAdmin, LoginForm, RegisterForm, LibraryForm, AddUserForm, ModifyUserForm1, ModifyUserForm2, DeleteUserForm, \
-    AddMovieForm, ModifyMovieForm1, ModifyMovieForm2, DeleteMovieForm
+    AddMovieForm, ModifyMovieForm1, ModifyMovieForm2, DeleteMovieForm, DisplayMovieRatingsForm
 
 path = str(pathlib.Path().absolute())
 UPLOADS_PATH = path+'\\frontend\\static\\images\\'
@@ -93,6 +93,7 @@ def user_login_page():
 def logout_page():
     logout_user()
     flash('Logged out successfully', category='info')
+    #response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
     return redirect(url_for('home_page'))
 
 
@@ -185,10 +186,33 @@ def search_display_page(str1):
 @app.route('/movie_display/<movieId>', methods=['GET', 'POST'])
 @login_required
 def movie_display_page(movieId):
-    print(movieId)
+    form = DisplayMovieRatingsForm()
     mov_obj = Movie.search(movieId=movieId)
-    print(mov_obj, mov_obj.movieId)
-    return render_template("displayMovie.html", movie=mov_obj, active_disp="active")
+    rat_obj = Ratings.get_all_ratings(movieId=movieId)
+    if form.addrating.data:
+        if form.validate_on_submit():
+            if form.rating.data and form.review.data:
+                Ratings.rinsert(id1=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
+                flash(f'Rating entered Succesfully', category='success')
+                return redirect(url_for('movie_display_page', movieId=movieId))
+            else:
+                flash(f'Validation error, please try later', category='danger')
+    if form.modifyrating.data:
+        if form.validate_on_submit():
+            if form.rating.data and form.review.data:
+                Ratings.rupdate(uid=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
+                flash(f'Rating modified Succesfully', category='success')
+                return redirect(url_for('movie_display_page', movieId=movieId))
+            else:
+                flash(f'Validation error, please try later', category='danger')
+    if form.deleterating.data:
+        Ratings.rdelete(uid=current_user.id, movieid=movieId)
+        flash(f'Rating modified Succesfully', category='success')
+        return redirect(url_for('movie_display_page', movieId=movieId))
+
+    if Ratings.check_rating(user_id=current_user.id,movieId=movieId):
+        return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active")
+    return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active")
 
 
 @app.route('/admin', methods=['GET', 'POST'])

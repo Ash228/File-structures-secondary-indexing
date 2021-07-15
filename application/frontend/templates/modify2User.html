@@ -13,6 +13,27 @@
 </head>
 
 <body style="background: rgb(77,126,150);">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, message in messages %}
+    <div class="alert alert-{{ cat }}" role="alert">
+        {{ message }}
+        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item"></li>
+                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
+                </div>
+            </div>
+        </nav>
     <section class="login-dark" style="background: rgb(71, 93, 98);">
         <form method="post" style="width: 700px;height: 500px;min-width: -3px;max-width: 700px;">
             <h2 class="visually-hidden">Login Form</h2>

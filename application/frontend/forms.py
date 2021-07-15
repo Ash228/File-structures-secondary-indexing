@@ -2,14 +2,15 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 from wtforms import widgets, StringField, PasswordField, SubmitField, SelectField, SelectMultipleField, TextAreaField, \
     IntegerField, FileField
-from wtforms.validators import Length, DataRequired, ValidationError
+from wtforms.validators import Length, DataRequired, ValidationError, Regexp
 from .model import Users, Movie, Ratings, Admin
 from wtforms.fields.html5 import DateField
+
 
 class RegisterForm(FlaskForm):
 
 
-    userId = StringField(label="User Id", validators=[Length(min=1, max=10,), DataRequired()])
+    userId = StringField(label="User Id", validators=[Length(min=1, max=10,), DataRequired(), Regexp(regex='^[0-9]+$')])
     name = StringField(label="Name", validators=[Length(min=1, max=20), DataRequired()])
     date = DateField(label="Date")
     gender = StringField(label="Gender", validators=[DataRequired()])
@@ -18,7 +19,7 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
 
-    userId = StringField(label="userId", validators=[Length(min=1, max=10)])
+    userId = StringField(label="userId", validators=[Length(min=1, max=10), Regexp(regex='^[0-9]+$')])
     password = PasswordField(label='password', validators=[Length(min=1)])
     submit = SubmitField(label='LogIn')
 
@@ -37,7 +38,7 @@ class LoginForm(FlaskForm):
 
 class LoginFormAdmin(FlaskForm):
 
-    adminId = StringField(label="Admin Id", validators=[Length(min=1, max=10), DataRequired()])
+    adminId = StringField(label="Admin Id", validators=[Length(min=1, max=10), DataRequired(), Regexp(regex='^[0-9]+$')])
     password = PasswordField(label='Password', validators=[Length(min=1), DataRequired()])
     submit = SubmitField(label='Log In')
 
@@ -79,7 +80,7 @@ class LibraryForm(FlaskForm):
 
 class AddUserForm(FlaskForm):
 
-    userId = StringField(label="User Id", validators=[Length(min=1, max=10), DataRequired()])
+    userId = StringField(label="User Id", validators=[Length(min=1, max=10), DataRequired(), Regexp(regex='^[0-9]+$')])
     name = StringField(label="Name", validators=[Length(min=1, max=20), DataRequired()])
     date = DateField(label="Date")
     gender = StringField(label="Gender", validators=[DataRequired()])
@@ -106,7 +107,7 @@ class DeleteUserForm(FlaskForm):
     submit = SubmitField(label='Delete User')
 
 class AddMovieForm(FlaskForm):
-    movieId = StringField(label="Movie Id", validators=[Length(min=1, max=10, ), DataRequired()])
+    movieId = StringField(label="Movie Id", validators=[Length(min=1, max=10, ), DataRequired(), Regexp(regex='^[0-9]+$')])
     title = StringField(label="Title", validators=[Length(min=1, max=20), DataRequired()])
     description = StringField(label="Description", validators=[DataRequired()])
     genre = StringField(label="Genre", validators=[DataRequired()])
@@ -131,5 +132,14 @@ class DeleteMovieForm(FlaskForm):
     check = SubmitField(label='Check MovieId')
     selectmid = SelectField(label='Select MovieId', choices=[])
     submit = SubmitField(label='Delete Movie')
+
+class DisplayMovieRatingsForm(FlaskForm):
+    addrating = SubmitField(label='Add Ratings')
+    modifyrating = SubmitField(label='Modify Ratings')
+    deleterating = SubmitField(label='Delete Ratings')
+    rating = StringField(label="Rating", validators=[Length(min=1, max=2), Regexp(regex='^[0-9]+$')])
+    review = StringField(label="Review", validators=[Length(min=1, max=20)])
+
+
 
 

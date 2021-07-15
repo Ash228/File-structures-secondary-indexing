@@ -13,6 +13,18 @@
 </head>
 
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, message in messages %}
+    <div class="alert alert-{{ cat }}" role="alert">
+        {{ message }}
+        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <header class="header-blue">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
