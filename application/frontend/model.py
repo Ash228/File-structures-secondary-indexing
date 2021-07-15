@@ -426,7 +426,7 @@ class Users(UserMixin):
             print("Id exists")
             user_obj = []
             for index, row in dsk_users.iterrows():
-                user_obj.append(Users(userId=row['userId']))
+                user_obj.append(Users(userId=row['userId'],username='',password=''))
             return user_obj
 
 

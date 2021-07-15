@@ -231,7 +231,7 @@ def admin_user_modify_page1():
         user_obj = Users.ufind(request.form.get('name'))
         if user_obj:
             if isinstance(user_obj, Iterable):
-                form.selectuid.choices = [(i.userId, i.userId) for i in user_obj]
+                form.selectuid.choices = [(i.id, i.id) for i in user_obj]
             else:
                 form.selectuid.choices = (user_obj.userId, user_obj.userId)
             return render_template("modify1User.html", form=form, active_admin="active")
@@ -239,7 +239,7 @@ def admin_user_modify_page1():
             flash(f'User name not found')
             return render_template("modify1User.html", form=form, active_admin="active")
     if form.submit.data:
-        return redirect(url_for("modify2User.html", userId=request.form.get('selectuid')))
+        return redirect(url_for("admin_user_modify_page2", userId=request.form.get('selectuid')))
     return render_template("modify1User.html", form=form, active_admin="active")
 
 @app.route('/modify_user/<userId>', methods=['GET', 'POST'])
@@ -248,14 +248,15 @@ def admin_user_modify_page2(userId):
     form = ModifyUserForm2()
     if form.validate_on_submit():
         username = request.form.get('name')
-        date = request.form.get('date')
+        date = form.date.data
         gender = request.form.get('gender')
         password = request.form.get('password')
         Users.uupdate(name=username, userId=userId, name1=username, dob=date, gender=gender, password=password)
+        flash(f'User Details Updated',category='success')
+        return render_template("modify2User.html", form=form, active_admin="active")
     else:
-            flash(f'User name not found')
-            return render_template("modify1User.html", form=form, active_admin="active")
-    return redirect(url_for("modify2User.html", userId=request.form.get('selectuid')))
+        flash(f'Error Please try later',category='danger')
+    return render_template("modify2User.html", form=form, active_admin="active")
 
 
 
