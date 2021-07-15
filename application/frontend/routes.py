@@ -103,9 +103,12 @@ def library_page():
             pass
     if detailform.submit1.data:
         movieId = request.form.get('movId')
+        movId1 = request.form.get('submit')
+        print(request.form)
+        print(movieId,movId1)
         if movieId:
             if Movie.check_movie(movieId=movieId):
-                return redirect(url_for('test_page'))
+                return redirect(url_for('movie_display_page', movieId=movieId))
             else:
                 flash(f"Error rendering movie", category="danger")
 
@@ -114,14 +117,13 @@ def library_page():
 
     return render_template("library.html", top_rec=top_rec, allmov=allmov, form=form, detailform=detailform, active_lib="active")
 
-'''@app.route('/librarysearch', methods=['GET', 'POST'])
+@app.route('/movie_display/<movieId>', methods=['GET', 'POST'])
 @login_required
-def library_search_page():
-
-    top_rec = Movie.recommendationtop()
-    allmov = Movie.get_all_movies()
-    return render_template("library.html", top_rec=top_rec, allmov=allmov, form=form, active_lib="active")
-'''
+def movie_display_page(movieId):
+    print(movieId)
+    mov_obj = Movie.search(movieId=movieId)
+    print(mov_obj,mov_obj.movieId)
+    return render_template("displayMovie.html",movie=mov_obj, active_disp="active")
 
 
 
