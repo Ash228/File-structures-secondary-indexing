@@ -15,13 +15,31 @@
 <body style="background: rgb(77,126,150);">
     <section class="login-dark" style="background: rgb(71, 93, 98);">
         <form method="post" style="width: 500px;height: 464px;min-width: -3px;max-width: 500px;">
-            <h2 class="visually-hidden">Login Form</h2><label class="form-label" style="margin-left: 125px;font-size: 30px;">Delete Movie</label><input class="form-control" type="text" placeholder="Genre" name="Genre" style="margin-top: 70px;">
-            <div class="mb-3"></div><input class="form-control" type="email" placeholder="Movie ID" name="Movie ID" style="margin-top: 20px;">
-            <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Select MovieId</button>
-                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
-            </div>
+            <h2 class="visually-hidden">Login Form</h2>
+            <label class="form-label" style="margin-left: 125px;font-size: 30px;">Delete Movie</label>
             <div class="mb-3"></div>
-            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Delete</button></div>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.genre(class="form-control", placeholder="Genre") }}
+                {% if form.genre.errors %}
+                    {{ form.genre(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.genre.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor%}
+                        </div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form.check(class="btn btn-primary d-block w-100") }}
+            </div>
+
+            <div class="mb-3"></div>
+            {{ form.selectmid(class="selectpicker form-control", placeholder='Select MovieId', style='background: rgba(30,40,51,255);')}}
+            </div>
+            <div class="mb-3">
+                {{ form.submit(class="btn btn-primary d-block w-100") }}
+            </div>
         </form>
     </section>
     <script src={{url_for('static',filename="deleteMovie_assets/bootstrap/js/bootstrap.min.js")}}></script>

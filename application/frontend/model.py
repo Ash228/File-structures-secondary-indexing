@@ -98,7 +98,7 @@ class Movie:
             print("Id exists")
             mov_obj = []
             for index, row in dsk_movies.iterrows():
-                mov_obj.append(Movie(movieId=row['movieId']))
+                mov_obj.append(Movie(movieId=row['movieId'],title='',imgpath='',genre='',desc='',avg_ratings=''))
             return mov_obj
 
     @staticmethod
@@ -310,24 +310,13 @@ class Movie:
         Movie.msecindex()
         dpk_movies = pd.read_csv(path + "\\data\\movprimary.csv", usecols=[0], header=None)
         with open(path + "\\data\\movies.csv", "a", encoding='utf-8', newline='') as csvfile:
-
-            files = glob.glob(path + '\\uploads')
-            for f in files:
-                im = Image.open(f)
-            # converting to jpg
-            rgb_im = im.convert("RGB")
-            # exporting the image
-            rgb_im.save(path + "\\frontend\\static\\" + str(id1) + ".jpg")
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
-            filedname = [id1, '\\frontend\\static\\'+str(id1)+'.jpg', title, description, genre, no_of_ratings, average_ratings]
+            filedname = [id1, '\\frontend\\static\\images\\'+str(id1)+'.jpg', title, description, genre, no_of_ratings, average_ratings]
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
-            files = glob.glob(path+'\\uploads')
-            for f in files:
-                os.remove(f)
         csvfile.close()
         Movie.mindex()
         Movie.msecindex()
@@ -337,16 +326,11 @@ class Movie:
             dsk_movies = pd.read_csv(path + "/data/movsecondary.csv")
             isk = dsk_movies.query('genre == @genre & movieId == @id1').index
             dpk_movies = pd.read_csv(path + "/data/movsecondary.csv")
-            ipk = dpk_movies.query('movieId == @iid1').index
+            ipk = dpk_movies.query('movieId == @id1').index
             df_movies = pd.read_csv(path + "/data/movies.csv")
             iu = df_movies.query('movieId == @id1').index
             df_movies.loc[iu, ['title', 'description', 'genre']] = [title, description, genre]
             df_movies.to_csv(path + "/data/movies.csv", index=False)
-            im = Image.open(imgpath)
-            # converting to jpg
-            rgb_im = im.convert("RGB")
-            # exporting the image
-            rgb_im.save(path + "\\frontend\\static\\" + str(id1) + ".jpg")
             Movie.mindex()
             Movie.msecindex()
 
@@ -358,7 +342,6 @@ class Movie:
         df_movies.to_csv(path + "\\data\\movies.csv", index=False)
         file_data = open(path + "\\data\\movies.csv", 'rb').read()
         open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
-        os.remove(path + "\\frontend\\static\\" + str(movieId) + '.jpg')
         print("Record deleted ")
         Movie.mindex()
         Movie.msecindex()

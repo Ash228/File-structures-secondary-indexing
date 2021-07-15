@@ -11,10 +11,10 @@ from .model import Movie, Users, Ratings, Admin
 from flask_login import login_user, logout_user, current_user, login_required
 # from .forms import RegisterForm, LoginForm, PurchaseForm, GameForm, GameEditForm, GameDeleteForm
 from .forms import LoginFormAdmin, LoginForm, RegisterForm, LibraryForm, AddUserForm, ModifyUserForm1, ModifyUserForm2, DeleteUserForm, \
-    AddMovieForm, ModifyMovieForm, DeleteMovieForm
+    AddMovieForm, ModifyMovieForm1, ModifyMovieForm2, DeleteMovieForm
 
 path = str(pathlib.Path().absolute())
-UPLOADS_PATH = path+'\\uploads'
+UPLOADS_PATH = path+'\\frontend\\static\\images\\'
 
 @login_manager.user_loader
 def load_user(userId):
@@ -265,6 +265,21 @@ def admin_user_modify_page2(userId):
 @login_required
 def admin_user_delete_page():
     form = DeleteUserForm()
+    if form.check.data:
+        user_obj = Users.ufind(request.form.get('name'))
+        if user_obj:
+            if isinstance(user_obj, Iterable):
+                form.selectuid.choices = [(i.id, i.id) for i in user_obj]
+            else:
+                form.selectuid.choices = (user_obj.id, user_obj.id)
+            return render_template("DeleteUser.html", form=form, active_admin="active")
+        else:
+            flash(f'User name not found')
+            return render_template("deleteUser.html", form=form, active_admin="active")
+    if form.submit.data:
+        Users.udelete(name=request.form.get('name'), userId=request.form.get('selectuid'))
+        flash(f'User deleted',category="success")
+        return redirect(url_for('admin_page'))
     return render_template("deleteUser.html", form=form, active_admin="active")
 
 
@@ -277,11 +292,12 @@ def admin_movie_add_page():
         print(2)
         if form.validate_on_submit():
             print(3)
+            print(Movie.check_movieId(request.form.get('movieId')))
             if not Movie.check_movieId(request.form.get('movieId')):
                 print(4)
                 image = request.files.get('imageupload')
                 print(5)
-                image.save(os.path.join(UPLOADS_PATH, secure_filename(image.filename)))
+                image.save(os.path.join(UPLOADS_PATH, request.form.get('movieId')+'.jpg'))
                 print(5)
                 Movie.minsert(request.form.get('movieId'), request.form.get('title'),UPLOADS_PATH,
                               request.form.get('description'),request.form.get('genre'))
@@ -297,13 +313,64 @@ def admin_movie_add_page():
 
 @app.route('/modify_movie', methods=['GET', 'POST'])
 @login_required
-def admin_movie_modify_page():
-    form = ModifyMovieForm()
+def admin_movie_modify_page1():
+    form = ModifyMovieForm1()
+    if form.check.data:
+        mov_obj = Movie.find_genre(request.form.get('genre'))
+        if mov_obj:
+            if isinstance(mov_obj, Iterable):
+                form.selectmid.choices = [(i.movieId, i.movieId) for i in mov_obj]
+            else:
+                form.selectmid.choices = (mov_obj.movieId, mov_obj.movieId)
+            return render_template("modify1Movie.html", form=form, active_admin="active")
+        else:
+            flash(f'Genre not found')
+            return render_template("modify1Movie.html", form=form, active_admin="active")
+    if form.submit.data:
+        return redirect(url_for("admin_movie_modify_page2", movieId=request.form.get('selectmid')))
     return render_template("modify1Movie.html", form=form, active_admin="active")
+
+@app.route('/modify_movie/<movieId>', methods=['GET', 'POST'])
+@login_required
+def admin_movie_modify_page2(movieId):
+    form = ModifyMovieForm2()
+    print(1)
+    print(form.validate_on_submit())
+    print(form.errors.items())
+    if form.validate_on_submit():
+        print(1)
+        image = request.files.get('imageupload')
+        print(1)
+        image.save(os.path.join(UPLOADS_PATH, str(movieId) + '.jpg'))
+        print(1)
+        Movie.mupdate(movieId, request.form.get('title'), UPLOADS_PATH,
+                      request.form.get('description'), request.form.get('genre'))
+        print(1)
+        flash(
+            f"User {request.form.get('title')} modified successfully", category="success")
+        return redirect(url_for('admin_page'))
+    else:
+        flash(f'Error Please try later',category='danger')
+    return render_template("modify2Movie.html", form=form, active_admin="active")
 
 
 @app.route('/delete_movie', methods=['GET', 'POST'])
 @login_required
 def admin_movie_delete_page():
     form = DeleteMovieForm()
+    if form.check.data:
+        mov_obj = Movie.find_genre(request.form.get('genre'))
+        if mov_obj:
+            if isinstance(mov_obj, Iterable):
+                form.selectmid.choices = [(i.movieId, i.movieId) for i in mov_obj]
+            else:
+                form.selectmid.choices = (mov_obj.movieId, mov_obj.movieId)
+            return render_template("deleteMovie.html", form=form, active_admin="active")
+        else:
+            flash(f'User name not found')
+            return render_template("deleteMovie.html", form=form, active_admin="active")
+    if form.submit.data:
+        Movie.mdelete(genre=request.form.get('genre'), movieId=request.form.get('selectmid'))
+        flash(f'Movie deleted',category="success")
+        return redirect(url_for('admin_page'))
     return render_template("deleteMovie.html", form=form, active_admin="active")

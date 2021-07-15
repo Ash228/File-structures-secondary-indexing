@@ -16,8 +16,10 @@
     <section class="login-dark" style="background: rgb(71, 93, 98);">
         <form method="post" style="width: 700px;height: 840px;min-width: -3px;max-width: 700px;" enctype="multipart/form-data">
             <h2 class="visually-hidden">Login Form</h2>
+            <label class="form-label" style="margin-left: 125px;font-size: 30px;">Add Movie</label>
 
             <div class="illustration"><i class="icon ion-android-person-add"></i></div>
+            <div class="mb-3"></div>
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 {{ form.movieId(class="form-control", placeholder="Movie Id") }}

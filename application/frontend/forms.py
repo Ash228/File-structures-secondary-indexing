@@ -100,7 +100,10 @@ class ModifyUserForm2(FlaskForm):
     submit = SubmitField(label='Modify User')
 
 class DeleteUserForm(FlaskForm):
-    pass
+    name = StringField(label="Username", validators=[Length(min=1, max=20), DataRequired()])
+    check = SubmitField(label='Check UID')
+    selectuid = SelectField(label='Select UID', choices=[])
+    submit = SubmitField(label='Delete User')
 
 class AddMovieForm(FlaskForm):
     movieId = StringField(label="Movie Id", validators=[Length(min=1, max=10, ), DataRequired()])
@@ -110,10 +113,23 @@ class AddMovieForm(FlaskForm):
     imageupload = FileField(label='Image Upload', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField(label='Insert Movie')
 
-class ModifyMovieForm(FlaskForm):
-    pass
+class ModifyMovieForm1(FlaskForm):
+    genre = StringField(label="Genre", validators=[Length(min=1, max=20), DataRequired()])
+    check = SubmitField(label='Check MovieId')
+    selectmid = SelectField(label='Select MovieId',choices=[])
+    submit = SubmitField(label='Modify User')
+
+class ModifyMovieForm2(FlaskForm):
+    title = StringField(label="Title", validators=[Length(min=1, max=50), DataRequired()])
+    description = StringField(label="Description", validators=[DataRequired()])
+    genre = StringField(label="Genre", validators=[DataRequired()])
+    imageupload = FileField(label='Image Upload', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+    submit = SubmitField(label='Modify Movie')
 
 class DeleteMovieForm(FlaskForm):
-    pass
+    genre = StringField(label="Genre", validators=[Length(min=1, max=20), DataRequired()])
+    check = SubmitField(label='Check MovieId')
+    selectmid = SelectField(label='Select MovieId', choices=[])
+    submit = SubmitField(label='Delete Movie')
 
 
