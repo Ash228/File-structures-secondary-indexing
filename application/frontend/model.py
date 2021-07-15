@@ -16,7 +16,6 @@ from flask_login import UserMixin
 
 path = str(pathlib.Path().absolute())
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Users.get(user_id)
@@ -94,7 +93,7 @@ class Movie:
         mov_obj = []
         for index, row in df_movies.iterrows():
             mov_obj.append(Movie(row['movieId'], row['title'],
-                                 row['imgpath'], row['genre'],
+                                 row['img'], row['genre'],
                                  row['description'], row['average_ratings']))
         return mov_obj
 
@@ -107,7 +106,7 @@ class Movie:
             df_movies = df_movies.loc[df_movies['movieId'] == movieId]
             if movieId in list(df_movies['movieId']):
                 mov_obj = Movie(df_movies['movieId'].values[0], df_movies['title'].values[0],
-                                df_movies['imgpath'].values[0], df_movies['genre'].values[0],
+                                df_movies['img'].values[0], df_movies['genre'].values[0],
                                 df_movies['description'].values[0], df_movies['average_ratings'].values[0])
                 return mov_obj
             else:
@@ -119,7 +118,7 @@ class Movie:
                 print('Movie title incorrect')
             else:
                 mov_obj = Movie(df_movies['movieId'].values[0], df_movies['title'].values[0],
-                                df_movies['imgpath'].values[0],
+                                df_movies['img'].values[0],
                                 df_movies['genre'].values[0], df_movies['description'].values[0],
                                 df_movies['average_ratings'].values[0])
                 return mov_obj
@@ -146,7 +145,7 @@ class Movie:
 
             qualified = \
                 df[(df['no_of_ratings'] >= m) & (df['no_of_ratings'].notnull()) & (df['average_ratings'].notnull())][
-                    ['movieId', 'img', 'title', 'genre', 'no_of_ratings', 'average_ratings']]
+                    ['movieId', 'img', 'title', 'genre', 'description', 'no_of_ratings', 'average_ratings']]
             qualified['no_of_ratings'] = qualified['no_of_ratings'].astype('int')
             qualified['average_ratings'] = qualified['average_ratings'].astype('int')
 
@@ -158,7 +157,7 @@ class Movie:
             mov_obj = []
             for index, row in qualified.iterrows():
                 mov_obj.append(Movie(row['movieId'], row['title'],
-                                     row['imgpath'], row['genre'],
+                                     row['img'], row['genre'],
                                      row['description'], row['average_ratings']))
             return mov_obj
         else:
@@ -169,7 +168,6 @@ class Movie:
     def recommendationtop():
         df2 = pd.read_csv(path + '/data/movies.csv')
         # print(df2)
-        df2 = df2.drop(['description'], axis=1)
         C = df2['average_ratings'].mean()
         m = df2['no_of_ratings'].quantile(0.9)
         q_movies = df2.copy().loc[df2['no_of_ratings'] >= m]
@@ -189,7 +187,7 @@ class Movie:
         mov_obj = []
         for index, row in qualifiedtop.iterrows():
             mov_obj.append(Movie(row['movieId'], row['title'],
-                                 row['imgpath'], row['genre'],
+                                 row['img'], row['genre'],
                                  row['description'], row['average_ratings']))
         return mov_obj
 
@@ -230,7 +228,7 @@ class Movie:
                 mov_obj = []
                 for index, row in qualified.iterrows():
                     mov_obj.append(Movie(row['movieId'], row['title'],
-                                         row['imgpath'], row['genre'],
+                                         row['img'], row['genre'],
                                          row['description'], row['average_ratings']))
                 return mov_obj
             else:
@@ -301,7 +299,7 @@ class Movie:
             # converting to jpg
             rgb_im = im.convert("RGB")
             # exporting the image
-            rgb_im.save(path + "\\data\\images\\" + str(id1) + ".jpg")
+            rgb_im.save(path + "\\frontend\\static\\" + str(id1) + ".jpg")
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
@@ -327,7 +325,7 @@ class Movie:
             # converting to jpg
             rgb_im = im.convert("RGB")
             # exporting the image
-            rgb_im.save(path + "\\data\\images\\" + str(id1) + ".jpg")
+            rgb_im.save(path + "\\frontend\\static\\" + str(id1) + ".jpg")
             Movie.mindex()
             Movie.msecindex()
 
@@ -339,7 +337,7 @@ class Movie:
         df_movies.to_csv(path + "\\data\\movies.csv", index=False)
         file_data = open(path + "\\data\\movies.csv", 'rb').read()
         open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
-        os.remove(path + '\\data\\images\\' + str(movieId) + '.jpg')
+        os.remove(path + "\\frontend\\static\\" + str(movieId) + '.jpg')
         print("Record deleted ")
         Movie.mindex()
         Movie.msecindex()

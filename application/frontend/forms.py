@@ -58,3 +58,18 @@ class SearchForm(FlaskForm):
                 return True
 
         return False
+
+class LibraryForm(FlaskForm):
+
+    title_movId = StringField(label='Title or MovieId' )
+    genre = StringField(label='Genre')
+    submit = SubmitField(label='Search')
+
+
+class DetailsForm(FlaskForm):
+    movId = StringField('MovieId')
+    submit1 = SubmitField(label='Details')
+
+'''class LibraryClickForm(object):
+    movId = SubmitField('Details')'''
+
