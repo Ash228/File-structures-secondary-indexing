@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="addUser_assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="addUser_assets/css/Form-Select---Full-Date---Month-Day-Year.css">
+    <link rel="stylesheet" href="addUser_assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="addUser_assets/css/styles.css">
 </head>
 
-<body style="background: linear-gradient(var(--bs-blue) 0%, rgb(255,255,255) 99%, var(--bs-blue) 100%), linear-gradient(black 1%, rgb(138,138,138) 54%, white), url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;), url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;), url(&quot;addUser_assets/img/background.jpg&quot;), rgb(59,191,247);">
-    <form class="bootstrap-form-with-validation">
-        <h2 class="text-center border-primary shadow-sm" style="font-family: 'Abhaya Libre', serif;font-size: 50px;">Add User</h2>
-        <div class="form-group mb-3"><label class="form-label" for="text-input" style="font-size: 30px;font-family: 'Abhaya Libre', serif;">UserId</label></div><input class="form-control" type="text" id="text-input" name="text-input" style="width: 983px;"><button class="btn btn-primary" data-toggle="modal" data-target="#modal1" type="button" style="font-family: 'Abhaya Libre', serif;">Check</button><br><label class="form-label" for="text-input" style="font-size: 30px;font-family: 'Abhaya Libre', serif;">User Name</label><input class="form-control" type="text" id="text-input-1" name="text-input">
-        <div class="form-group mb-3"><label class="form-label" for="password-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;">Gender</label></div><input class="form-control" type="password" id="password-input" name="password-input">
-        <div class="form-group mb-3"><label class="form-label" for="email-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;">DOB</label>
+<body style="background: rgb(77,126,150);">
+    <section class="login-dark" style="background: rgb(71, 93, 98);">
+        <form method="post" style="width: 700px;height: 700px;min-width: -3px;max-width: 700px;">
+            <h2 class="visually-hidden">Login Form</h2><label class="form-label" style="margin-left: 236px;font-size: 30px;">Add User</label><input class="form-control" type="text" placeholder="User ID" name="User ID" style="margin-top: 70px;"><button class="btn btn-primary" data-toggle="modal" data-target="#modal1" type="button">Check</button><input class="form-control" type="text" placeholder="User Name" name="User Name" style="margin-top: 20px;"><input class="form-control" type="text" placeholder="Gender" name="Gender" style="margin-top: 20px;"><label class="form-label" style="margin-left: 15px;margin-top: 10px;color: var(--bs-gray);">DOB</label>
+            <div class="mb-3"></div>
             <div class="row">
-                <div class="col-sm-12"><select class="form-select display-inline-block">
+                <div class="col-sm-12" style="color: var(--bs-gray);margin-left: 4px;"><select class="form-select display-inline-block" style="background: var(--bs-gray);">
                         <option value="1" selected="">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -31,7 +31,7 @@
                         <option value="10">October</option>
                         <option value="11">November</option>
                         <option value="12">December</option>
-                    </select><select class="form-select display-inline-block">
+                    </select><select class="form-select display-inline-block" style="background: var(--bs-gray);">
                         <option value="1" selected="">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -63,14 +63,16 @@
                         <option value="29">29</option>
                         <option value="30">30</option>
                         <option value="31">31</option>
-                    </select><select class="form-select display-inline-block">
+                    </select><select class="form-select display-inline-block" style="background: var(--bs-gray);">
                         <option value="2016" selected="">2016</option>
                         <option value="2017">2017</option>
                     </select></div>
-            </div>
-        </div>
-        <div class="form-group mb-3"><label class="form-label" for="textarea-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;">Password</label></div><input class="form-control" type="text">
-    </form><button class="btn btn-primary" type="submit" style="height: 38px;font-family: 'Abhaya Libre', serif;font-size: 20px;">Submit</button>
+            </div><input class="form-control" type="email" placeholder="Password" name="Password" style="margin-top: 20px;">
+            <div></div>
+            <div class="mb-3"></div>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Insert</button></div>
+        </form>
+    </section>
     <script src="addUser_assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 

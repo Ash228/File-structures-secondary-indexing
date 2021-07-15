@@ -4,42 +4,44 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ModifyMovie2</title>
+    <title>Modify2Movie</title>
     <link rel="stylesheet" href="modify2Movie_assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="modify2Movie_assets/css/Form-Select---Full-Date---Month-Day-Year.css">
+    <link rel="stylesheet" href="modify2Movie_assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="modify2Movie_assets/css/styles.css">
 </head>
 
-<body style="background: linear-gradient(var(--bs-blue) 0%, rgb(255,255,255) 99%, var(--bs-blue) 100%), linear-gradient(black 1%, rgb(138,138,138) 54%, white), url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;), url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;), url(&quot;modify2Movie_assets/img/background.jpg&quot;), rgb(59,191,247);">
-    <form class="bootstrap-form-with-validation">
-        <h2 class="text-center border-primary shadow-sm" style="font-family: 'Abhaya Libre', serif;font-size: 50px;">Modify Movie</h2>
-        <div class="form-group mb-3"><label class="form-label" for="text-input" style="font-size: 30px;font-family: 'Abhaya Libre', serif;">Title</label></div><input class="form-control" type="text" id="text-input" name="text-input">
-        <div class="form-group mb-3"><label class="form-label" for="password-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;">Description</label></div><input class="form-control" type="password" id="password-input" name="password-input">
-        <div class="form-group mb-3" style="margin-left: -150px;"><label class="form-label" for="email-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;">Genre</label><label class="form-label" for="password-input" style="font-family: 'Abhaya Libre', serif;font-size: 30px;margin-left: 75px;">Genre</label>
-            <div class="row">
-                <div class="col-sm-12"><input class="form-control" type="text"></div>
-            </div>
-        </div>
-    </form>
-    <div>
-        <div class="row padMar mx-auto col-sm-9 col-md-7 col-lg-5 col-xl-6 colorCajasBlancas margenesCajas">
-            <div class="col margenesCajas">
-                <div class="row" style="margin-left: -310px;">
-                    <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto" style="margin-left: -100px;">
-                        <h4 class="padMar" style="font-family: 'Abhaya Libre', serif;">Upload Image</h4>
-                    </div>
-                    <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto">
-                        <p class="margenesTxts" style="font-family: 'Abhaya Libre', serif;">Choose the file you want to upload: </p>
-                    </div>
-                    <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto"><button class="btn btn-primary btn-Oscuro" type="button" style="font-family: 'Abhaya Libre', serif;">CHOOSE FILE</button><input type="text" placeholder="  No file chosen..." style="font-family: 'Abhaya Libre', serif;"><button class="btn btn-primary btn-Oscuro" type="button" style="font-family: 'Abhaya Libre', serif;">UPLOAD </button></div>
-                    <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto">
-                        <p class="margenesTxts" style="font-family: 'Abhaya Libre', serif;">Status: File added successfully </p>
+<body style="background: rgb(77,126,150);">
+    <section class="login-dark" style="background: rgb(71, 93, 98);">
+        <form method="post" style="width: 700px;height: 800px;min-width: -3px;max-width: 700px;">
+            <h2 class="visually-hidden">Login Form</h2><label class="form-label" style="margin-left: 210px;font-size: 30px;">Modify Movie</label><input class="form-control" type="text" placeholder="Title" name="Title" style="margin-top: 70px;"><input class="form-control" type="text" placeholder="Description" name="Description" style="margin-top: 20px;">
+            <div class="mb-3"></div><input class="form-control" type="email" placeholder="Genre" name="Genre" style="margin-top: 20px;">
+            <div>
+                <div class="row padMar mx-auto col-sm-9 col-md-7 col-lg-5 col-xl-6 colorCajasBlancas margenesCajas">
+                    <div class="col margenesCajas">
+                        <div class="row" style="margin-right: 0px;margin-left: -225px;max-width: 1000px;width: 1000px;">
+                            <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto">
+                                <h4 class="padMar" style="margin-top: 20px;color: var(--bs-gray);">Upload Image</h4>
+                            </div>
+                            <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto">
+                                <p class="margenesTxts" style="color: var(--bs-gray);">Choose the file you want to upload: </p>
+                            </div>
+                            <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto" style="margin-top: 20px;"><button class="btn btn-primary btn-Oscuro" type="button" style="width: 120px;color: var(--bs-light);">CHOOSE FILE</button><input class="form-control" type="text" placeholder="  No file chosen..." style="width: 200px;"><button class="btn btn-primary btn-Oscuro" type="button" style="height: 50px;color: var(--bs-light);">UPLOAD </button></div>
+                            <div class="col-12 col-sm-10 col-md-10 col-lg-12 col-xl-9 d-flex flex-wrap padMar mx-auto">
+                                <p class="margenesTxts" style="color: var(--bs-gray);">Status: File added successfully </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div><button class="btn btn-primary" type="submit" style="height: 38px;font-family: 'Abhaya Libre', serif;font-size: 20px;">Modify</button>
+            <div class="dropdown"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Select MovieId</button>
+                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+            </div>
+            <div class="mb-3"></div>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Modify</button></div>
+        </form>
+    </section>
     <script src="modify2Movie_assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
