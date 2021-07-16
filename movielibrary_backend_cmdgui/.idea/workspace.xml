@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1878979e-226c-427e-9da9-6ec430032548" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../application/data/movies.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../application/data/movies.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/frontend/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/frontend/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/frontend/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/displayMovie.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/displayMovie.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../application/frontend/templates/library.html" beforeDir="false" afterPath="$PROJECT_DIR$/../application/frontend/templates/library.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/movielibrary_backend_cmdgui.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/movielibrary_backend_cmdgui.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommendationgenre.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommendationgenre.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updatenoofratings.py" beforeDir="false" afterPath="$PROJECT_DIR$/updatenoofratings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,21 +86,21 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1515" height="210" key="GridCell.Tab.0.bottom" timestamp="1626453837489">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom" timestamp="1626456740133">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1626453837489" />
-    <state width="1515" height="210" key="GridCell.Tab.0.center" timestamp="1626453837489">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1626456740133" />
+    <state width="1515" height="210" key="GridCell.Tab.0.center" timestamp="1626456740133">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1626453837489" />
-    <state width="1515" height="210" key="GridCell.Tab.0.left" timestamp="1626453837489">
+    <state width="1515" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1626456740133" />
+    <state width="1515" height="210" key="GridCell.Tab.0.left" timestamp="1626456740133">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1626453837489" />
-    <state width="1515" height="210" key="GridCell.Tab.0.right" timestamp="1626453837489">
+    <state width="1515" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1626456740133" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right" timestamp="1626456740133">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1626453837489" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1626456740133" />
   </component>
 </project>

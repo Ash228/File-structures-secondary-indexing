@@ -69,8 +69,10 @@ class Movie:
         sortkey = int(sortkey)
         df_movies = pd.read_csv(path + "/data/movies.csv")
         df_movies = df_movies.loc[df_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
+        mov_obj = []
         if df_movies.empty:
             print("Record does not exist")
+            return mov_obj
         else:
             print("Id exists")
             if sortkey == 1:
@@ -81,7 +83,6 @@ class Movie:
                 genre_list = Movie.get_genre()
                 res = [i for i in genre_list if i.lower().startswith(genre.lower())][0]
                 df_movies = Movie.recommendationgenre(genre=res, percentile=0)
-            mov_obj = []
             for index, row in df_movies.iterrows():
                 mov_obj.append(Movie(row['movieId'], row['title'],
                                      row['img'], row['genre'],
@@ -94,11 +95,12 @@ class Movie:
         Movie.msecindex()
         dsk_movies = pd.read_csv(path + "/data/movies.csv")
         dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
+        mov_obj = []
         if dsk_movies.empty:
             print("Record does not exist")
+            return mov_obj
         else:
             print("Id exists")
-            mov_obj = []
             for index, row in dsk_movies.iterrows():
                 mov_obj.append(Movie(movieId=row['movieId'], title='', imgpath='', genre='', desc='', avg_ratings=''))
             return mov_obj
@@ -116,6 +118,7 @@ class Movie:
     #Retrieve single movie data based on movieId or title
     @staticmethod
     def search(movieId = False, title = False):
+        mov_obj = []
         if movieId:
             movieId = int(movieId)
             df_movies = pd.read_csv(path + "\\data\\movies.csv")
@@ -127,20 +130,20 @@ class Movie:
                 return mov_obj
             else:
                 print('MovieId incorrect')
+                return mov_obj
         elif title:
             df_movies = pd.read_csv(path + "\\data\\movies.csv")
             df_movies = df_movies.loc[df_movies['title'].str.contains(title, flags=re.IGNORECASE)]
             if df_movies.empty:
                 print('Movie title incorrect')
+                return mov_obj
             else:
-                mov_obj = []
                 for index, row in df_movies.iterrows():
                     mov_obj.append(Movie(row['movieId'], row['title'],
                                          row['img'], row['genre'],
                                          row['description'], row['average_ratings']))
                 return mov_obj
         else:
-            mov_obj = []
             print("Please enter MovieId or title")
             return mov_obj
 
@@ -150,8 +153,6 @@ class Movie:
         # df = gen_md[gen_md['genre'] == genre]
         features = 'genre'
         md = pd.read_csv(path + '/data/movies.csv')
-        print(genre)
-        print(type(genre))
         if genre in list(md['genre']):
             s = md.apply(lambda x: pd.Series(x['genre']), axis=1).stack().reset_index(level=1, drop=True)
             s.name = 'genre'
@@ -175,8 +176,6 @@ class Movie:
                         m / (m + x['no_of_ratings']) * C), axis=1)
             qualified = qualified.sort_values('wr', ascending=False)
             return qualified
-        else:
-            print('invalid genre')
 
     #Get Top Trending recommendation
     @staticmethod
@@ -238,17 +237,13 @@ class Movie:
                          'title': movies.iloc[idx]['title'].values[0], 'genre': movies.iloc[idx]['genre'].values[0],
                          'description': movies.iloc[idx]['description'].values[0],
                          'average_ratings': movies.iloc[idx]['average_ratings'].values[0],'distance': val[1]})
-                qualified = pd.DataFrame(recommend_frame, index=range(1, n_movies_to_reccomend + 1)).head(5)
+                qualified = pd.DataFrame(recommend_frame, index=range(1, n_movies_to_reccomend + 1)).head(4)
                 mov_obj = []
                 for index, row in qualified.iterrows():
                     mov_obj.append(Movie(row['movieId'], row['title'],
                                          row['img'], row['genre'],
                                          row['description'], row['average_ratings']))
                 return mov_obj
-            else:
-                return "No movies found. Please check your input"
-        else:
-            print('Movie not found')
 
     @staticmethod
     def mindex():
@@ -401,12 +396,12 @@ class Users(UserMixin):
         Users.usecindex()
         dsk_users = pd.read_csv(path + "/data/usecondary.csv")
         dsk_users = dsk_users.loc[dsk_users['name'].str.contains(uname, flags=re.IGNORECASE)]
+        user_obj = []
         if dsk_users.empty:
             print("Record does not exist")
-            return -1
+            return user_obj
         else:
             print("Id exists")
-            user_obj = []
             for index, row in dsk_users.iterrows():
                 user_obj.append(Users(userId=row['userId'],username='',password=''))
             return user_obj
