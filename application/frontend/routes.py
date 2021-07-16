@@ -26,7 +26,7 @@ def load_user(userId):
 @app.route("/")
 @app.route("/home")
 def home_page():
-    return render_template("home.html", active_home="active")
+    return render_template("home.html", active_home="active", el=1)
 
 
 @app.route("/registration", methods=['GET', 'POST'])
@@ -155,34 +155,6 @@ def library_page():
     return render_template("library.html", top_rec=top_rec, allmov=allmov, form=form, active_lib="active")
 
 
-'''@app.route('/search/<str1>', methods=['GET', 'POST'])
-@login_required
-def search_display_page(str1):
-    if movieId:
-        mov_obj = Movie.search(movieId=movieId)
-            return render_template("library.html", mov_obj=mov_obj, active_search="active")
-        else:
-            flash(f'Movie Id not found')
-            return redirect(url_for(library_page))
-    elif title:
-        mov_obj = Movie.search(title=title)
-        if mov_obj:
-            return render_template("library.html", mov_obj=mov_obj, active_search="active")
-        else:
-            flash(f'Movie title not found')
-            return redirect(url_for(library_page))
-    elif genre:
-        mov_obj = Movie.search(genre=genre)
-        if mov_obj:
-            return render_template("library.html", mov_obj=mov_obj, active_search="active")
-        else:
-            flash(f'Genre not found')
-            return redirect(url_for(library_page))
-    else:
-        flash(f'not found')
-        return redirect(url_for(library_page))'''
-
-
 @app.route('/movie_display/<movieId>', methods=['GET', 'POST'])
 @login_required
 def movie_display_page(movieId):
@@ -218,6 +190,9 @@ def movie_display_page(movieId):
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin_page():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     return render_template("admin.html", active_admin="active")
 
 
@@ -228,6 +203,9 @@ def admin_page():
 @app.route('/add_user', methods=['GET', 'POST'])
 @login_required
 def admin_user_add_page():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = AddUserForm()
     print(1)
     if form.userId.data:
@@ -250,6 +228,9 @@ def admin_user_add_page():
 @app.route('/modify_user', methods=['GET', 'POST'])
 @login_required
 def admin_user_modify_page1():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = ModifyUserForm1()
     if form.check.data:
         user_obj = Users.ufind(request.form.get('name'))
@@ -269,6 +250,9 @@ def admin_user_modify_page1():
 @app.route('/modify_user/<userId>', methods=['GET', 'POST'])
 @login_required
 def admin_user_modify_page2(userId):
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = ModifyUserForm2()
     if form.validate_on_submit():
         username = request.form.get('name')
@@ -288,6 +272,9 @@ def admin_user_modify_page2(userId):
 @app.route('/delete_user', methods=['GET', 'POST'])
 @login_required
 def admin_user_delete_page():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = DeleteUserForm()
     if form.check.data:
         user_obj = Users.ufind(request.form.get('name'))
@@ -310,6 +297,9 @@ def admin_user_delete_page():
 @app.route('/add_movie', methods=['GET', 'POST'])
 @login_required
 def admin_movie_add_page():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = AddMovieForm()
     print(1)
     if form.movieId.data:
@@ -338,6 +328,9 @@ def admin_movie_add_page():
 @app.route('/modify_movie', methods=['GET', 'POST'])
 @login_required
 def admin_movie_modify_page1():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = ModifyMovieForm1()
     if form.check.data:
         mov_obj = Movie.find_genre(request.form.get('genre'))
@@ -357,6 +350,9 @@ def admin_movie_modify_page1():
 @app.route('/modify_movie/<movieId>', methods=['GET', 'POST'])
 @login_required
 def admin_movie_modify_page2(movieId):
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = ModifyMovieForm2()
     print(1)
     print(form.validate_on_submit())
@@ -381,6 +377,9 @@ def admin_movie_modify_page2(movieId):
 @app.route('/delete_movie', methods=['GET', 'POST'])
 @login_required
 def admin_movie_delete_page():
+    if not Admin.check_password(current_user.id,current_user.password):
+        flash(f'Please login as admin', category='danger')
+        return redirect(url_for('admin_login_page'))
     form = DeleteMovieForm()
     if form.check.data:
         mov_obj = Movie.find_genre(request.form.get('genre'))

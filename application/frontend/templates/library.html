@@ -1,189 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>MovieLibrary</title>
-    <link rel="stylesheet" href={{url_for('static',filename='assets/bootstrap/css/bootstrap.min.css')}}>
-    <link rel="stylesheet" href="/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
-    <link rel="stylesheet" href={{url_for('static',filename='assets/css/Footer-Dark.css')}}>
-    <link rel="stylesheet" href={{url_for('static',filename='assets/css/Header-Blue.css')}}>
-    <link rel="stylesheet" href={{url_for('static',filename='assets/css/styles.css')}}>
-    <style>
-        .card-img-top {
-    max-width: 400px;
-    max-height: 500px;
-    object-fit: contain;
-    margin-top: 30px;
-}
-    </style>
-</head>
-<body>
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for cat, message in messages %}
-    <div class="alert alert-{{ cat }}" role="alert">
-        {{ message }}
-        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background: rgb(10, 53, 75)">
-            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"></li>
-                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
-                </div>
-            </div>
-        </nav>
-<header class="header-blue">
-    <form method="post">
-    {{ form.hidden_tag() }}
-    {{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline-block;width:54%;") }}
-    {{ form.genre(class="form-control",placeholder="Genre",style="display:inline-block;width:34%;" ) }}
-    {{ form.submit(class="btn btn-primary",style="display:inline-block;width:10%;") }}
-    {% if top_rec %}
-        <div class="row">
-        <div class="col-12">
-            <br><div style="background-color:lightgoldenrodyellow"> <h3 style="text-align: center;">Trending Now </h3></div>
-            <div class="container">
-                <div class="row g-2">
-                    {% for item in top_rec %}
-                    <div class="col-6 ">
-                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
-                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
-                            <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
-                                 alt="Movie Image">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">{{item.description}}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
+{% extends 'base.html' %}
 
-                                <li class="list-group-item">Genre:  {{item.genre}}</li>
-                                <li class="list-group-item">Rating: {{item.avg_ratings}}</li>
-                            </ul>
-                                </div>
+{% block title %}
+Movie Library
+{% endblock title %}
 
-                        </a>
-                        </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% if allmov %}
-        <div class="row">
-        <div class="col-12">
-            <br>
-            <div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">All Movies</h3></div>
-            <div class="container">
-                <div class="row g-2">
-                    {% for item in allmov %}
-                    <div class="col-6 ">
-                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
-                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
-                            <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
-                                 alt="Movie Image">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">{{item.description}}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
 
-                                <li class="list-group-item">{{item.genre}}</li>
-                                <li class="list-group-item">{{item.avg_ratings}}</li>
-                            </ul>
-                            </div>
-                        </a>
-                        </div>
-                    {% endfor %}
-                </div>
-                </div>
-
-            </div>
-        </div>
-        {% endif %}
-        {% if mov_obj %}
-        <div class="row">
-        <div class="col-12">
-
-            <br><div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">Movies</h3></div>
-            <div class="container">
-                <div class="row g-2">
-                    {% if iterab %}
-                    {% for item in mov_obj %}
-                    <div class="col-6 ">
-                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
-                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
-                            <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
-                                 alt="Movie Image">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title}}</h5>
-                                <p class="card-text">{{item.description}}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-
-                                <li class="list-group-item">{{item.genre}}</li>
-                                <li class="list-group-item">{{item.avg_ratings}}</li>
-                            </ul>
-                            </div>
-                        </a>
-                        </div>
-                    {% endfor %}
-                    {% else %}
-                    <div class="col-6 ">
-                        <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=mov_obj.movieId)}}">
-                        <div class="card " style="width: 25rem; color: black; margin: 1rem;">
-                            <img src="{{ url_for('static', filename= 'images/'+mov_obj.movieId|string ~ '.jpg') }}" class="card-img-top"
-                                 alt="Movie Image">
-                            <div class="card-body">
-                                <h5 class="card-title">{{mov_obj.title}}</h5>
-                                <p class="card-text">{{mov_obj.description}}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-
-                                <li class="list-group-item">{{mov_obj.genre}}</li>
-                                <li class="list-group-item">{{mov_obj.avg_ratings}}</li>
-                            </ul>
-                            </div>
-                        </a>
-                        </div>
-                    {% endif %}
-
-                </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </form>
-    <footer class="footer-dark">
+{% block content %}
+<form method="post">
+{{ form.hidden_tag() }}
+{{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline-block;width:54%;") }}
+{{ form.genre(class="form-control",placeholder="Genre",style="display:inline-block;width:34%;" ) }}
+{{ form.submit(class="btn btn-primary",style="display:inline-block;width:10%;") }}
+{% if top_rec %}
+    <div class="row">
+    <div class="col-12">
+        <br><div style="background-color:lightgoldenrodyellow"> <h3 style="text-align: center;">Trending Now </h3></div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 item text">
-                    <h3>Movie Library</h3>
-                    <p></p>
-                </div>
-            </div>
-            <p class="copyright">Movie Library © 2021</p>
-        </div>
-    </footer>
-</header>
-<script src={{url_for('static',filename="assets/bootstrap/js/bootstrap.min.js")}}></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+            <div class="row g-2">
+                {% for item in top_rec %}
+                <div class="col-6 ">
+                    <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
+                    <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                        <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
+                             alt="Movie Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.title}}</h5>
+                            <p class="card-text">{{item.description}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
 
-</body>
-</html>
+                            <li class="list-group-item">Genre:  {{item.genre}}</li>
+                            <li class="list-group-item">Rating: {{item.avg_ratings}}</li>
+                        </ul>
+                            </div>
+
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if allmov %}
+    <div class="row">
+    <div class="col-12">
+        <br>
+        <div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">All Movies</h3></div>
+        <div class="container">
+            <div class="row g-2">
+                {% for item in allmov %}
+                <div class="col-6 ">
+                    <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
+                    <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                        <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
+                             alt="Movie Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.title}}</h5>
+                            <p class="card-text">{{item.description}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">{{item.genre}}</li>
+                            <li class="list-group-item">{{item.avg_ratings}}</li>
+                        </ul>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+    {% if mov_obj %}
+    <div class="row">
+    <div class="col-12">
+
+        <br><div style="background-color:lightgoldenrodyellow"><h3 style="text-align: center;">Movies</h3></div>
+        <div class="container">
+            <div class="row g-2">
+                {% if iterab %}
+                {% for item in mov_obj %}
+                <div class="col-6 ">
+                    <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
+                    <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                        <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
+                             alt="Movie Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.title}}</h5>
+                            <p class="card-text">{{item.description}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">{{item.genre}}</li>
+                            <li class="list-group-item">{{item.avg_ratings}}</li>
+                        </ul>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% else %}
+                <div class="col-6 ">
+                    <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=mov_obj.movieId)}}">
+                    <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                        <img src="{{ url_for('static', filename= 'images/'+mov_obj.movieId|string ~ '.jpg') }}" class="card-img-top"
+                             alt="Movie Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{mov_obj.title}}</h5>
+                            <p class="card-text">{{mov_obj.description}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">{{mov_obj.genre}}</li>
+                            <li class="list-group-item">{{mov_obj.avg_ratings}}</li>
+                        </ul>
+                        </div>
+                    </a>
+                    </div>
+                {% endif %}
+
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</form>
+{% endblock content %}

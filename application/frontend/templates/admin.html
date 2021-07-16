@@ -1,29 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" style="background: rgb(71,93,98);">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-    <title>Admin</title>
-    <link href={{url_for('static',filename="admin_assets/bootstrap/css/bootstrap.min.css")}} rel="stylesheet">
-    <link href={{url_for('static',filename="admin_assets/css/Features-Blue.css")}} rel="stylesheet">
-    <link href={{url_for('static',filename="admin_assets/css/Features-Boxed.css")}} rel="stylesheet">
-    <link href={{url_for('static',filename="admin_assets/css/Footer-Dark.css")}} rel="stylesheet">
-    <link href={{url_for('static',filename="admin_assets/css/styles.css")}} rel="stylesheet">
-</head>
+{% block title %}
+Admin
+{% endblock title %}
 
-<body style="color: rgb(33, 37, 41);background: rgb(71,93,98);">
-<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"></li>
-                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
-                </div>
-            </div>
-        </nav>
+{% block content %}
 <section class="features-boxed"></section>
-<section class="features-blue" style="background: rgb(71, 93, 98);">
+<section class="features-blue" >
     <div class="container">
         <div class="intro">
             <h2 class="text-center">Admin</h2>
@@ -87,26 +70,4 @@
         </div>
     </div>
 </section>
-<footer class="footer-dark" style="margin-top: 95px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 item text">
-                <h3>Movie Library</h3>
-            </div>
-        </div>
-        <p class="copyright">Movie Library © 2021</p>
-    </div>
-</footer>
-<script src={{url_for('static',filename="admin_assets/bootstrap/js/bootstrap.min.js")}}></script>
-<script crossorigin="anonymous"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+{% endblock content %}

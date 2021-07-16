@@ -719,7 +719,7 @@ class Admin(UserMixin):
     @staticmethod
     def check_password(adminId, password):
         adminId = adminId
-        if password == '1234' and adminId == '1234':
+        if str(password) == '1234' and str(adminId) == '1234':
             return True
         else:
             return False

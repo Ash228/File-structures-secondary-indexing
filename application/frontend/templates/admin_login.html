@@ -1,55 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href={{url_for('static',filename="admin_login_assets/bootstrap/css/bootstrap.min.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="admin_login_assets/fonts/ionicons.min.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="admin_login_assets/css/Login-Form-Dark.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="admin_login_assets/css/styles.css")}}>
-</head>
+{% block title %}
+Admin Login
+{%endblock title %}
 
-<body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for cat, message in messages %}
-    <div class="alert alert-{{ cat }}" role="alert">
-        {{ message }}
-        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <section class="login-dark">
-        <!--h1 class="font-monospace text-center text-light" style="height: 140;">Admin Login</h1-->
-        <form class="text-start" method="post">
-            <h2 class="visually-hidden">Login Form</h2>
-            <div class="illustration"><i class="icon ion-android-person"></i></div>
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-            {{ form.adminId(class="form-control",placeholder="Admin ID" ) }}
-            </div>
-            <div class="mb-3">
-            {{ form.password(class="form-control" , placeholder="Password") }}
-            </div>
-            <div class="mb-3">
-            {{ form.submit(class="btn btn-primary d-block w-100") }}
-            </div>
-        </form>
-    </section>
-    <script src="admin_login_assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% block content %}
+<section class="login-dark">
+    <!--h1 class="font-monospace text-center text-light" style="height: 140;">Admin Login</h1-->
+    <form class="text-start" method="post">
+        <h2 class="visually-hidden">Login Form</h2>
+        <div class="illustration"><i class="icon ion-android-person"></i></div>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+        {{ form.adminId(class="form-control",placeholder="Admin ID" ) }}
+        </div>
+        <div class="mb-3">
+        {{ form.password(class="form-control" , placeholder="Password") }}
+        </div>
+        <div class="mb-3">
+        {{ form.submit(class="btn btn-primary d-block w-100") }}
+        </div>
+    </form>
+</section>
+{% endblock content %}

@@ -1,63 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Modify2User</title>
-    <link rel="stylesheet" href={{url_for('static',filename="modify2User_assets/bootstrap/css/bootstrap.min.css")}}>
-    <link rel="stylesheet" href=https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
-    <link rel="stylesheet" href={{url_for('static',filename="modify2User_assets/css/Form-Select---Full-Date---Month-Day-Year.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="modify2User_assets/css/Login-Form-Dark.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="modify2User_assets/css/styles.css")}}>
-</head>
+{% block title %}
+Modify User
+{%endblock title %}
 
-<body style="background: rgb(77,126,150);">
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for cat, message in messages %}
-    <div class="alert alert-{{ cat }}" role="alert">
-        {{ message }}
-        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"></li>
-                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
-                </div>
-            </div>
-        </nav>
-    <section class="login-dark" style="background: rgb(71, 93, 98);">
-        <form method="post" style="width: 700px;height: 500px;min-width: -3px;max-width: 700px;">
-            <h2 class="visually-hidden">Login Form</h2>
-            <label class="form-label" style="margin-left: 236px;font-size: 30px;">Modify User</label>
-            <div class="mb-3"></div>
-            <div class="mb-3">
-                {{ form.hidden_tag() }}
-            {{ form.name(class="form-control", placeholder="Name") }}
-            </div>
-            <div class="input-group mb-4">
-                {{ form.date(class="form-control") }}
-            </div>
-            <div class="mb-3">
-                {{ form.gender(class="form-control", placeholder="Gender") }}
-            </div>
-            <div class="mb-3">
-                {{ form.password(class="form-control" , placeholder="Password") }}
-            </div>
-            <div class="mb-3">
-                {{ form.submit(class="btn btn-primary d-block w-100") }}
-            </div>
-        </form>
-    </section>
-    <script src={{url_for('static',filename="modify2User_assets/bootstrap/js/bootstrap.min.js")}}></script>
-</body>
-
-</html>
+{% block content %}
+<section class="login-dark" >
+    <form method="post">
+        <h2 class="visually-hidden">Login Form</h2>
+        <h2 style="text-align:center;"><label class="form-label" >Modify User</label></h2>
+        <div class="mb-3"></div>
+        <div class="mb-3">
+            {{ form.hidden_tag() }}
+        {{ form.name(class="form-control", placeholder="Name") }}
+        </div>
+        <div class="input-group mb-4">
+            {{ form.date(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.gender(class="form-control", placeholder="Gender") }}
+        </div>
+        <div class="mb-3">
+            {{ form.password(class="form-control" , placeholder="Password") }}
+        </div>
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary d-block w-100") }}
+        </div>
+    </form>
+</section>
+{% endblock content %}

@@ -1,68 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>DeleteMovie</title>
-    <link rel="stylesheet" href={{url_for('static',filename="modify1Movie_assets/bootstrap/css/bootstrap.min.css")}}>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
-    <link rel="stylesheet" href={{url_for('static',filename="modify1Movie_assets/css/Form-Select---Full-Date---Month-Day-Year.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="modify1Movie_assets/css/Login-Form-Dark.css")}}>
-    <link rel="stylesheet" href={{url_for('static',filename="modify1Movie_assets/css/styles.css")}}>
-</head>
+{% block title %}
+Modify Movie
+{%endblock title %}
 
-<body style="background: rgb(77,126,150);">
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for cat, message in messages %}
-    <div class="alert alert-{{ cat }}" role="alert">
-        {{ message }}
-        <button class="m1-2 mb-1 close" type="button" data-dismiss="alert" aria-label="close" style="float:right">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-            <div class="container-fluid"><a class="navbar-brand" href="#">Movie Library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"></li>
-                    </ul><span class="navbar-text" > <a class="login" href="{{url_for('logout_page')}}">Log out</a></span>
-                </div>
-            </div>
-        </nav>
-    <section class="login-dark" style="background: rgb(71, 93, 98);">
-        <form method="post" style="width: 500px;height: 523px;min-width: -3px;max-width: 500px;">
-            <h2 class="visually-hidden">Login Form</h2>
-            <label class="form-label" style="margin-left: 125px;font-size: 30px;">Modify Movie</label>
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-                {{ form.genre(class="form-control", placeholder="Genre") }}
-                {% if form.genre.errors %}
-                    {{ form.genre(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.genre.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor%}
-                        </div>
-                {% endif %}
-            </div>
-            <div class="mb-3">
-                {{ form.check(class="btn btn-primary d-block w-100") }}
-            </div>
+{% block content %}
+<section class="login-dark" >
+    <form method="post">
+        <h2 class="visually-hidden">Login Form</h2>
+        <h2 style="text-align:center;"><label class="form-label" style="margin-left: 125px;font-size: 30px;">Modify Movie</label></h2>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.genre(class="form-control", placeholder="Genre") }}
+            {% if form.genre.errors %}
+                {{ form.genre(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.genre.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor%}
+                    </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.check(class="btn btn-primary d-block w-100") }}
+        </div>
 
-            <div class="mb-3"></div>
-            {{ form.selectmid(class="selectpicker form-control", placeholder='Select MovieId', style='background: rgba(30,40,51,255);')}}
-            </div>
-            <div class="mb-3">
-                {{ form.submit(class="btn btn-primary d-block w-100") }}
-            </div>
-        </form>
-    </section>
-    <script src={{url_for('static',filename="modify1Movie_assets/bootstrap/js/bootstrap.min.js")}}></script>
-</body>
-
-</html>
+        <div class="mb-3"></div>
+        {{ form.selectmid(class="selectpicker form-control", placeholder='Select MovieId', style='background: rgba(30,40,51,255);')}}
+        </div>
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary d-block w-100") }}
+        </div>
+    </form>
+</section>
+{% endblock content %}
