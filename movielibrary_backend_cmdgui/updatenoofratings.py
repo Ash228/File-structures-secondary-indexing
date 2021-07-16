@@ -1,6 +1,8 @@
 import csv
 import hashlib
 import pathlib
+import re
+
 import pandas as pd
 from itertools import zip_longest
 from primary_index import *
@@ -117,4 +119,17 @@ def display_df(df_movies):
         print("Genre:  ",row["genre"]+"\n")
 df_movies = pd.read_csv(path + "\\data\\movies.csv")
 
-rupdate()
+
+def get_genre():
+    mindex()
+    msecindex()
+    df_movies = pd.read_csv(path + "\\data\\movsecondary.csv")
+    df = df_movies['genre'].drop_duplicates().to_list()
+    print(df)
+    res = [i for i in df if i.lower().startswith('com')]
+    print(res)
+    '''df_list = [df_list.append((i.split('|')) for i in df]
+    print(df_list)
+    flat_list = [item for sublist in df_list for item in sublist]
+    print(flat_list)'''
+

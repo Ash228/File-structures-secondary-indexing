@@ -11,6 +11,13 @@ Movie Library
 {{ form.title_movId(class="form-control",placeholder="Title or MovieId" ,style="display:inline-block;width:54%;") }}
 {{ form.genre(class="form-control",placeholder="Genre",style="display:inline-block;width:34%;" ) }}
 {{ form.submit(class="btn btn-primary",style="display:inline-block;width:10%;") }}
+{% if gen %}
+<div style="display:flex;flex-direction:row-reverse;margin-top:10px;margin-right:2%">
+{{ form.selectsort(class="btn btn-light action-button ", style='background:transparent;') }}<b style="color:white;">Genre: </b>
+{% endif %}
+</div>
+    <br>
+</form>
 {% if top_rec %}
     <div class="row">
     <div class="col-12">
@@ -126,5 +133,5 @@ Movie Library
         </div>
     </div>
     {% endif %}
-</form>
+
 {% endblock content %}

@@ -54,27 +54,33 @@ class Movie:
 
     #check if genre exists
     @staticmethod
-    def check_genre(genre):
+    def get_genre():
         Movie.mindex()
         Movie.msecindex()
         df_movies = pd.read_csv(path + "\\data\\movsecondary.csv")
-        df_movies = df_movies.loc[df_movies['genre'] == genre]
-        if genre in list(df_movies['genre']):
-            return True
-        else:
-            return False
+        df_movies = df_movies['genre'].drop_duplicates().to_list()
+        return df_movies
 
     #Retieve list of movieId for given genre
     @staticmethod
-    def find_genre_search(genre):
+    def find_genre_search(genre, sortkey):
         Movie.mindex()
         Movie.msecindex()
+        sortkey = int(sortkey)
         df_movies = pd.read_csv(path + "/data/movies.csv")
         df_movies = df_movies.loc[df_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
         if df_movies.empty:
             print("Record does not exist")
         else:
             print("Id exists")
+            if sortkey == 1:
+                df_movies = df_movies.sort_values('title', ascending=True)
+            elif sortkey == 2:
+                df_movies = df_movies.sort_values('title', ascending=False)
+            elif sortkey == 3:
+                genre_list = Movie.get_genre()
+                res = [i for i in genre_list if i.lower().startswith(genre.lower())][0]
+                df_movies = Movie.recommendationgenre(genre=res, percentile=0)
             mov_obj = []
             for index, row in df_movies.iterrows():
                 mov_obj.append(Movie(row['movieId'], row['title'],
@@ -87,18 +93,14 @@ class Movie:
         Movie.mindex()
         Movie.msecindex()
         dsk_movies = pd.read_csv(path + "/data/movies.csv")
-        print(dsk_movies)
-        print(genre)
-        print(dsk_movies['genre'])
         dsk_movies = dsk_movies.loc[dsk_movies['genre'].str.contains(genre, flags=re.IGNORECASE)]
-        print(dsk_movies)
         if dsk_movies.empty:
             print("Record does not exist")
         else:
             print("Id exists")
             mov_obj = []
             for index, row in dsk_movies.iterrows():
-                mov_obj.append(Movie(movieId=row['movieId'],title='',imgpath='',genre='',desc='',avg_ratings=''))
+                mov_obj.append(Movie(movieId=row['movieId'], title='', imgpath='', genre='', desc='', avg_ratings=''))
             return mov_obj
 
     @staticmethod
@@ -138,7 +140,9 @@ class Movie:
                                          row['description'], row['average_ratings']))
                 return mov_obj
         else:
+            mov_obj = []
             print("Please enter MovieId or title")
+            return mov_obj
 
     #Get trending recommendations based on genre
     @staticmethod
@@ -146,7 +150,9 @@ class Movie:
         # df = gen_md[gen_md['genre'] == genre]
         features = 'genre'
         md = pd.read_csv(path + '/data/movies.csv')
-        if genre in md['genre']:
+        print(genre)
+        print(type(genre))
+        if genre in list(md['genre']):
             s = md.apply(lambda x: pd.Series(x['genre']), axis=1).stack().reset_index(level=1, drop=True)
             s.name = 'genre'
             gen_md = md.drop('genre', axis=1).join(s)
@@ -167,14 +173,8 @@ class Movie:
             qualified['wr'] = qualified.apply(
                 lambda x: (x['no_of_ratings'] / (x['no_of_ratings'] + m) * x['average_ratings']) + (
                         m / (m + x['no_of_ratings']) * C), axis=1)
-            qualified = qualified.sort_values('wr', ascending=False).head(5)
-
-            mov_obj = []
-            for index, row in qualified.iterrows():
-                mov_obj.append(Movie(row['movieId'], row['title'],
-                                     row['img'], row['genre'],
-                                     row['description'], row['average_ratings']))
-            return mov_obj
+            qualified = qualified.sort_values('wr', ascending=False)
+            return qualified
         else:
             print('invalid genre')
 
@@ -211,13 +211,11 @@ class Movie:
     def recommendationname(movie_name):
         movies = pd.read_csv(path + '\\data\\movies.csv')
         ratings = pd.read_csv(path + '\\data\\ratings.csv')
-        if movie_name in movies['title']:
+        if movie_name in list(movies['title']):
             final_dataset = ratings.pivot(index='movieId', columns='userId', values='ratings')
             final_dataset.fillna(0, inplace=True)
-            # print(final_dataset)
 
             csr_data = csr_matrix(final_dataset.values)
-            # print(csr_data)
 
             final_dataset.reset_index(inplace=True)
             knn = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
@@ -238,7 +236,8 @@ class Movie:
                     recommend_frame.append(
                         {'movieId': movies.iloc[idx]['movieId'].values[0], 'img': movies.iloc[idx]['img'].values[0],
                          'title': movies.iloc[idx]['title'].values[0], 'genre': movies.iloc[idx]['genre'].values[0],
-                         'distance': val[1]})
+                         'description': movies.iloc[idx]['description'].values[0],
+                         'average_ratings': movies.iloc[idx]['average_ratings'].values[0],'distance': val[1]})
                 qualified = pd.DataFrame(recommend_frame, index=range(1, n_movies_to_reccomend + 1)).head(5)
                 mov_obj = []
                 for index, row in qualified.iterrows():
@@ -529,11 +528,11 @@ class Ratings():
             b = df_ratings.filter(like='userId')
             df_ratings[b.columns] = b.replace(a)
             df_ratings = df_ratings.rename(columns={'userId': 'username'})
-
-            rating_obj = []
+            print(df_ratings)
+            rating_obj = list()
         for index, row in df_ratings.iterrows():
             rating_obj.append(Ratings(row['username'],'', row['ratings'],row['reviews']))
-            return rating_obj
+        return rating_obj
 
     #Check if user has left a rating for movie
     @staticmethod

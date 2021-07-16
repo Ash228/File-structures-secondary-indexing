@@ -29,4 +29,4 @@ def recommendationgenre(genre, percentile=0.85):
     qualified = qualified.sort_values('wr', ascending=False).head(250)
 
     return qualified
-#print(recommendationgenre('Drama'))
+print(recommendationgenre('drama',0))

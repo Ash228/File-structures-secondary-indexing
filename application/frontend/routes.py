@@ -101,6 +101,8 @@ def logout_page():
 @login_required
 def library_page():
     form = LibraryForm()
+    top_rec = Movie.recommendationtop()
+    allmov = Movie.get_all_movies()
     if form.submit.data:
         title_movId = request.form.get('title_movId')
         print(title_movId)
@@ -132,13 +134,16 @@ def library_page():
                                                active_search="active")
                 else:
                     flash(f'Movie title not found')
-                    return redirect(url_for(library_page))
+                    return render_template("library.html", top_rec=top_rec, allmov=allmov, form=form, active_lib="active")
         elif genre:
             print('search3')
-            mov_obj = Movie.find_genre_search(genre=genre)
+            sortkey = 1
+            if form.selectsort.data:
+                sortkey = request.form.get('selectsort')
+            mov_obj = Movie.find_genre_search(genre=genre,sortkey=sortkey)
             if mov_obj:
                 if isinstance(mov_obj, Iterable):
-                    return render_template("library.html", mov_obj=mov_obj, form=form, iterab=True,
+                    return render_template("library.html", mov_obj=mov_obj, form=form, iterab=True, gen=1,
                                            active_search="active")
                 else:
                     return render_template("library.html", mov_obj=mov_obj, form=form, iterab=False,
@@ -149,8 +154,7 @@ def library_page():
         else:
             flash(f"Invalid Input", category='danger')
 
-    top_rec = Movie.recommendationtop()
-    allmov = Movie.get_all_movies()
+
 
     return render_template("library.html", top_rec=top_rec, allmov=allmov, form=form, active_lib="active")
 
@@ -161,12 +165,16 @@ def movie_display_page(movieId):
     form = DisplayMovieRatingsForm()
     mov_obj = Movie.search(movieId=movieId)
     rat_obj = Ratings.get_all_ratings(movieId=movieId)
+    rec_obj = Movie.recommendationname(mov_obj.title)
     if form.addrating.data:
         if form.validate_on_submit():
-            if form.rating.data and form.review.data:
-                Ratings.rinsert(id1=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
-                flash(f'Rating entered Succesfully', category='success')
-                return redirect(url_for('movie_display_page', movieId=movieId))
+            if Ratings.check_rating(user_id=current_user.id,movieId=movieId):
+                if form.rating.data and form.review.data:
+                    Ratings.rinsert(id1=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
+                    flash(f'Rating entered Succesfully', category='success')
+                    return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
+                else:
+                    flash(f'Validation error, please try later', category='danger')
             else:
                 flash(f'Validation error, please try later', category='danger')
     if form.modifyrating.data:
@@ -174,17 +182,17 @@ def movie_display_page(movieId):
             if form.rating.data and form.review.data:
                 Ratings.rupdate(uid=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
                 flash(f'Rating modified Succesfully', category='success')
-                return redirect(url_for('movie_display_page', movieId=movieId))
+                return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
             else:
                 flash(f'Validation error, please try later', category='danger')
     if form.deleterating.data:
         Ratings.rdelete(uid=current_user.id, movieid=movieId)
         flash(f'Rating modified Succesfully', category='success')
-        return redirect(url_for('movie_display_page', movieId=movieId))
+        return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active", rec_obj=rec_obj)
 
     if Ratings.check_rating(user_id=current_user.id,movieId=movieId):
-        return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active")
-    return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active")
+        return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
+    return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active", rec_obj=rec_obj)
 
 
 @app.route('/admin', methods=['GET', 'POST'])

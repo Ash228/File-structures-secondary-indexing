@@ -42,10 +42,42 @@
 {{ form.rating(class="form-control", placeholder="Rating",style="width:50%;margin-left: 25%;margin-top: 50px;") }}
 {{ form.review(class="form-control", placeholder="Review",style="width:50%;margin-left: 25%;margin-top: 50px;") }}
 <br>
+{% if not rate %}
 {{ form.addrating(class="btn btn-primary", style="background: #355a91;margin-left: 30%;margin-top: 10px;margin-bottom: 10px;display:inline-block;") }}
-{% if rate %}
+{% else %}
 {{ form.modifyrating(class="btn btn-primary", style="background: #355a91;margin-left: 5%;margin-top: 10px;margin-bottom: 10px;display:inline-block;") }}
 {{ form.deleterating(class="btn btn-primary", style="background: #355a91;margin-left: 5%;margin-top: 10px;margin-bottom: 10px;display:inline-block;") }}
 {% endif %}
 </form>
+
+{% if rec_obj %}
+    <div class="row">
+    <div class="col-12">
+        <br><div style="background-color:lightgoldenrodyellow"> <h3 style="text-align: center;">Recommendations </h3></div>
+        <div class="container">
+            <div class="row g-2">
+                {% for item in rec_obj %}
+                <div class="col-6 ">
+                    <a style='text-decoration:none;' href ="{{url_for('movie_display_page', movieId=item.movieId)}}">
+                    <div class="card " style="width: 25rem; color: black; margin: 1rem;">
+                        <img src="{{ url_for('static', filename= 'images/'+item.movieId|string ~ '.jpg') }}" class="card-img-top"
+                             alt="Movie Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.title}}</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">Genre:  {{item.genre}}</li>
+                            <li class="list-group-item">Rating: {{item.avg_ratings}}</li>
+                        </ul>
+                            </div>
+
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock content %}

@@ -67,6 +67,7 @@ class LibraryForm(FlaskForm):
     title_movId = StringField(label='Title or MovieId' )
     genre = StringField(label='Genre')
     submit = SubmitField(label='Search')
+    selectsort = SelectField(label='sort', choices=[(1, 'Ascending'), (2, 'Descending'), (3, 'Popularity')])
 
 
 
