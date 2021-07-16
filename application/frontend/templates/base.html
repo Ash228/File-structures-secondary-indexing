@@ -47,7 +47,7 @@
             </div>
         </nav>
         {% endif %}
-        {% if el and current_user.is_authenticated and not active_admin_login and not active_login and not active_register %}
+        {% if el and current_user.is_authenticated and not current_user.id|string == '1234' and not active_admin_login and not active_login and not active_register %}
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{url_for('home_page')}}">Movie Library</a>
@@ -63,13 +63,30 @@
             </div>
         </nav>
         {% endif %}
-        {% if not el and current_user.is_authenticated and not active_admin_login and not active_login and not active_register %}
+        {% if not el and current_user.is_authenticated and not current_user.id|string == '1234' and not active_admin_login and not active_login and not active_register %}
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{url_for('home_page')}}">Movie Library</a>
                 <div class="collapse navbar-collapse" id="navcol-3">
                 <ul class="nav navbar-nav" >
                     <li><a class="btn btn-light action-button" role="button" href="{{url_for('library_page')}}" >Library</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto" >
+                    <li class="navbar-text">Welcome, {{ current_user.username }}</li>
+                    <li><a  class="btn btn-light action-button" href="{{url_for('logout_page')}}" style="margin-left: 10px;">Log out</a>
+                </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+        {% endif %}
+        {% if current_user.is_authenticated and current_user.id|string == '1234' and not active_admin_login and not active_login and not active_register %}
+        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{url_for('home_page')}}">Movie Library</a>
+                <div class="collapse navbar-collapse" id="navcol-4">
+                <ul class="nav navbar-nav" >
+                    <li><a class="btn btn-light action-button" role="button" href="{{url_for('admin_page')}}" >Dashboard</a></li>
                 </ul>
                 <ul class="navbar-nav ms-auto" >
                     <li class="navbar-text">Welcome, {{ current_user.username }}</li>
