@@ -96,11 +96,13 @@
                 </div>
             </div>
         </nav>
+
         {% endif %}
     {% block content%}
 
     {% endblock content %}
-        <footer class="footer-dark">
+    </header>
+        <footer class="footer-dark" >
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 item text">
@@ -111,7 +113,7 @@
                 <p class="copyright">Movie Library © 2021</p>
             </div>
         </footer>
-    </header>
+
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src={{url_for('static',filename="assets/bootstrap/js/bootstrap.min.js")}}></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
