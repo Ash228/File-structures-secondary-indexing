@@ -14,7 +14,7 @@ from .forms import LoginFormAdmin, LoginForm, RegisterForm, LibraryForm, AddUser
     AddMovieForm, ModifyMovieForm1, ModifyMovieForm2, DeleteMovieForm, DisplayMovieRatingsForm
 
 path = str(pathlib.Path().absolute())
-UPLOADS_PATH = path+'\\frontend\\static\\images\\'
+UPLOADS_PATH = path+'/frontend/static/images/'
 
 @login_manager.user_loader
 def load_user(userId):

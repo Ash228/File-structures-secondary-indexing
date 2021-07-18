@@ -44,7 +44,7 @@ class Movie:
     def check_movieId(movieId = False):
         if movieId:
             movieId = int(movieId)
-            df_movies = pd.read_csv(path + "\\data\\movies.csv")
+            df_movies = pd.read_csv(path + "/data/movies.csv")
             df_movies = df_movies.loc[df_movies['movieId'] == movieId]
             if movieId in list(df_movies['movieId']):
                 return True
@@ -57,7 +57,7 @@ class Movie:
     def get_genre():
         Movie.mindex()
         Movie.msecindex()
-        df_movies = pd.read_csv(path + "\\data\\movsecondary.csv")
+        df_movies = pd.read_csv(path + "/data/movsecondary.csv")
         df_movies = df_movies['genre'].drop_duplicates().to_list()
         return df_movies
 
@@ -107,7 +107,7 @@ class Movie:
 
     @staticmethod
     def get_all_movies():
-        df_movies = pd.read_csv(path + '\\data\\movies.csv')
+        df_movies = pd.read_csv(path + '/data/movies.csv')
         mov_obj = []
         for index, row in df_movies.iterrows():
             mov_obj.append(Movie(row['movieId'], row['title'],
@@ -121,7 +121,7 @@ class Movie:
         mov_obj = []
         if movieId:
             movieId = int(movieId)
-            df_movies = pd.read_csv(path + "\\data\\movies.csv")
+            df_movies = pd.read_csv(path + "/data/movies.csv")
             df_movies = df_movies.loc[df_movies['movieId'] == movieId]
             if movieId in list(df_movies['movieId']):
                 mov_obj = Movie(df_movies['movieId'].values[0], df_movies['title'].values[0],
@@ -132,7 +132,7 @@ class Movie:
                 print('MovieId incorrect')
                 return mov_obj
         elif title:
-            df_movies = pd.read_csv(path + "\\data\\movies.csv")
+            df_movies = pd.read_csv(path + "/data/movies.csv")
             df_movies = df_movies.loc[df_movies['title'].str.contains(title, flags=re.IGNORECASE)]
             if df_movies.empty:
                 print('Movie title incorrect')
@@ -208,8 +208,8 @@ class Movie:
     #Get recommendation based on similar movies (rating based)
     @staticmethod
     def recommendationname(movie_name):
-        movies = pd.read_csv(path + '\\data\\movies.csv')
-        ratings = pd.read_csv(path + '\\data\\ratings.csv')
+        movies = pd.read_csv(path + '/data/movies.csv')
+        ratings = pd.read_csv(path + '/data/ratings.csv')
         if movie_name in list(movies['title']):
             final_dataset = ratings.pivot(index='movieId', columns='userId', values='ratings')
             final_dataset.fillna(0, inplace=True)
@@ -250,7 +250,7 @@ class Movie:
         Offset_address = []
         Primary_key = []
         csv_columns = ["movieId", "offset"]
-        fi_movies = open(path + "\\data\\movies.csv", "r", encoding='utf-8')
+        fi_movies = open(path + "/data/movies.csv", "r", encoding='utf-8')
         pos = fi_movies.tell()
         line = fi_movies.readline()
         pos = fi_movies.tell()
@@ -264,7 +264,7 @@ class Movie:
         list = [Primary_key, Offset_address]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + "\\data\\\movprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + "/data/movprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("movieId", "offset"))
             wr.writerows(export_data)
@@ -275,7 +275,7 @@ class Movie:
         genre = []
         Primary_key = []
         csv_columns = ["genre", "movieId"]
-        fi_movies = open(path + "\\data\\movies.csv", "r", encoding='utf-8')
+        fi_movies = open(path + "/data/movies.csv", "r", encoding='utf-8')
         pos = fi_movies.tell()
         line = fi_movies.readline()
         pos = fi_movies.tell()
@@ -291,7 +291,7 @@ class Movie:
         list = [genre, Primary_key]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + "\\data\\movsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + "/data/movsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("genre", "movieId"))
             wr.writerows(export_data)
@@ -302,12 +302,12 @@ class Movie:
         id1 = int(id1)
         Movie.mindex()
         Movie.msecindex()
-        dpk_movies = pd.read_csv(path + "\\data\\movprimary.csv", usecols=[0], header=None)
-        with open(path + "\\data\\movies.csv", "a", encoding='utf-8', newline='') as csvfile:
+        dpk_movies = pd.read_csv(path + "/data/movprimary.csv", usecols=[0], header=None)
+        with open(path + "/data/movies.csv", "a", encoding='utf-8', newline='') as csvfile:
             no_of_ratings = average_ratings = 0
             writer = csv.writer(csvfile)
             writer.writerow('')
-            filedname = [id1, '\\frontend\\static\\images\\'+str(id1)+'.jpg', title, description, genre, no_of_ratings, average_ratings]
+            filedname = [id1, '/frontend/static/images/'+str(id1)+'.jpg', title, description, genre, no_of_ratings, average_ratings]
             print(filedname)
             writer = csv.writer(csvfile, lineterminator='')
             writer.writerow(filedname)
@@ -330,12 +330,12 @@ class Movie:
 
     @staticmethod
     def mdelete(genre, movieId):
-        df_movies = pd.read_csv(path + "\\data\\movies.csv")
+        df_movies = pd.read_csv(path + "/data/movies.csv")
         i = df_movies.query('movieId == @movieId').index
         df_movies = df_movies.drop(i)
-        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
-        file_data = open(path + "\\data\\movies.csv", 'rb').read()
-        open(path + "\\data\\movies.csv", 'wb').write(file_data[:-2])
+        df_movies.to_csv(path + "/data/movies.csv", index=False)
+        file_data = open(path + "/data/movies.csv", 'rb').read()
+        open(path + "/data/movies.csv", 'wb').write(file_data[:-2])
         print("Record deleted ")
         Movie.mindex()
         Movie.msecindex()
@@ -365,7 +365,7 @@ class Users(UserMixin):
     def check_password(user_id, password):
         print(user_id)
         #userId = int(user_id)
-        df_user = pd.read_csv(path + "\\data\\user.csv")
+        df_user = pd.read_csv(path + "/data/user.csv")
         df_user = df_user.loc[df_user['userId'] == user_id]
         if df_user.empty:
             return False
@@ -412,7 +412,7 @@ class Users(UserMixin):
         Offset_address = []
         Primary_key = []
         csv_columns = ["userId", "offset"]
-        fi_user = open(path + "\\data\\user.csv", "r", encoding='utf-8')
+        fi_user = open(path + "/data/user.csv", "r", encoding='utf-8')
         pos = fi_user.tell()
         line = fi_user.readline()
         pos = fi_user.tell()
@@ -426,7 +426,7 @@ class Users(UserMixin):
         list = [Primary_key, Offset_address]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + "\\data\\uprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + "/data/uprimary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("userId", "offset"))
             wr.writerows(export_data)
@@ -437,7 +437,7 @@ class Users(UserMixin):
         name = []
         Primary_key = []
         csv_columns = ["name", "userId"]
-        fi_user = open(path + "\\data\\user.csv", "r", encoding='utf-8')
+        fi_user = open(path + "/data/user.csv", "r", encoding='utf-8')
         pos = fi_user.tell()
         line = fi_user.readline()
         pos = fi_user.tell()
@@ -452,7 +452,7 @@ class Users(UserMixin):
         list = [name, Primary_key]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + "\\data\\usecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + "/data/usecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("name", "userId"))
             wr.writerows(export_data)
@@ -464,7 +464,7 @@ class Users(UserMixin):
         Users.uindex()
         Users.usecindex()
         dob = dob.strftime("%m-%d-%Y")
-        with open(path + "\\data\\user.csv", "a", encoding='utf-8', newline='') as csvfile:
+        with open(path + "/data/user.csv", "a", encoding='utf-8', newline='') as csvfile:
             password = hashlib.md5(password.encode('utf8')).hexdigest()
             writer = csv.writer(csvfile)
             writer.writerow('')
@@ -479,12 +479,12 @@ class Users(UserMixin):
     @staticmethod
     def udelete(name, userId):
         userId = int(userId)
-        df_user = pd.read_csv(path + "\\data\\user.csv")
+        df_user = pd.read_csv(path + "/data/user.csv")
         i = df_user.query('userId == @userId').index
         df_user = df_user.drop(i)
-        df_user.to_csv(path + "\\data\\user.csv", index=False)
-        file_data = open(path + "\\data\\user.csv", 'rb').read()
-        open(path + "\\data\\user.csv", 'wb').write(file_data[:-2])
+        df_user.to_csv(path + "/data/user.csv", index=False)
+        file_data = open(path + "/data/user.csv", 'rb').read()
+        open(path + "/data/user.csv", 'wb').write(file_data[:-2])
         print("Record deleted")
         Users.uindex()
         Users.usecindex()
@@ -513,11 +513,11 @@ class Ratings():
     @staticmethod
     def get_all_ratings(movieId):
         movieId = int(movieId)
-        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
         df_ratings = df_ratings.loc[df_ratings['movieId'] == movieId]
         if movieId in list(df_ratings['movieId']):
             df_ratings = df_ratings.drop(['movieId'], axis=1)
-            df_user = pd.read_csv(path + "\\data\\user.csv")
+            df_user = pd.read_csv(path + "/data/user.csv")
             id2 = df_ratings['userId']
             a = df_user.set_index('userId')['name'].to_dict()
             b = df_ratings.filter(like='userId')
@@ -554,7 +554,7 @@ class Ratings():
         Primary_key = []
         movieId = []
         csv_columns = ["userId", "movieId", "offset"]
-        fi_ratings = open(path + "\\data\\ratings.csv", "r", encoding='utf-8')
+        fi_ratings = open(path + "/data/ratings.csv", "r", encoding='utf-8')
         pos = fi_ratings.tell()
         line = fi_ratings.readline()
         pos = fi_ratings.tell()
@@ -571,7 +571,7 @@ class Ratings():
         list = [Primary_key, movieId, Offset_address]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + '\\data\\rprimary.csv', 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + '/data/rprimary.csv', 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("userId", "movieId", "offset"))
             wr.writerows(export_data)
@@ -582,7 +582,7 @@ class Ratings():
         ratings = []
         Primary_key = []
         csv_columns = ["ratings", "id"]
-        fi_ratings = open(path + "\\data\\ratings.csv", "r", encoding='utf-8')
+        fi_ratings = open(path + "/data/ratings.csv", "r", encoding='utf-8')
         pos = fi_ratings.tell()
         line = fi_ratings.readline()
         pos = fi_ratings.tell()
@@ -597,7 +597,7 @@ class Ratings():
         list = [ratings, Primary_key]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
-        with open(path + "\\data\\rsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
+        with open(path + "/data/rsecondary.csv", 'w', encoding="ISO-8859-1", newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("ratings", "id"))
             wr.writerows(export_data)
@@ -619,9 +619,9 @@ class Ratings():
         df_movies = pd.read_csv(path + "/data/movies.csv")
         df_movies = df_movies.loc[df_movies['movieId'] == movieid]
         no_of_ratings = int(df_movies['no_of_ratings']) + 1
-        df_movies = pd.read_csv(path + "\\data\\\movies.csv")
+        df_movies = pd.read_csv(path + "/data/\movies.csv")
 
-        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
         df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
         t = 0
         if movieid in list(df_ratings['movieId']):
@@ -632,7 +632,7 @@ class Ratings():
             t = str(round(t, 2))
         iu = df_movies.query('movieId == @movieid').index
         df_movies.loc[iu, ['average_ratings', 'no_of_ratings']] = [t, no_of_ratings]
-        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        df_movies.to_csv(path + "/data/movies.csv", index=False)
         print('done')
         Ratings.rindex()
         Ratings.rsecindex()
@@ -645,16 +645,16 @@ class Ratings():
         i = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings = df_ratings.drop(i)
         print(df_ratings)
-        df_ratings.to_csv(path + "\\data\\ratings.csv", index=False)
-        file_data = open(path + "\\data\\ratings.csv", 'rb').read()
-        open(path + "\\data\\ratings.csv", 'wb').write(file_data[:-2])
+        df_ratings.to_csv(path + "/data/ratings.csv", index=False)
+        file_data = open(path + "/data/ratings.csv", 'rb').read()
+        open(path + "/data/ratings.csv", 'wb').write(file_data[:-2])
 
-        df_movies = pd.read_csv(path + "\\data\\movies.csv")
+        df_movies = pd.read_csv(path + "/data/movies.csv")
         df_movies = df_movies.loc[df_movies['movieId'] == movieid]
         no_of_ratings = int(df_movies['no_of_ratings'].values[0]) - 1
-        df_movies = pd.read_csv(path + "\\data\\\movies.csv")
+        df_movies = pd.read_csv(path + "/data/\movies.csv")
 
-        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
         df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
         t = 0
         if movieid in list(df_ratings['movieId']):
@@ -665,7 +665,7 @@ class Ratings():
             t = str(round(t, 2))
         iu = df_movies.query('movieId == @movieid').index
         df_movies.loc[iu, ['average_ratings', 'no_of_ratings']] = [t, no_of_ratings]
-        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        df_movies.to_csv(path + "/data/movies.csv", index=False)
         Ratings.rindex()
         Ratings.rsecindex()
 
@@ -677,9 +677,9 @@ class Ratings():
         iu = df_ratings.query('userId == @uid & movieId == @movieid').index
         df_ratings.loc[iu, ['ratings', 'reviews']] = [ratings, reviews]
         df_ratings.to_csv(path + "/data/ratings.csv", index=False)
-        df_movies = pd.read_csv(path + "\\data\\\movies.csv")
+        df_movies = pd.read_csv(path + "/data/movies.csv")
         # -------------
-        df_ratings = pd.read_csv(path + "\\data\\ratings.csv")
+        df_ratings = pd.read_csv(path + "/data/ratings.csv")
         df_ratings = df_ratings.loc[df_ratings['movieId'] == movieid]
         t = 0
         if int(movieid) in list(df_ratings['movieId']):
@@ -690,7 +690,7 @@ class Ratings():
             t = str(round(t, 2))
         iu = df_movies.query('movieId == @movieid').index
         df_movies.loc[iu, ['average_ratings']] = [t]
-        df_movies.to_csv(path + "\\data\\movies.csv", index=False)
+        df_movies.to_csv(path + "/data/movies.csv", index=False)
         # --------------
         Ratings.rindex()
         Ratings.rsecindex()

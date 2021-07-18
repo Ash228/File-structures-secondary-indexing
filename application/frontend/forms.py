@@ -119,7 +119,7 @@ class ModifyMovieForm1(FlaskForm):
     genre = StringField(label="Genre", validators=[Length(min=1, max=20), DataRequired()])
     check = SubmitField(label='Check MovieId')
     selectmid = SelectField(label='Select MovieId',choices=[])
-    submit = SubmitField(label='Modify User')
+    submit = SubmitField(label='Modify Movie')
 
 class ModifyMovieForm2(FlaskForm):
     title = StringField(label="Title", validators=[Length(min=1, max=50), DataRequired()])
