@@ -1,6 +1,6 @@
 # File-structures-secondary-indexing
 File structures mini project using secondary indexing method
-![Image of Homepage](https://github.com/Ash228/File-structures-secondary-indexing/tree/master/img/home.png?raw=true)
+<img src ='/img/home.png'/>
 Fig 6.1.1 Home Page
 The Fig 6.1.1 displays the Home Page of the Movie Library where we can login as a User or Admin.
 
