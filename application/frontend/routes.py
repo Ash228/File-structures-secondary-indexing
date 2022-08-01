@@ -172,6 +172,9 @@ def movie_display_page(movieId):
                 if form.rating.data and form.review.data:
                     Ratings.rinsert(id1=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
                     flash(f'Rating entered Succesfully', category='success')
+                    mov_obj = Movie.search(movieId=movieId)
+                    rat_obj = Ratings.get_all_ratings(movieId=movieId)
+                    rec_obj = Movie.recommendationname(mov_obj.title)
                     return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
                 else:
                     flash(f'Validation error, please try later', category='danger')
@@ -182,15 +185,21 @@ def movie_display_page(movieId):
             if form.rating.data and form.review.data:
                 Ratings.rupdate(uid=current_user.id,movieid=movieId,ratings=request.form.get('rating'),reviews=request.form.get('review'))
                 flash(f'Rating modified Succesfully', category='success')
+                mov_obj = Movie.search(movieId=movieId)
+                rat_obj = Ratings.get_all_ratings(movieId=movieId)
+                rec_obj = Movie.recommendationname(mov_obj.title)
                 return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
             else:
                 flash(f'Validation error, please try later', category='danger')
     if form.deleterating.data:
         Ratings.rdelete(uid=current_user.id, movieid=movieId)
         flash(f'Rating modified Succesfully', category='success')
+        mov_obj = Movie.search(movieId=movieId)
+        rat_obj = Ratings.get_all_ratings(movieId=movieId)
+        rec_obj = Movie.recommendationname(mov_obj.title)
         return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active", rec_obj=rec_obj)
 
-    if Ratings.check_rating(user_id=current_user.id,movieId=movieId):
+    if not Ratings.check_rating(user_id=current_user.id,movieId=movieId):
         return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, rate= True, active_disp="active", rec_obj=rec_obj)
     return render_template("displayMovie.html", movie=mov_obj, form=form, rating=rat_obj, active_disp="active", rec_obj=rec_obj)
 
