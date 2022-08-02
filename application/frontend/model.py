@@ -455,10 +455,13 @@ class Users(UserMixin):
         while line:
             line = line.rstrip()
             temp = line.split(",")
-            name.append(temp[1])
-            Primary_key.append(temp[0])
-            pos = fi_user.tell()
-            line = fi_user.readline()
+            if len(temp)>1: 
+                name.append(temp[1])
+                Primary_key.append(temp[0])
+                pos = fi_user.tell()
+                line = fi_user.readline()
+            else:
+                line = fi_user.readline()
         list = [name, Primary_key]
         list = zip_longest(*list, fillvalue='')
         export_data = sorted(list, key=lambda x: x[0])
